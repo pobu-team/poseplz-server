@@ -6,6 +6,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.7.22'
     id 'org.jetbrains.kotlin.plugin.spring' version '1.7.22'
     id 'org.jetbrains.kotlin.plugin.jpa' version '1.7.22'
+    id "com.google.cloud.tools.jib" version "3.3.1"
 }
 
 group = 'com.haeseong'
@@ -39,4 +40,35 @@ tasks.withType(KotlinCompile) {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.named('jar') {
+    enabled = false
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+String now = new Date().format('yyyyMMddHHmmss')
+
+jib {
+    from {
+        image = 'eclipse-temurin:17-jre-focal'
+    }
+    container {
+        ports = ['8080']
+        jvmFlags = [
+                '-Xms512m',
+                '-Xmx512m',
+                '-Duser.timezone=Asia/Seoul',
+                '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005'
+        ]
+    }
+    to {
+        image = properties.getProperty('dockerImageName')
+        auth {
+            username = properties.getProperty('dockerUsername')
+            password = properties.getProperty('dockerPassword')
+        }
+        tags = ["latest", "$now"]
+    }
 }
