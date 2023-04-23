@@ -26,6 +26,12 @@ dependencies {
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion"
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:$springdocVersion"
 
+    // admin
+    implementation "org.webjars:webjars-locator:$webjarsLocatorVersion"
+    implementation "org.webjars:bootstrap:$webjarsBootstrapVersion"
+    implementation "org.webjars:jquery:$webjarsJqueryVersion"
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+<body>
+<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;" th:fragment="header">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="/"></use></svg>
+        <span class="fs-4">Poseplz</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li>
+            <a href="/dashboard" class="nav-link text-white">
+                <svg class="bi pe-none me-2" width="16" height="16"></svg>
+                Dashboard
+            </a>
+        </li>
+        <li>
+            <a href="/pose" class="nav-link text-white">
+                <svg class="bi pe-none me-2" width="16" height="16"></svg>
+                Poses
+            </a>
+        </li>
+        <li>
+            <a href="/tag" class="nav-link text-white">
+                <svg class="bi pe-none me-2" width="16" height="16"></svg>
+                Tags
+            </a>
+        </li>
+        <li>
+            <a href="/file" class="nav-link text-white">
+                <svg class="bi pe-none me-2" width="16" height="16"></svg>
+                Files
+            </a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
+
