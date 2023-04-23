@@ -48,4 +48,13 @@ class PoseController {
             ),
         )
     }
+
+    @PostMapping("/recommend")
+    fun recommend(
+        @RequestBody recommendRequest: PoseRecommendRequest,
+    ): ApiResponse<List<PoseSimpleResponse>> {
+        return ApiResponse.success(
+            data = emptyList(),
+        )
+    }
 }
