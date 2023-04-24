@@ -1,21 +1,43 @@
 package com.poseplz.server.ui.file
 
+import com.poseplz.server.application.file.FileApplicationService
+import com.poseplz.server.application.file.FileUploadVo
+import com.poseplz.server.ui.ApiResponse
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping("/api/v1/files")
-class FileController {
+class FileController(
+    private val fileApplicationService: FileApplicationService,
+) {
     @GetMapping("/{fileId}")
     fun getFile(
         @PathVariable fileId: Long,
         response: HttpServletResponse,
     ) {
-        response.setHeader("Content-Disposition", "attachment; filename=\"test.txt\"")
-        response.setHeader("Content-Type", "text/plain")
-        response.outputStream.write("test".toByteArray())
+        val fileDownloadResponseVo = fileApplicationService.download(
+            fileId = fileId,
+            outputStream = response.outputStream,
+        )
+        response.contentType = fileDownloadResponseVo.contentType
+        response.setContentLengthLong(fileDownloadResponseVo.size)
+    }
+
+    @PostMapping(consumes = ["multipart/form-data"])
+    fun upload(
+        @RequestPart file: MultipartFile,
+    ): ApiResponse<FileResponse> {
+        return ApiResponse.success(
+            data = fileApplicationService.upload(
+                inputStream = file.inputStream,
+                fileUploadVo = FileUploadVo(
+                    name = file.originalFilename ?: "",
+                    contentType = file.contentType ?: "",
+                    size = file.size,
+                )
+            )
+        )
     }
 }

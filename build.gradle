@@ -25,6 +25,8 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion"
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:$springdocVersion"
+    implementation "com.amazonaws:aws-java-sdk-s3:${awsJavaSdkVersion}"
+
 
     // admin
     implementation "org.webjars:webjars-locator:$webjarsLocatorVersion"
