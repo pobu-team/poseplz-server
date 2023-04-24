@@ -1,12 +1,12 @@
-package com.haeseong.pobuserver.ui.admin
+package com.poseplz.server.ui.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 
-@RequestMapping("/pose")
+@RequestMapping("/dashboard")
 @Controller
-class AdminPoseController {
+class AdminDashboardController {
     @GetMapping
-    fun index() = "pose/index"
+    fun index() = "dashboard/index"
 }

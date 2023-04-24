@@ -1,4 +1,4 @@
-package com.haeseong.pobuserver.ui.pose
+package com.poseplz.server.ui.pose
 
 enum class PreparedPoseQuery {
     /**

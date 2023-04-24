@@ -1,4 +1,4 @@
-package com.haeseong.pobuserver.ui
+package com.poseplz.server.ui
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

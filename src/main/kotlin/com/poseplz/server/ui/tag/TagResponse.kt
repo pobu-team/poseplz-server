@@ -1,6 +1,6 @@
-package com.haeseong.pobuserver.ui.tag
+package com.poseplz.server.ui.tag
 
-import com.haeseong.pobuserver.domain.tag.TagType
+import com.poseplz.server.domain.tag.TagType
 
 data class TagResponse(
     val tagId: String,

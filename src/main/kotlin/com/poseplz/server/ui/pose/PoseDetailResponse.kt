@@ -1,6 +1,6 @@
-package com.haeseong.pobuserver.ui.pose
+package com.poseplz.server.ui.pose
 
-import com.haeseong.pobuserver.ui.tag.TagResponse
+import com.poseplz.server.ui.tag.TagResponse
 
 data class PoseDetailResponse(
     val poseId: String,

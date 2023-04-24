@@ -1,4 +1,4 @@
-package com.haeseong.pobuserver.domain.tag
+package com.poseplz.server.domain.tag
 
 enum class TagType {
     /**

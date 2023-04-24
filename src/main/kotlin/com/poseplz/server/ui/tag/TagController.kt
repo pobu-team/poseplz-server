@@ -1,7 +1,7 @@
-package com.haeseong.pobuserver.ui.tag
+package com.poseplz.server.ui.tag
 
-import com.haeseong.pobuserver.domain.tag.TagType
-import com.haeseong.pobuserver.ui.ApiResponse
+import com.poseplz.server.domain.tag.TagType
+import com.poseplz.server.ui.ApiResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam

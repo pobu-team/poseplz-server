@@ -1,4 +1,4 @@
-package com.haeseong.pobuserver.ui.file
+package com.poseplz.server.ui.file
 
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.web.bind.annotation.GetMapping

@@ -1,8 +1,7 @@
-package com.haeseong.pobuserver.ui.pose
+package com.poseplz.server.ui.pose
 
-import com.haeseong.pobuserver.domain.tag.TagType
-import com.haeseong.pobuserver.ui.ApiResponse
-import com.haeseong.pobuserver.ui.tag.TagResponse
+import com.poseplz.server.ui.ApiResponse
+import com.poseplz.server.ui.tag.TagResponse
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -34,7 +33,7 @@ class PoseController {
                         name = "#2명",
                         selectorName = "2명",
                         selectorDisplayOrder = 2,
-                        type = TagType.NUMBER_OF_PEOPLE,
+                        type = com.poseplz.server.domain.tag.TagType.NUMBER_OF_PEOPLE,
                     ),
                     TagResponse(
                         tagId = "1",
@@ -42,7 +41,7 @@ class PoseController {
                         emojiImageUrl = "https://www.poseplz.com/images/simple.png",
                         selectorName = "심플한",
                         selectorDisplayOrder = 1,
-                        type = TagType.ATMOSPHERE_OF_POSE,
+                        type = com.poseplz.server.domain.tag.TagType.ATMOSPHERE_OF_POSE,
                     ),
                 ),
             ),
