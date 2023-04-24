@@ -1,4 +1,4 @@
-package com.haeseong.pobuserver
+package com.poseplz.server
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

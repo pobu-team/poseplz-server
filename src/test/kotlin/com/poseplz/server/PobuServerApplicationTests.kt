@@ -1,4 +1,4 @@
-package com.haeseong.pobuserver
+package com.poseplz.server
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
