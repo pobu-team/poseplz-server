@@ -24,9 +24,9 @@ data class ApiResponse<T>(
             data = data,
         )
 
-        fun failure(): ApiResponse<Unit> = ApiResponse(
-            code = ResultCode.INTERNAL_SERVER_ERROR,
-            message = "오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
+        fun failure(resultCode: ResultCode = ResultCode.INTERNAL_SERVER_ERROR): ApiResponse<Unit> = ApiResponse(
+            code = resultCode,
+            message = resultCode.defaultMessage,
             data = null,
         )
     }
