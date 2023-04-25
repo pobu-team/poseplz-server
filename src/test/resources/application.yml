@@ -1,3 +1,11 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: clientId
+            clientSecret: clientSecret
 poseplz:
   aws:
     s3:
