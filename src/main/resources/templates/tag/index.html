@@ -11,7 +11,36 @@
 <main class="d-flex flex-nowrap">
     <div th:replace="~{fragments/header :: header}">Header}</div>
     <div class="container">
-        <h1>Tag</h1>
+        <div>
+            <h1>Tag</h1>
+            <div>
+                <a class="btn btn-primary" href="/tag/add" role="button">태그 추가</a>
+            </div>
+        </div>
+        <table class="table table-hover">
+            <thead class="table-header thead-light">
+            <tr>
+                <th>tagId</th>
+                <th>type</th>
+                <th>name</th>
+                <th>selectorName</th>
+                <th>selectorDisplayOrder</th>
+                <th>deleted</th>
+            </tr>
+            </thead>
+            <tbody class="table-container">
+            <tr th:each="tag : *{tags}">
+                <td>
+                    <a th:href="${'/tag/' + tag.getTagId()}" th:text="${tag.getTagId()}"/>
+                </td>
+                <td th:text="${tag.getType()}"></td>
+                <td th:text="${tag.getName()}"></td>
+                <td th:text="${tag.getSelectorName()}"></td>
+                <td th:text="${tag.getSelectorDisplayOrder()}"></td>
+                <td th:text="${tag.getDeleted()}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </main>
 <div th:insert="~{fragments/footer :: footer-admin}">&copy; 2023 The Static Templates</div>

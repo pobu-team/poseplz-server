@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tag Detail</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+<body>
+<main class="d-flex flex-nowrap">
+    <div th:replace="~{fragments/header :: header}">Header</div>
+    <div class="container">
+        <h1>Tag Detail</h1>
+        <table class="table table-hover">
+            <tbody class="table-container">
+            <tr>
+                <th>tagId</th>
+                <td th:text="${tag.getTagId()}"></td>
+            </tr>
+            <tr>
+                <th>name</th>
+                <td th:text="${tag.getName()}"></td>
+            </tr>
+            <tr>
+                <th>selectorName</th>
+                <td th:text="${tag.getSelectorName()}"></td>
+            </tr>
+            <tr>
+                <th>selectorDisplayOrder</th>
+                <td th:text="${tag.getSelectorDisplayOrder()}"></td>
+            </tr>
+            <tr>
+                <th>emojiImageUrl</th>
+                <td th:text="${tag.getEmojiImageUrl()}"></td>
+            </tr>
+            <tr>
+                <th>emojiText</th>
+                <td th:text="${tag.getEmojiText()}"></td>
+            </tr>
+            <tr>
+                <th>description</th>
+                <td th:text="${tag.getDescription()}"></td>
+            </tr>
+            <tr>
+                <th>deleted</th>
+                <td th:text="${tag.getDeleted()}"></td>
+            </tr>
+            <tr>
+                <th>createdAt</th>
+                <td th:text="${tag.getCreatedAt()}"></td>
+            </tr>
+            <tr>
+                <th>updatedAt</th>
+                <td th:text="${tag.getUpdatedAt()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<div th:insert="~{fragments/footer :: footer-admin}">&copy; 2023 The Static Templates</div>
+</body>
+</html>
