@@ -1,4 +1,4 @@
-package com.poseplz.server.ui
+package com.poseplz.server.ui.api
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

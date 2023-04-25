@@ -1,4 +1,4 @@
-package com.poseplz.server.ui.file
+package com.poseplz.server.ui.api.file
 
 data class FileResponse(
     val fileId: String,

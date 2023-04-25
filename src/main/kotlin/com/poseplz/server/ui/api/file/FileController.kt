@@ -1,8 +1,8 @@
-package com.poseplz.server.ui.file
+package com.poseplz.server.ui.api.file
 
 import com.poseplz.server.application.file.FileApplicationService
 import com.poseplz.server.application.file.FileUploadVo
-import com.poseplz.server.ui.ApiResponse
+import com.poseplz.server.ui.api.ApiResponse
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile

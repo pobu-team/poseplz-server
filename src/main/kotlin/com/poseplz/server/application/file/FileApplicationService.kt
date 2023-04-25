@@ -6,8 +6,7 @@ import com.poseplz.server.domain.file.FileService
 import com.poseplz.server.domain.file.storage.StorageDownloadRequestVo
 import com.poseplz.server.domain.file.storage.StorageService
 import com.poseplz.server.domain.file.storage.StorageUploadRequestVo
-import com.poseplz.server.ui.file.FileResponse
-import jakarta.servlet.http.HttpServletResponse
+import com.poseplz.server.ui.api.file.FileResponse
 import org.springframework.stereotype.Component
 import java.io.InputStream
 import java.io.OutputStream

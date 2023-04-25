@@ -1,4 +1,4 @@
-package com.poseplz.server.ui
+package com.poseplz.server.ui.api
 
 enum class ResultCode {
     SUCCESS,

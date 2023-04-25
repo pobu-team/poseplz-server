@@ -1,4 +1,4 @@
-package com.poseplz.server.ui.tag
+package com.poseplz.server.ui.api.tag
 
 import com.poseplz.server.domain.tag.TagType
 

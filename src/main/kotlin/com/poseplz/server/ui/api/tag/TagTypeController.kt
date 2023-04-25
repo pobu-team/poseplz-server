@@ -1,7 +1,7 @@
-package com.poseplz.server.ui.tag
+package com.poseplz.server.ui.api.tag
 
 import com.poseplz.server.domain.tag.TagType
-import com.poseplz.server.ui.ApiResponse
+import com.poseplz.server.ui.api.ApiResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController

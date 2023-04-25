@@ -1,4 +1,4 @@
-package com.poseplz.server.ui
+package com.poseplz.server.ui.api
 
 data class ApiResponse<T>(
     val code: ResultCode,
