@@ -23,6 +23,7 @@ class FileController(
         )
         response.contentType = fileDownloadResponseVo.contentType
         response.setContentLengthLong(fileDownloadResponseVo.size)
+        fileDownloadResponseVo.write(response.outputStream)
     }
 
     @PostMapping(consumes = ["multipart/form-data"])
