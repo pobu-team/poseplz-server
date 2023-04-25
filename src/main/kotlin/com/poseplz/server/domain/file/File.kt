@@ -4,6 +4,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.EntityListeners
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
+import org.hibernate.annotations.GenericGenerator
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -16,7 +17,11 @@ import java.time.LocalDateTime
 @EntityListeners(AuditingEntityListener::class)
 class File(
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "SnowflakeIdentifierGenerator")
+    @GenericGenerator(
+        name = "SnowflakeIdentifierGenerator",
+        strategy = "com.poseplz.server.infrastructure.hibernate.SnowflakeIdentifierGenerator",
+    )
     val fileId: Long = 0L,
     val url: String,
     val name: String,
