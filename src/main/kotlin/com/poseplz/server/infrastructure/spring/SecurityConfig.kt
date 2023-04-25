@@ -15,6 +15,9 @@ import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService
 import org.springframework.security.oauth2.core.oidc.user.OidcUser
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 
 @EnableWebSecurity
@@ -36,6 +39,9 @@ class SecurityConfig {
             .oauth2Login()
             .and()
             .anonymous()
+            .and()
+            .cors()
+            .configurationSource(corsConfigurationSource())
             .and()
             .exceptionHandling()
             .authenticationEntryPoint { request, response, _ ->
@@ -64,8 +70,17 @@ class SecurityConfig {
         return PoseplzAdminOidcUserService()
     }
 
-    companion object {
-        private val log: Logger = LoggerFactory.getLogger(SecurityConfig::class.java)
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val configuration = CorsConfiguration()
+        configuration.allowedOrigins = listOf(
+            "https://server.poseplz.com",
+            "http://localhost:3000",
+        )
+        configuration.allowedMethods = listOf("HEAD", "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
     }
 }
 
