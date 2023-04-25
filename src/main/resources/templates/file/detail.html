@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>File</title>
+    <title>File Detail</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -11,35 +11,45 @@
 <main class="d-flex flex-nowrap">
     <div th:replace="~{fragments/header :: header}">Header</div>
     <div class="container">
-        <h1>File</h1>
+        <h1>File Detail</h1>
         <table class="table table-hover">
-            <thead class="table-header thead-light">
-            <tr>
-                <th>thumbnail</th>
-                <th>name</th>
-                <th>contentType</th>
-                <th>size</th>
-                <th>deleted</th>
-                <th>createdAt</th>
-                <th>updatedAt</th>
-            </tr>
-            </thead>
             <tbody class="table-container">
-            <tr th:each="file : *{files}">
+            <tr>
+                <th>fileId</th>
+                <td th:text="${file.getFileId()}"></td>
+            </tr>
+            <tr>
+                <th>name</th>
+                <td th:text="${file.getName()}"></td>
+            </tr>
+            <tr>
+                <th>contentType</th>
+                <td th:text="${file.getContentType()}"></td>
+            </tr>
+            <tr>
+                <th>size</th>
+                <td th:text="${file.getSize()}"></td>
+            </tr>
+            <tr>
+                <th>deleted</th>
+                <td th:text="${file.getDeleted()}"></td>
+            </tr>
+            <tr>
+                <th>createdAt</th>
+                <td th:text="${file.getCreatedAt()}"></td>
+            </tr>
+            <tr>
+                <th>updatedAt</th>
+                <td th:text="${file.getUpdatedAt()}"></td>
+            </tr>
+            <tr>
+                <th>image</th>
                 <td>
-                    <a th:href="${'/file/' + file.getFileId()}">
                     <img class="img-thumbnail"
                          th:src="${'/api/v1/files/' + file.getFileId()}"
                          th:alt="${file.getFileId()}"
                     />
-                    </a>
                 </td>
-                <td th:text="${file.getName()}"></td>
-                <td th:text="${file.getContentType()}"></td>
-                <td th:text="${file.getSize()}"></td>
-                <td th:text="${file.getDeleted()}"></td>
-                <td th:text="${file.getCreatedAt()}"></td>
-                <td th:text="${file.getUpdatedAt()}"></td>
             </tr>
             </tbody>
         </table>

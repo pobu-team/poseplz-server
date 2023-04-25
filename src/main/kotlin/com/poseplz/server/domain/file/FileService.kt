@@ -1,11 +1,14 @@
 package com.poseplz.server.domain.file
 
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 interface FileService {
     fun create(fileCreateVo: FileCreateVo): File
+    fun findAll(pageable: Pageable): Page<File>
     fun findById(fileId: Long): File?
 }
 
@@ -24,6 +27,10 @@ class FileServiceImpl(
         ).let {
             return fileRepository.save(it)
         }
+    }
+
+    override fun findAll(pageable: Pageable): Page<File> {
+        return fileRepository.findAll(pageable)
     }
 
     override fun findById(fileId: Long): File? {
