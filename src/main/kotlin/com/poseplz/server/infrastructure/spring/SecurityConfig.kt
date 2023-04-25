@@ -26,9 +26,7 @@ class SecurityConfig {
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .authorizeHttpRequests(
-
-            )
+            .authorizeHttpRequests()
             .requestMatchers("/api/v1/**", "/actuator/**").permitAll()
             .requestMatchers("/login").permitAll()
             .requestMatchers("/favicon.ico", "/error").permitAll()
@@ -43,6 +41,7 @@ class SecurityConfig {
             .cors()
             .configurationSource(corsConfigurationSource())
             .and()
+            .csrf().disable()
             .exceptionHandling()
             .authenticationEntryPoint { request, response, _ ->
                 if (request.requestURI.startsWith("/api/v1")) {
