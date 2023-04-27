@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{poseplz.tag.menu.edit}"></title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <style>
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group.required .control-label:after {
+            color: red;
+            content: '*';
+        }
+    </style>
+</head>
+<body>
+<main class="d-flex flex-nowrap">
+    <div th:replace="~{fragments/header :: header}">Header</div>
+    <div class="container">
+        <h1 th:text="#{poseplz.tag.menu.edit}"></h1>
+        <form>
+            <div class="form-group required">
+                <label for="tagTypeId" class="control-label" th:text="#{poseplz.tag.type}"></label>
+                <select id="tagTypeId" name="tagType" class="custom-select">
+                    <option th:each="tagType : *{tagTypes}" th:value="${tagType}" th:text="${tagType.displayName}" th:selected="${tagType} == ${tag.getType()}"></option>
+                </select>
+            </div>
+            <div class="form-group required">
+                <label for="nameId" class="control-label" th:text="#{poseplz.tag.name}"></label>
+                <input id="nameId" type="text" name="name" class="form-control" placeholder="태그 이름을 입력하세요."
+                       th:value="${tag.name}">
+                <small class="form-text text-muted">#1명, #심플, #친근, #생일 #기념일, ...</small>
+            </div>
+            <div class="form-group required">
+                <label for="selectorNameId" class="control-label" th:text="#{poseplz.tag.selectorName}"></label>
+                <input id="selectorNameId" name="selectorName" type="text" class="form-control"
+                       placeholder="태그 선택지 이름을 입력하세요. " th:value="${tag.selectorName}">
+                <small class="form-text text-muted">1명, 심플한, 친근한, 생일 / 기념일, ...</small>
+            </div>
+            <div class="form-group">
+                <label for="selectorDisplayOrderId" class="form-check-label" th:text="#{poseplz.tag.selectorDisplayOrder}"></label>
+                <input id="selectorDisplayOrderId" name="selectorDisplayOrder" type="number" value="0"
+                       th:value="${tag.selectorDisplayOrder}">
+            </div>
+            <div class="form-group">
+                <label for="emojiImageUrlId" th:text="#{poseplz.tag.emojiImageUrl}"></label>
+                <input id="emojiImageUrlId" name="emojiImageUrl" type="text" class="form-control"
+                       placeholder="이모지 이미지 주소를 입력하세요." th:value="${tag.emojiImageUrl}">
+            </div>
+            <div class="form-group">
+                <label for="emojiTextId" th:text="#{poseplz.tag.emojiText}"></label>
+                <input id="emojiTextId" name="emojiText" type="text" class="form-control"
+                       placeholder="이모지 문자 값을 입력하세요." th:value="${tag.emojiText}">
+            </div>
+            <div class="form-group">
+                <label for="descriptionId" th:text="#{poseplz.tag.description}"></label>
+                <input id="descriptionId" name="description" type="text" class="form-control" placeholder="설명을 입력하세요."
+                       th:value="${tag.description}">
+            </div>
+            <button id="tagSubmitId" type="submit" formmethod="post" class="btn btn-primary" th:text="#{poseplz.button.edit}"></button>
+        </form>
+    </div>
+</main>
+<div th:insert="~{fragments/footer :: footer-admin}">&copy; 2023 The Static Templates</div>
+</body>
+</html>

@@ -18,20 +18,30 @@ class Tag(
     )
     val tagId: Long = 0L,
     @Enumerated(EnumType.STRING)
-    val type: TagType,
-    val name: String,
-    val selectorName: String,
-    val selectorDisplayOrder: Int,
-    val emojiImageUrl: String? = null,
-    val emojiText: String? = null,
-    val description: String? = null,
-    val deleted: Boolean = false,
+    var type: TagType,
+    var name: String,
+    var selectorName: String,
+    var selectorDisplayOrder: Int,
+    var emojiImageUrl: String? = null,
+    var emojiText: String? = null,
+    var description: String? = null,
+    var deleted: Boolean = false,
 ) {
     @CreatedDate
     lateinit var createdAt: LocalDateTime
 
     @LastModifiedDate
     lateinit var updatedAt: LocalDateTime
+
+    fun update(tagUpdateVo: TagUpdateVo) {
+        type = tagUpdateVo.tagType
+        name = tagUpdateVo.name
+        selectorName = tagUpdateVo.selectorName
+        selectorDisplayOrder = tagUpdateVo.selectorDisplayOrder
+        emojiImageUrl = tagUpdateVo.emojiImageUrl
+        emojiText = tagUpdateVo.emojiText
+        description = tagUpdateVo.description
+    }
 
     companion object {
         fun from(tagCreateVo: TagCreateVo): Tag {

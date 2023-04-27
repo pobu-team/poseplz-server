@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Tag</title>
+    <title th:text="#{poseplz.tag.menu.list}"></title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -12,32 +12,32 @@
     <div th:replace="~{fragments/header :: header}">Header}</div>
     <div class="container">
         <div>
-            <h1>Tag</h1>
+            <h1 th:text="#{poseplz.tag.menu.list}"></h1>
             <div>
-                <a class="btn btn-primary" href="/tag/add" role="button">태그 추가</a>
+                <a class="btn btn-primary" href="/tag/add" role="button" th:text="#{poseplz.tag.menu.add}"></a>
             </div>
         </div>
         <table class="table table-hover">
             <thead class="table-header thead-light">
             <tr>
-                <th>tagId</th>
-                <th>type</th>
-                <th>name</th>
-                <th>selectorName</th>
-                <th>selectorDisplayOrder</th>
-                <th>deleted</th>
+                <th><div th:text="#{poseplz.tag.id}"></div></th>
+                <th th:text="#{poseplz.tag.type}"></th>
+                <th th:text="#{poseplz.tag.name}"></th>
+                <th th:text="#{poseplz.tag.selectorName}"></th>
+                <th th:text="#{poseplz.tag.selectorDisplayOrder}"></th>
+                <th th:text="#{poseplz.tag.deleted}"></th>
             </tr>
             </thead>
             <tbody class="table-container">
             <tr th:each="tag : *{tags}">
                 <td>
-                    <a th:href="${'/tag/' + tag.getTagId()}" th:text="${tag.getTagId()}"/>
+                    <a th:href="${'/tag/' + tag.tagId}" th:text="${tag.tagId}"/>
                 </td>
-                <td th:text="${tag.getType()}"></td>
-                <td th:text="${tag.getName()}"></td>
-                <td th:text="${tag.getSelectorName()}"></td>
-                <td th:text="${tag.getSelectorDisplayOrder()}"></td>
-                <td th:text="${tag.getDeleted()}"></td>
+                <td th:text="${tag.type.displayName}"></td>
+                <td th:text="${tag.name}"></td>
+                <td th:text="${tag.selectorName}"></td>
+                <td th:text="${tag.selectorDisplayOrder}"></td>
+                <td th:text="${tag.deleted}"></td>
             </tr>
             </tbody>
         </table>

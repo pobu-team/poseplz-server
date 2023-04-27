@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Tag Detail</title>
+    <title th:text="#{poseplz.tag.menu.detail}"></title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -11,48 +11,56 @@
 <main class="d-flex flex-nowrap">
     <div th:replace="~{fragments/header :: header}">Header</div>
     <div class="container">
-        <h1>Tag Detail</h1>
+        <h1 th:text="#{poseplz.tag.menu.detail}"></h1>
+        <div>
+            <a class="btn btn-primary" th:href="'/tag/' + ${tag.tagId} + '/edit'" role="button"
+               th:text="#{poseplz.tag.menu.edit}"></a>
+        </div>
         <table class="table table-hover">
             <tbody class="table-container">
             <tr>
-                <th>tagId</th>
-                <td th:text="${tag.getTagId()}"></td>
+                <th th:text="#{poseplz.tag.id}"></th>
+                <td th:text="${tag.tagId}"></td>
             </tr>
             <tr>
-                <th>name</th>
-                <td th:text="${tag.getName()}"></td>
+                <th th:text="#{poseplz.tag.type}"></th>
+                <td th:text="${tag.type.displayName}"></td>
             </tr>
             <tr>
-                <th>selectorName</th>
-                <td th:text="${tag.getSelectorName()}"></td>
+                <th th:text="#{poseplz.tag.name}"></th>
+                <td th:text="${tag.name}"></td>
             </tr>
             <tr>
-                <th>selectorDisplayOrder</th>
-                <td th:text="${tag.getSelectorDisplayOrder()}"></td>
+                <th th:text="#{poseplz.tag.selectorName}"></th>
+                <td th:text="${tag.selectorName}"></td>
             </tr>
             <tr>
-                <th>emojiImageUrl</th>
-                <td th:text="${tag.getEmojiImageUrl()}"></td>
+                <th th:text="#{poseplz.tag.selectorDisplayOrder}"></th>
+                <td th:text="${tag.selectorDisplayOrder}"></td>
             </tr>
             <tr>
-                <th>emojiText</th>
-                <td th:text="${tag.getEmojiText()}"></td>
+                <th th:text="#{poseplz.tag.emojiImageUrl}"></th>
+                <td th:text="${tag.emojiImageUrl}"></td>
             </tr>
             <tr>
-                <th>description</th>
-                <td th:text="${tag.getDescription()}"></td>
+                <th th:text="#{poseplz.tag.emojiText}"></th>
+                <td th:text="${tag.emojiText}"></td>
             </tr>
             <tr>
-                <th>deleted</th>
-                <td th:text="${tag.getDeleted()}"></td>
+                <th th:text="#{poseplz.tag.description}"></th>
+                <td th:text="${tag.description}"></td>
             </tr>
             <tr>
-                <th>createdAt</th>
-                <td th:text="${tag.getCreatedAt()}"></td>
+                <th th:text="#{poseplz.tag.deleted}"></th>
+                <td th:text="${tag.deleted}"></td>
             </tr>
             <tr>
-                <th>updatedAt</th>
-                <td th:text="${tag.getUpdatedAt()}"></td>
+                <th th:text="#{poseplz.tag.createdAt}"></th>
+                <td th:text="${tag.createdAt}"></td>
+            </tr>
+            <tr>
+                <th th:text="#{poseplz.tag.updatedAt}"></th>
+                <td th:text="${tag.updatedAt}"></td>
             </tr>
             </tbody>
         </table>

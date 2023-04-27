@@ -3,6 +3,7 @@ package com.poseplz.server.ui.admin.tag
 import com.poseplz.server.domain.tag.TagCreateVo
 import com.poseplz.server.domain.tag.TagService
 import com.poseplz.server.domain.tag.TagType
+import com.poseplz.server.domain.tag.TagUpdateVo
 import jakarta.validation.Valid
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Controller
@@ -18,34 +19,44 @@ import org.springframework.web.bind.annotation.RequestMapping
 class AdminTagController(
     private val tagService: TagService,
 ) {
+    /**
+     * 태그 목록 조회
+     */
     @GetMapping
-    fun index(
+    fun list(
         pageable: Pageable,
         model: Model,
     ): String {
-        val tagPage = tagService.findAll(pageable)
-        model.addAttribute("tags", tagPage.content)
-        return "tag/index"
+        model.addAttribute("tags", tagService.findAll(pageable).content)
+        return "tag/list"
     }
 
-    @GetMapping("{tagId}")
-    fun index(
+    /**
+     * 태그 상세 조회
+     */
+    @GetMapping("/{tagId}")
+    fun detail(
         @PathVariable tagId: Long,
         model: Model,
     ): String {
-        val tag = tagService.getById(tagId)
-        model.addAttribute("tag", tag)
+        model.addAttribute("tag", tagService.getById(tagId))
         return "tag/detail"
     }
 
+    /**
+     * 태그 추가
+     */
     @GetMapping("/add")
     fun add(
         model: Model,
     ): String {
-        model.addAttribute("tagTypes", TagType.values().map { it.name }.toList())
+        model.addAttribute("tagTypes", TagType.values().toList())
         return "tag/add"
     }
 
+    /**
+     * 태그 추가 처리
+     */
     @PostMapping("/add")
     fun addSubmit(
         @ModelAttribute @Valid tagAddRequest: TagAddRequest,
@@ -60,6 +71,42 @@ class AdminTagController(
                 emojiText = tagAddRequest.emojiText,
                 description = tagAddRequest.description,
             ),
+        )
+        return "redirect:/tag/${tag.tagId}"
+    }
+
+    /**
+     * 태그 수정
+     */
+    @GetMapping("/{tagId}/edit")
+    fun edit(
+        @PathVariable tagId: Long,
+        model: Model,
+    ): String {
+        model.addAttribute("tag", tagService.getById(tagId))
+        model.addAttribute("tagTypes", TagType.values().toList())
+        return "tag/edit"
+    }
+
+    /**
+     * 태그 수정 처리
+     */
+    @PostMapping("/{tagId}/edit")
+    fun editSubmit(
+        @PathVariable tagId: Long,
+        @ModelAttribute tagEditRequest: TagEditRequest
+    ): String {
+        val tag = tagService.update(
+            tagId = tagId,
+            tagUpdateVo = TagUpdateVo(
+                tagType = tagEditRequest.tagType!!,
+                name = tagEditRequest.name!!,
+                selectorName = tagEditRequest.selectorName!!,
+                selectorDisplayOrder = tagEditRequest.selectorDisplayOrder ?: 0,
+                emojiImageUrl = tagEditRequest.emojiImageUrl,
+                emojiText = tagEditRequest.emojiText,
+                description = tagEditRequest.description,
+            )
         )
         return "redirect:/tag/${tag.tagId}"
     }

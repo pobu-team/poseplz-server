@@ -2,50 +2,60 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Tag Add</title>
+    <title th:text="#{poseplz.tag.menu.add}"></title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <style>
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group.required .control-label:after {
+            color: red;
+            content: '*';
+        }
+    </style>
 </head>
 <body>
 <main class="d-flex flex-nowrap">
     <div th:replace="~{fragments/header :: header}">Header</div>
     <div class="container">
-        <h1>Tag Add</h1>
+        <h1 th:text="#{poseplz.tag.menu.add}"></h1>
         <form>
-            <div class="form-group">
-                <label for="tagTypeId">Tag Type</label>
+            <div class="form-group required">
+                <label for="tagTypeId" class="control-label" th:text="#{poseplz.tag.id}"></label>
                 <select id="tagTypeId" name="tagType" class="custom-select">
-                    <option th:each="tagType : *{tagTypes}" th:value="${tagType}" th:text="${tagType}"></option>
+                    <option th:each="tagType : *{tagTypes}" th:value="${tagType}" th:text="${tagType.displayName}"></option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="nameId">태그 이름</label>
-                <small class="form-text text-muted">#1명, #심플, #친근, #생일 #기념일, ...</small>
+            <div class="form-group required">
+                <label for="nameId" class="control-label" th:text="#{poseplz.tag.type}"></label>
                 <input id="nameId" type="text" name="name" class="form-control" placeholder="태그 이름을 입력하세요.">
+                <small class="form-text text-muted">#1명, #심플, #친근, #생일 #기념일, ...</small>
             </div>
-            <div class="form-group">
-                <label for="selectorNameId">태그 선택지 이름</label>
-                <small class="form-text text-muted">1명, 심플한, 친근한, 생일 / 기념일, ...</small>
+            <div class="form-group required">
+                <label for="selectorNameId" class="control-label" th:text="#{poseplz.tag.selectorName}"></label>
                 <input id="selectorNameId" name="selectorName" type="text" class="form-control" placeholder="태그 선택지 이름을 입력하세요. ">
+                <small class="form-text text-muted">1명, 심플한, 친근한, 생일 / 기념일, ...</small>
             </div>
             <div class="form-group">
-                <label for="selectorDisplayOrderId" class="form-check-label">태그 노출 순서</label>
+                <label for="selectorDisplayOrderId" th:text="#{poseplz.tag.selectorDisplayOrder}"></label>
                 <input id="selectorDisplayOrderId" name="selectorDisplayOrder" type="number">
             </div>
             <div class="form-group">
-                <label for="emojiImageUrlId">이모지 image url</label>
+                <label for="emojiImageUrlId" class="control-label" th:text="#{poseplz.tag.emojiImageUrl}"></label>
                 <input id="emojiImageUrlId" name="emojiImageUrl" type="text" class="form-control" placeholder="이모지 이미지 주소를 입력하세요.">
             </div>
             <div class="form-group">
-                <label for="emojiTextId">이모지 텍스트</label>
+                <label for="emojiTextId" class="control-label" th:text="#{poseplz.tag.emojiText}"></label>
                 <input id="emojiTextId" name="emojiText" type="text" class="form-control" placeholder="이모지 문자 값을 입력하세요.">
             </div>
             <div class="form-group">
-                <label for="descriptionId">설명</label>
+                <label for="descriptionId" class="control-label" th:text="#{poseplz.tag.description}"></label>
                 <input id="descriptionId" name="description" type="text" class="form-control" placeholder="설명을 입력하세요.">
             </div>
-            <button id="tagSubmitId" type="submit" formmethod="post" class="btn btn-primary">태그 추가</button>
+            <button id="tagSubmitId" type="submit" formmethod="post" class="btn btn-primary" th:text="#{poseplz.button.add}"></button>
         </form>
     </div>
 </main>
