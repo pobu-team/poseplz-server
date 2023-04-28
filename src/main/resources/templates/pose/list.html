@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>File</title>
+    <title th:text="#{poseplz.pose.menu.list}"></title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
     <link rel="stylesheet" href="/css/common.css" type="text/css"/>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
@@ -12,35 +12,32 @@
 <main class="d-flex flex-nowrap">
     <div th:replace="~{fragments/header :: header}">Header</div>
     <div class="container">
-        <h1>File</h1>
+        <h1 th:text="#{poseplz.pose.menu.list}"></h1>
+        <div>
+            <a class="btn btn-primary" href="/pose/add" role="button" th:text="#{poseplz.pose.menu.add}"></a>
+        </div>
         <table class="table table-hover">
             <thead class="table-header thead-light">
             <tr>
-                <th class="col-md-4 col-sm-6">thumbnail</th>
-                <th>name</th>
-                <th>contentType</th>
-                <th>size</th>
-                <th>deleted</th>
-                <th>createdAt</th>
-                <th>updatedAt</th>
+                <th th:text="#{poseplz.pose.file}" class="col-md-4 col-sm-6"></th>
+                <th th:text="#{poseplz.pose.createdAt}"></th>
+                <th th:text="#{poseplz.pose.updatedAt}"></th>
+                <th th:text="#{poseplz.pose.deleted}"></th>
             </tr>
             </thead>
             <tbody class="table-container">
-            <tr th:each="file : *{files}">
+            <tr th:each="pose : *{poses}">
                 <td>
-                    <a th:href="${'/file/' + file.getFileId()}">
+                    <a th:href="${'/pose/' + pose.poseId}">
                         <img class="img-thumbnail"
-                             th:src="${'/api/v1/files/' + file.getFileId()}"
-                             th:alt="${file.getFileId()}"
+                             th:src="${'/api/v1/files/' + pose.file.fileId}"
+                             th:alt="${pose.poseId}"
                         />
                     </a>
                 </td>
-                <td th:text="${file.getName()}"></td>
-                <td th:text="${file.getContentType()}"></td>
-                <td th:text="${file.getSize()}"></td>
-                <td th:text="${file.getDeleted()}"></td>
-                <td th:text="${file.getCreatedAt()}"></td>
-                <td th:text="${file.getUpdatedAt()}"></td>
+                <td th:text="${pose.createdAt}"></td>
+                <td th:text="${pose.updatedAt}"></td>
+                <td th:text="${pose.deleted}"></td>
             </tr>
             </tbody>
         </table>

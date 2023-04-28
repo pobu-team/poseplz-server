@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{poseplz.pose.menu.add}"></title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+    <link rel="stylesheet" href="/css/common.css" type="text/css"/>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+<body>
+<main class="d-flex flex-nowrap">
+    <div th:replace="~{fragments/header :: header}">Header</div>
+    <div class="container">
+        <h1 th:text="#{poseplz.pose.menu.add}"></h1>
+        <form enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="fileId" class="form-label" th:text="#{poseplz.pose.file}"></label>
+                <input id="fileId" class="form-control" type="file" name="file">
+            </div>
+            <div class="form-group">
+                <label for="tagIdsId" class="form-label" th:text="#{poseplz.pose.tags}"></label>
+                <select id="tagIdsId" name="tagIds" class="form-control" multiple="multiple">
+                    <option th:each="tag : *{tags}" th:value="${tag.tagId}" th:text="${tag.name}"></option>
+                </select>
+                <small class="form-text text-muted">`Ctrl + Click` or `Command + Click` 으로 여러개 선택 가능</small>
+            </div>
+            <button id="tagSubmitId" type="submit" formmethod="post" class="btn btn-primary" th:text="#{poseplz.button.add}"></button>
+        </form>
+    </div>
+</main>
+<div th:insert="~{fragments/footer :: footer-admin}">&copy; 2023 The Static Templates</div>
+</body>
+</html>

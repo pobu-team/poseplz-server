@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{poseplz.pose.menu.detail}"></title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+    <link rel="stylesheet" href="/css/common.css" type="text/css"/>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+<body>
+<main class="d-flex flex-nowrap">
+    <div th:replace="~{fragments/header :: header}">Header</div>
+    <div class="container">
+        <h1 th:text="#{poseplz.pose.menu.detail}"></h1>
+        <div>
+            <a class="btn btn-primary" th:href="${'/pose/' + pose.poseId + '/edit'}" role="button" th:text="#{poseplz.pose.menu.edit}"></a>
+        </div>
+        <table class="table table-hover">
+            <tbody class="table-container">
+            <tr>
+                <th th:text="#{poseplz.pose.id}"></th>
+                <td th:text="${pose.poseId}"></td>
+            </tr>
+            <tr>
+                <th th:text="#{poseplz.pose.tags}"></th>
+                <td>
+                    <div>
+                        <div class="mx-1" th:each="poseTag : *{pose.getPoseTags()}" th:text="${poseTag.tag.name}"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th th:text="#{poseplz.pose.createdAt}"></th>
+                <td th:text="${pose.createdAt}"></td>
+            </tr>
+            <tr>
+                <th th:text="#{poseplz.pose.updatedAt}"></th>
+                <td th:text="${pose.updatedAt}"></td>
+            </tr>
+            <tr>
+                <th th:text="#{poseplz.pose.deleted}"></th>
+                <td th:text="${pose.deleted}"></td>
+            </tr>
+            <tr>
+                <th th:text="#{poseplz.pose.file}"></th>
+                <td>
+                    <div>
+                        <img th:src="${'/api/v1/files/' + pose.file.fileId}" th:alt="${pose.poseId}"/>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<div th:insert="~{fragments/footer :: footer-admin}">&copy; 2023 The Static Templates</div>
+</body>
+</html>

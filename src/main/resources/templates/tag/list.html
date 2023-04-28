@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title th:text="#{poseplz.tag.menu.list}"></title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+    <link rel="stylesheet" href="/css/common.css" type="text/css"/>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 </head>
@@ -20,7 +21,7 @@
         <table class="table table-hover">
             <thead class="table-header thead-light">
             <tr>
-                <th><div th:text="#{poseplz.tag.id}"></div></th>
+                <th th:text="#{poseplz.tag.id}"></th>
                 <th th:text="#{poseplz.tag.type}"></th>
                 <th th:text="#{poseplz.tag.name}"></th>
                 <th th:text="#{poseplz.tag.selectorName}"></th>
