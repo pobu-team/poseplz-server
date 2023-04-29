@@ -29,7 +29,7 @@ class SecurityConfig {
             .authorizeHttpRequests()
             .requestMatchers("/api/v1/**", "/actuator/**").permitAll()
             .requestMatchers("/login").permitAll()
-            .requestMatchers("/favicon.ico", "/error", "/webjars/**").permitAll()
+            .requestMatchers("/favicon.ico", "/error", "/webjars/**", "/css/**", "/js/**").permitAll()
             .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
             .anyRequest().authenticated()
             .and()
