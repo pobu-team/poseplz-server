@@ -16,6 +16,16 @@
         <div>
             <a class="btn btn-primary" href="/pose/add" role="button" th:text="#{poseplz.pose.menu.add}"></a>
         </div>
+        <form>
+            <div class="form-group">
+                <label for="tagIds" th:text="#{poseplz.pose.tags}"></label>
+                <select class="form-control" id="tagIds" name="tagIds" multiple="multiple">
+                    <option th:each="tag : *{tags}" th:value="${tag.tagId}" th:text="${tag.name}"></option>
+                </select>
+                <small class="form-text text-muted">`Ctrl + Click` or `Command + Click` 으로 여러개 선택 가능</small>
+            </div>
+            <button formmethod="post" type="submit" class="btn btn-primary" th:text="#{poseplz.button.search}"></button>
+        </form>
         <table class="table table-hover">
             <thead class="table-header thead-light">
             <tr>

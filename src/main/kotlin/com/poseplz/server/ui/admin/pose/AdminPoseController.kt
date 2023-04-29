@@ -28,6 +28,21 @@ class AdminPoseController(
         model: Model,
     ): String {
         model.addAttribute("poses", poseService.findAll(pageable))
+        model.addAttribute("tags", tagService.findAll(Pageable.unpaged()))
+        return "pose/list"
+    }
+
+    @PostMapping
+    fun search(
+        @ModelAttribute poseSearchRequest: PostSearchRequest,
+        @PageableDefault(size = 10000, sort = ["poseId"], direction = Sort.Direction.DESC) pageable: Pageable,
+        model: Model,
+    ): String {
+        model.addAttribute("poses", poseService.findBy(
+            tagIds = poseSearchRequest.tagIds.map { it.toLong() },
+            pageable = pageable,
+        ))
+        model.addAttribute("tags", tagService.findAll(Pageable.unpaged()))
         return "pose/list"
     }
 

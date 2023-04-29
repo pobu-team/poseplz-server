@@ -12,6 +12,7 @@ interface PoseService {
     fun create(poseCreateVo: PoseCreateVo): Pose
     fun update(poseId: Long, poseUpdateVo: PoseUpdateVo): Pose
     fun findAll(pageable: Pageable): Page<Pose>
+    fun findBy(tagIds: List<Long>, pageable: Pageable): Page<Pose>
     fun findById(poseId: Long): Pose?
     fun getById(poseId: Long): Pose
 }
@@ -49,6 +50,10 @@ class PoseServiceImpl(
 
     override fun findAll(pageable: Pageable): Page<Pose> {
         return poseRepository.findAll(pageable)
+    }
+
+    override fun findBy(tagIds: List<Long>, pageable: Pageable): Page<Pose> {
+        return poseRepository.findByPoseTags_Tag_TagIdIn(tagIds, pageable)
     }
 
     override fun findById(poseId: Long): Pose? {
