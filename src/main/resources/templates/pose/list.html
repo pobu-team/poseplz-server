@@ -19,7 +19,8 @@
         <table class="table table-hover">
             <thead class="table-header thead-light">
             <tr>
-                <th th:text="#{poseplz.pose.file}" class="col-md-4 col-sm-6"></th>
+                <th th:text="#{poseplz.pose.file}"></th>
+                <th th:text="#{poseplz.pose.tags}"></th>
                 <th th:text="#{poseplz.pose.createdAt}"></th>
                 <th th:text="#{poseplz.pose.updatedAt}"></th>
                 <th th:text="#{poseplz.pose.deleted}"></th>
@@ -32,8 +33,14 @@
                         <img class="img-thumbnail"
                              th:src="${'/api/v1/files/' + pose.file.fileId}"
                              th:alt="${pose.poseId}"
+                             style="height: 200px"
                         />
                     </a>
+                </td>
+                <td>
+                    <div class="row">
+                        <span th:each="poseTag : *{pose.poseTags}" th:text="${poseTag.tag.name}"></span>
+                    </div>
                 </td>
                 <td th:text="${pose.createdAt}"></td>
                 <td th:text="${pose.updatedAt}"></td>
