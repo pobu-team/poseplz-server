@@ -75,6 +75,7 @@ class SecurityConfig {
         configuration.allowedOrigins = listOf(
             "https://server.poseplz.com",
             "http://localhost:3000",
+            "http://localhost:8080",
         )
         configuration.allowedMethods = listOf("HEAD", "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
         val source = UrlBasedCorsConfigurationSource()

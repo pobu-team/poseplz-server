@@ -8,6 +8,9 @@ import com.poseplz.server.domain.file.storage.StorageUploadRequestVo
 import com.poseplz.server.domain.pose.PoseCreateVo
 import com.poseplz.server.domain.pose.PoseService
 import com.poseplz.server.ui.api.pose.PoseDetailResponse
+import com.poseplz.server.ui.api.pose.PoseSimpleResponse
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
 import java.io.InputStream
 
@@ -45,5 +48,13 @@ class PoseApplicationService(
             ),
         )
         return pose.toPoseDetailResponse()
+    }
+
+    fun findByTagIds(
+        tagIds: Collection<Long>,
+        pageable: Pageable,
+    ): Page<PoseSimpleResponse> {
+        return poseService.findBy(tagIds, pageable)
+            .map { it.toPoseSimpleResponse() }
     }
 }
