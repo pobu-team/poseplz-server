@@ -6,6 +6,7 @@ import com.poseplz.server.domain.file.FileService
 import com.poseplz.server.domain.file.storage.StorageService
 import com.poseplz.server.domain.file.storage.StorageUploadRequestVo
 import com.poseplz.server.domain.pose.PoseCreateVo
+import com.poseplz.server.domain.pose.PoseNotFoundException
 import com.poseplz.server.domain.pose.PoseService
 import com.poseplz.server.ui.api.pose.PoseDetailResponse
 import com.poseplz.server.ui.api.pose.PoseSimpleResponse
@@ -56,5 +57,12 @@ class PoseApplicationService(
     ): Page<PoseSimpleResponse> {
         return poseService.findBy(tagIds, pageable)
             .map { it.toPoseSimpleResponse() }
+    }
+
+    fun findByPoseId(
+        poseId: Long,
+    ): PoseDetailResponse {
+        return poseService.findById(poseId)?.toPoseDetailResponse()
+            ?: throw PoseNotFoundException()
     }
 }

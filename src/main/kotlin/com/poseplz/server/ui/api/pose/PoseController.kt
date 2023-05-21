@@ -29,28 +29,7 @@ class PoseController(
         @PathVariable poseId: Long,
     ): ApiResponse<PoseDetailResponse> {
         return ApiResponse.success(
-            data = PoseDetailResponse(
-                poseId = "12345678901234567890",
-                thumbnailImageUrl = "https://www.poseplz.com/images/2-1.png",
-                imageUrl = "https://www.poseplz.com/images/2-1.png",
-                tags = listOf(
-                    TagResponse(
-                        tagId = "2345678901",
-                        name = "#2명",
-                        selectorName = "2명",
-                        selectorDisplayOrder = 2,
-                        type = TagType.NUMBER_OF_PEOPLE,
-                    ),
-                    TagResponse(
-                        tagId = "1",
-                        name = "#심플",
-                        emojiImageUrl = "https://www.poseplz.com/images/simple.png",
-                        selectorName = "심플한",
-                        selectorDisplayOrder = 1,
-                        type = TagType.ATMOSPHERE_OF_POSE,
-                    ),
-                ),
-            ),
+            data = poseApplicationService.findByPoseId(poseId),
         )
     }
 
