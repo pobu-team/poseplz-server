@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface PoseRepository : JpaRepository<Pose, Long> {
     @Suppress("FunctionName")
-    fun findByPoseTags_Tag_TagIdIn(tagIds: List<Long>, pageable: Pageable): Page<Pose>
+    fun findByPoseTags_Tag_TagIdIn(tagIds: Collection<Long>, pageable: Pageable): Page<Pose>
 }

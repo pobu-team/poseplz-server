@@ -10,6 +10,8 @@ interface TagService {
     fun create(tagCreateVo: TagCreateVo): Tag
     fun update(tagId: Long, tagUpdateVo: TagUpdateVo): Tag
     fun findAll(pageable: Pageable): Page<Tag>
+
+    fun findByTagType(tagType: TagType, pageable: Pageable): Page<Tag>
     fun getById(tagId: Long): Tag
 }
 
@@ -33,6 +35,10 @@ class TagServiceImpl(
 
     override fun findAll(pageable: Pageable): Page<Tag> {
         return tagRepository.findAll(pageable)
+    }
+
+    override fun findByTagType(tagType: TagType, pageable: Pageable): Page<Tag> {
+        return tagRepository.findByType(tagType, pageable)
     }
 
     override fun getById(tagId: Long): Tag {
