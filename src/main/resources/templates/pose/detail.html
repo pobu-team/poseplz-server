@@ -13,8 +13,15 @@
     <div th:replace="~{fragments/header :: header}">Header</div>
     <div class="container">
         <h1 th:text="#{poseplz.pose.menu.detail}"></h1>
-        <div>
-            <a class="btn btn-primary" th:href="${'/pose/' + pose.poseId + '/edit'}" role="button" th:text="#{poseplz.pose.menu.edit}"></a>
+        <div class="d-flex">
+            <div>
+                <a class="btn btn-primary" th:href="${'/pose/' + pose.poseId + '/edit'}" role="button" th:text="#{poseplz.pose.menu.edit}"></a>
+            </div>
+            <div>
+                <form th:action="${'/pose/' + pose.poseId + '/delete'}" method="post">
+                    <button class="btn btn-danger" th:text="#{poseplz.pose.menu.delete}"></button>
+                </form>
+            </div>
         </div>
         <table class="table table-hover">
             <tbody class="table-container">

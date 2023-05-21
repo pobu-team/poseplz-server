@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional
 interface PoseService {
     fun create(poseCreateVo: PoseCreateVo): Pose
     fun update(poseId: Long, poseUpdateVo: PoseUpdateVo): Pose
+    fun delete(postId: Long)
     fun findAll(pageable: Pageable): Page<Pose>
     fun findBy(tagIds: Collection<Long>, pageable: Pageable): Page<Pose>
     fun findById(poseId: Long): Pose?
@@ -46,6 +47,13 @@ class PoseServiceImpl(
         pose.poseTags.clear()
         pose.poseTags.addAll(poseTags)
         return pose
+    }
+
+    @Transactional
+    override fun delete(postId: Long) {
+        if (poseRepository.existsById(postId)) {
+            poseRepository.deleteById(postId)
+        }
     }
 
     override fun findAll(pageable: Pageable): Page<Pose> {

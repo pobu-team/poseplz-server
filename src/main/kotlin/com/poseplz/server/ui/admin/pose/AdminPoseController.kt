@@ -97,4 +97,13 @@ class AdminPoseController(
         model.addAttribute("pose", pose)
         return "redirect:/pose/${poseId}"
     }
+
+    @PostMapping("/{postId}/delete")
+    fun deleteSubmit(
+        @PathVariable postId: Long,
+    ): String {
+        poseService.delete(postId)
+        return "redirect:/pose"
+    }
+
 }
