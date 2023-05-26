@@ -68,7 +68,6 @@ jib {
     container {
         ports = ['8080']
         jvmFlags = [
-                '-Xms512m',
                 '-Xmx512m',
                 '-Duser.timezone=Asia/Seoul',
                 '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005'
