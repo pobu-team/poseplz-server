@@ -4,8 +4,10 @@ import com.poseplz.server.application.file.FileApplicationService
 import com.poseplz.server.application.file.FileUploadVo
 import com.poseplz.server.ui.api.ApiResponse
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.http.CacheControl
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import java.time.Duration
 
 @RestController
 @RequestMapping("/api/v1/files")
@@ -23,6 +25,7 @@ class FileController(
         )
         response.contentType = fileDownloadResponseVo.contentType
         response.setContentLengthLong(fileDownloadResponseVo.size)
+        response.addHeader("Cache-Control", CacheControl.maxAge(Duration.ofHours(24)).headerValue)
         fileDownloadResponseVo.write(response.outputStream)
     }
 
