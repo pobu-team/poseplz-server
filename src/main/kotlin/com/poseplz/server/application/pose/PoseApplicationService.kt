@@ -51,6 +51,13 @@ class PoseApplicationService(
         return pose.toPoseDetailResponse()
     }
 
+    fun recommend(
+        tagIds: Collection<Long>,
+    ): List<PoseSimpleResponse> {
+        return poseService.recommend(tagIds)
+            .map { it.toPoseSimpleResponse() }
+    }
+
     fun findByTagIds(
         tagIds: Collection<Long>,
         pageable: Pageable,
