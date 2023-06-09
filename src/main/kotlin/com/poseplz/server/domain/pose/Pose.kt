@@ -27,7 +27,7 @@ class Pose(
     val poseId: Long = 0L,
     @ManyToOne
     @JoinColumn(name = "fileId")
-    val file: File,
+    var file: File,
     @OneToMany(mappedBy = "pose", cascade = [CascadeType.ALL])
     val poseTags: MutableList<PoseTag> = mutableListOf(),
     var deleted: Boolean = false,

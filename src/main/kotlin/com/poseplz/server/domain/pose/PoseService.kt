@@ -42,11 +42,8 @@ class PoseServiceImpl(
     override fun update(poseId: Long, poseUpdateVo: PoseUpdateVo): Pose {
         val pose = poseRepository.findByIdOrNull(poseId)
             ?: throw PoseNotFoundException()
-        val poseTags = poseUpdateVo.tagIds
-            .map { tagRepository.getReferenceById(it) }
-            .map { tag -> PoseTag.of(pose, tag) }
-        pose.poseTags.clear()
-        pose.poseTags.addAll(poseTags)
+        pose.file = fileRepository.getReferenceById(poseUpdateVo.fileId)
+        // TODO: 태그 수정
         return pose
     }
 

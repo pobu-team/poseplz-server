@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional
 
 interface FileService {
     fun create(fileCreateVo: FileCreateVo): File
+    fun delete(fileId: Long)
     fun findAll(pageable: Pageable): Page<File>
     fun findById(fileId: Long): File?
 }
@@ -27,6 +28,10 @@ class FileServiceImpl(
         ).let {
             return fileRepository.save(it)
         }
+    }
+
+    override fun delete(fileId: Long) {
+        fileRepository.findByIdOrNull(fileId)?.delete()
     }
 
     override fun findAll(pageable: Pageable): Page<File> {

@@ -91,9 +91,19 @@ class AdminPoseController(
     @PostMapping("/{poseId}/edit")
     fun editSubmit(
         @PathVariable poseId: Long,
+        @ModelAttribute poseEditRequest: PoseEditRequest,
         model: Model,
     ): String {
-        val pose = poseService.getById(poseId)
+        val pose = poseApplicationService.update(
+            poseId = poseId,
+            inputStream = poseEditRequest.file.inputStream,
+            fileUploadVo = FileUploadVo(
+                name = poseEditRequest.file.originalFilename!!,
+                contentType = poseEditRequest.file.contentType!!,
+                size = poseEditRequest.file.size,
+            ),
+            tagIds = poseEditRequest.tagIds.map { it.toLong() }
+        )
         model.addAttribute("pose", pose)
         return "redirect:/pose/${poseId}"
     }

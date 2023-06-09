@@ -13,6 +13,13 @@
     <div th:replace="~{fragments/header :: header}">Header</div>
     <div class="container">
         <h1 th:text="#{poseplz.pose.menu.edit}"></h1>
+        <form enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="fileId" class="form-label" th:text="#{poseplz.pose.file}"></label>
+                <input id="fileId" class="form-control" type="file" name="file">
+            </div>
+            <button id="tagSubmitId" type="submit" formmethod="post" class="btn btn-primary" th:text="#{poseplz.button.edit}"></button>
+        </form>
     </div>
 </main>
 <div th:insert="~{fragments/footer :: footer-admin}">&copy; 2023 The Static Templates</div>

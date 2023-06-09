@@ -27,11 +27,15 @@ class File(
     val name: String,
     val contentType: String,
     val size: Long,
-    val deleted: Boolean = false,
+    var deleted: Boolean = false,
 ) {
     @CreatedDate
     lateinit var createdAt: LocalDateTime
 
     @LastModifiedDate
     lateinit var updatedAt: LocalDateTime
+
+    fun delete() {
+        this.deleted = true
+    }
 }
