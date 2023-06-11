@@ -17,6 +17,7 @@ interface PoseService {
     fun findBy(tagIds: Collection<Long>, pageable: Pageable): Page<Pose>
     fun findById(poseId: Long): Pose?
     fun getById(poseId: Long): Pose
+    fun countByTagId(tagId: Long): Long
 }
 
 @Service
@@ -78,4 +79,7 @@ class PoseServiceImpl(
         return poseRepository.findByIdOrNull(poseId) ?: throw PoseNotFoundException()
     }
 
+    override fun countByTagId(tagId: Long): Long {
+        return poseRepository.countByPoseTags_Tag_TagId(tagId)
+    }
 }

@@ -20,7 +20,7 @@
             <div class="form-group">
                 <label for="tagIds" th:text="#{poseplz.pose.tags}"></label>
                 <select class="form-control" id="tagIds" name="tagIds" multiple="multiple" style="height: 30rem">
-                    <option th:each="tag : *{tags}" th:value="${tag.tagId}" th:text="${tag.name}"></option>
+                    <option th:each="tag : *{tags}" th:value="${tag.tagId}" th:text="${tag.name} + ' (' + ${tag.count} + ')'"></option>
                 </select>
                 <small class="form-text text-muted">`Ctrl + Click` or `Command + Click` 으로 여러개 선택 가능</small>
             </div>

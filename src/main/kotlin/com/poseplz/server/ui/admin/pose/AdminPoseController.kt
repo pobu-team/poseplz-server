@@ -2,8 +2,8 @@ package com.poseplz.server.ui.admin.pose
 
 import com.poseplz.server.application.file.FileUploadVo
 import com.poseplz.server.application.pose.PoseApplicationService
+import com.poseplz.server.application.tag.TagApplicationService
 import com.poseplz.server.domain.pose.PoseService
-import com.poseplz.server.domain.tag.TagService
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 class AdminPoseController(
     private val poseService: PoseService,
     private val poseApplicationService: PoseApplicationService,
-    private val tagService: TagService,
+    private val tagApplicationService: TagApplicationService,
 ) {
     @GetMapping
     fun list(
@@ -28,7 +28,7 @@ class AdminPoseController(
         model: Model,
     ): String {
         model.addAttribute("poses", poseService.findAll(pageable))
-        model.addAttribute("tags", tagService.findAll(Pageable.unpaged()))
+        model.addAttribute("tags", tagApplicationService.findWithCount(null, Pageable.unpaged()))
         return "pose/list"
     }
 
@@ -42,7 +42,7 @@ class AdminPoseController(
             tagIds = poseSearchRequest.tagIds.map { it.toLong() },
             pageable = pageable,
         ))
-        model.addAttribute("tags", tagService.findAll(Pageable.unpaged()))
+        model.addAttribute("tags", tagApplicationService.findWithCount(null, Pageable.unpaged()))
         return "pose/list"
     }
 
@@ -59,7 +59,7 @@ class AdminPoseController(
     fun add(
         model: Model,
     ): String {
-        model.addAttribute("tags", tagService.findAll(Pageable.unpaged()))
+        model.addAttribute("tags", tagApplicationService.findWithCount(null, Pageable.unpaged()))
         return "pose/add"
     }
 

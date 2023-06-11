@@ -1,5 +1,6 @@
 package com.poseplz.server.ui.admin.tag
 
+import com.poseplz.server.application.tag.TagApplicationService
 import com.poseplz.server.domain.tag.TagCreateVo
 import com.poseplz.server.domain.tag.TagService
 import com.poseplz.server.domain.tag.TagType
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Controller
 class AdminTagController(
     private val tagService: TagService,
+    private val tagApplicationService: TagApplicationService,
 ) {
     /**
      * 태그 목록 조회
@@ -27,7 +29,7 @@ class AdminTagController(
         pageable: Pageable,
         model: Model,
     ): String {
-        model.addAttribute("tags", tagService.findAll(pageable).content)
+        model.addAttribute("tags", tagApplicationService.findWithCount(null, pageable).content)
         return "tag/list"
     }
 
