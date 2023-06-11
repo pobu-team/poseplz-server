@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{poseplz.tag.group.menu.list}"></title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+    <link rel="stylesheet" href="/css/common.css" type="text/css"/>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+<body>
+<main class="d-flex flex-nowrap">
+    <div th:replace="~{fragments/header :: header}">Header}</div>
+    <div class="container">
+        <div>
+            <h1 th:text="#{poseplz.tag.group.menu.list}"></h1>
+            <div>
+                <a class="btn btn-primary" href="/tag-group/add" role="button" th:text="#{poseplz.tag.group.menu.add}"></a>
+            </div>
+        </div>
+        <table class="table table-hover">
+            <thead class="table-header thead-light">
+            <tr>
+                <th th:text="#{poseplz.tag.group.id}"></th>
+                <th th:text="#{poseplz.tag.group.name}"></th>
+                <th th:text="#{poseplz.tag.group.deleted}"></th>
+            </tr>
+            </thead>
+            <tbody class="table-container">
+            <tr th:each="tagGroup : *{tagGroups}">
+                <td>
+                    <a th:href="${'/tag-group/' + tagGroup.tagGroupId}" th:text="${tagGroup.tagGroupId}"/>
+                </td>
+                <td th:text="${tagGroup.name}"></td>
+                <td th:text="${tagGroup.deleted}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<div th:insert="~{fragments/footer :: footer-admin}">&copy; 2023 The Static Templates</div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{poseplz.tag.group.menu.edit}"></title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+    <link rel="stylesheet" href="/css/common.css" type="text/css"/>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <style>
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group.required .control-label:after {
+            color: red;
+            content: '*';
+        }
+    </style>
+</head>
+<body>
+<main class="d-flex flex-nowrap">
+    <div th:replace="~{fragments/header :: header}">Header</div>
+    <div class="container">
+        <h1 th:text="#{poseplz.tag.group.menu.edit}"></h1>
+        <form>
+            <div class="form-group required">
+                <label for="tagGroupNameId" class="control-label" th:text="#{poseplz.tag.group.name}"></label>
+                <input id="tagGroupNameId" type="text" name="name" class="form-control" placeholder="태그 그룹 이름을 입력하세요."
+                       th:value="${tagGroup.name}">
+                <small class="form-text text-muted">분위기있게, 예쁘게, 재미있게, 귀엽게, 연인사이, 친구끼리, ...</small>
+            </div>
+            <button id="tagGroupSubmitId" type="submit" formmethod="post" class="btn btn-primary" th:text="#{poseplz.button.edit}"></button>
+        </form>
+    </div>
+</main>
+<div th:insert="~{fragments/footer :: footer-admin}">&copy; 2023 The Static Templates</div>
+</body>
+</html>

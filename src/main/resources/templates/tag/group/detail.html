@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{poseplz.tag.group.menu.detail}"></title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+    <link rel="stylesheet" href="/css/common.css" type="text/css"/>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+<body>
+<main class="d-flex flex-nowrap">
+    <div th:replace="~{fragments/header :: header}">Header</div>
+    <div class="container">
+        <h1 th:text="#{poseplz.tag.group.menu.detail}"></h1>
+        <div>
+            <a class="btn btn-primary" th:href="'/tag-group/' + ${tagGroup.tagGroupId} + '/edit'" role="button"
+               th:text="#{poseplz.tag.group.menu.edit}"></a>
+        </div>
+        <table class="table table-hover">
+            <tbody class="table-container">
+            <tr>
+                <th th:text="#{poseplz.tag.group.id}"></th>
+                <td th:text="${tagGroup.tagGroupId}"></td>
+            </tr>
+            <tr>
+                <th th:text="#{poseplz.tag.group.name}"></th>
+                <td th:text="${tagGroup.name}"></td>
+            </tr>
+            <tr>
+                <th th:text="#{poseplz.tag.group.createdAt}"></th>
+                <td th:text="${tagGroup.createdAt}"></td>
+            </tr>
+            <tr>
+                <th th:text="#{poseplz.tag.group.updatedAt}"></th>
+                <td th:text="${tagGroup.updatedAt}"></td>
+            </tr>
+            <tr>
+                <th th:text="#{poseplz.tag.group.deleted}"></th>
+                <td th:text="${tagGroup.deleted}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<div th:insert="~{fragments/footer :: footer-admin}">&copy; 2023 The Static Templates</div>
+</body>
+</html>
