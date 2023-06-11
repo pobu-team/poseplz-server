@@ -76,7 +76,7 @@ class AdminPoseController(
             ),
             tagIds = poseAddRequest.tagIds.map { it.toLong() },
         )
-        return "redirect:/pose/${poseDetailResponse.poseId}"
+        return "redirect:/pose"
     }
 
     @GetMapping("/{poseId}/edit")
