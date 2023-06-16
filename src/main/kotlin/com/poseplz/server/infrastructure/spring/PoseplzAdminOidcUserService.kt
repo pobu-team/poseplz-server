@@ -23,6 +23,7 @@ class PoseplzAdminOidcUserService : OAuth2UserService<OidcUserRequest, OidcUser>
             "h96yesuny@gmail.com",
             "rkdalsgp1998@gmail.com",
             "seong0428@gmail.com",
+            "ckhe1215@gmail.com",
         )
     }
 }
