@@ -10,4 +10,6 @@ interface PoseRepository : JpaRepository<Pose, Long>, PoseRepositoryCustom {
 
     @Suppress("FunctionName")
     fun countByPoseTags_Tag_TagId(tagId: Long): Long
+
+    fun countByDeletedFalse(): Long
 }

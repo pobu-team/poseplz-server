@@ -33,6 +33,15 @@ class PoseController(
         )
     }
 
+    @GetMapping("/count")
+    fun count(): ApiResponse<PoseCountResponse> {
+        return ApiResponse.success(
+            data = PoseCountResponse(
+                count = poseApplicationService.count(),
+            ),
+        )
+    }
+
     @PostMapping("/recommend")
     fun recommend(
         @RequestBody recommendRequest: PoseRecommendRequest,

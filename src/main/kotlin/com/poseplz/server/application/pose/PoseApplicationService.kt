@@ -117,6 +117,10 @@ class PoseApplicationService(
             .map { it.toPoseSimpleResponse() }
     }
 
+    fun count(): Long {
+        return poseService.count()
+    }
+
     fun findByTagIds(
         tagIds: Collection<Long>,
         pageable: Pageable,

@@ -18,6 +18,7 @@ interface PoseService {
     fun findById(poseId: Long): Pose?
     fun getById(poseId: Long): Pose
     fun countByTagId(tagId: Long): Long
+    fun count(): Long
 }
 
 @Service
@@ -89,5 +90,9 @@ class PoseServiceImpl(
 
     override fun countByTagId(tagId: Long): Long {
         return poseRepository.countByPoseTags_Tag_TagId(tagId)
+    }
+
+    override fun count(): Long {
+        return poseRepository.count()
     }
 }
