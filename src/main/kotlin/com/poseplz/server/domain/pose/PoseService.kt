@@ -30,7 +30,7 @@ class PoseServiceImpl(
     @Transactional
     override fun create(poseCreateVo: PoseCreateVo): Pose {
         val file = fileRepository.getReferenceById(poseCreateVo.fileId)
-        val pose = Pose.of(file)
+        val pose = Pose.of(file, poseCreateVo.peopleCount)
         val poseTags = poseCreateVo.tagIds
             .map { tagRepository.getReferenceById(it) }
             .map { tag -> PoseTag.of(pose, tag) }
@@ -44,6 +44,7 @@ class PoseServiceImpl(
         val pose = poseRepository.findByIdOrNull(poseId)
             ?: throw PoseNotFoundException()
         poseUpdateVo.fileId?.run { pose.file = fileRepository.getReferenceById(this) }
+        pose.peopleCount = poseUpdateVo.peopleCount
         pose.poseTags.clear()
         pose.poseTags.addAll(
             poseUpdateVo.tagIds

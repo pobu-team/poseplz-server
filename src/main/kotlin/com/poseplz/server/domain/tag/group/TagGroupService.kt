@@ -12,6 +12,7 @@ interface TagGroupService {
     fun update(tagGroupId: Long, tagGroupUpdateVo: TagGroupUpdateVo): TagGroup
     fun delete(tagGroupId: Long)
     fun findAll(pageable: Pageable): Page<TagGroup>
+    fun findByPeopleCount(peopleCount: Int): List<TagGroup>
     fun findById(tagGroupId: Long): TagGroup?
     fun getById(tagGroupId: Long): TagGroup
 }
@@ -24,8 +25,9 @@ class TagGroupServiceImpl(
 ) : TagGroupService {
     @Transactional
     override fun create(tagGroupCreateVo: TagGroupCreateVo): TagGroup {
+        val tags = tagService.findByTagIds(tagGroupCreateVo.tagIds)
         return tagGroupRepository.save(
-            TagGroup.from(tagGroupCreateVo),
+            TagGroup.of(tagGroupCreateVo, tags),
         )
     }
 
@@ -48,6 +50,10 @@ class TagGroupServiceImpl(
 
     override fun findAll(pageable: Pageable): Page<TagGroup> {
         return tagGroupRepository.findAll(pageable)
+    }
+
+    override fun findByPeopleCount(peopleCount: Int): List<TagGroup> {
+        return tagGroupRepository.findByPeopleCountsContains(peopleCount)
     }
 
     override fun findById(tagGroupId: Long): TagGroup? {

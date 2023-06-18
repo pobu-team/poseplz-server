@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
 import java.io.InputStream
+import kotlin.reflect.typeOf
 
 @Component
 class PoseApplicationService(
@@ -27,6 +28,7 @@ class PoseApplicationService(
         inputStream: InputStream,
         fileUploadVo: FileUploadVo,
         tagIds: List<Long>,
+        peopleCount: Int,
     ): PoseDetailResponse {
         val file = storageService.upload(
             inputStream = inputStream,
@@ -48,6 +50,7 @@ class PoseApplicationService(
             poseCreateVo = PoseCreateVo(
                 fileId = file.fileId,
                 tagIds = tagIds,
+                peopleCount = peopleCount,
             ),
         )
         return pose.toPoseDetailResponse()
@@ -58,6 +61,7 @@ class PoseApplicationService(
         inputStream: InputStream,
         fileUploadVo: FileUploadVo,
         tagIds: List<Long>,
+        peopleCount: Int,
     ): PoseDetailResponse {
         val file: File? = if (inputStream.available() > 0) {
             // Delete old file
@@ -77,6 +81,7 @@ class PoseApplicationService(
             poseUpdateVo = PoseUpdateVo(
                 fileId = file?.fileId,
                 tagIds = tagIds,
+                peopleCount = peopleCount,
             ),
         )
 

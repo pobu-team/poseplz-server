@@ -1,5 +1,6 @@
 package com.poseplz.server.domain.tag.group
 
+import com.poseplz.server.domain.tag.Tag
 import jakarta.persistence.*
 import org.hibernate.annotations.GenericGenerator
 import org.springframework.data.annotation.CreatedDate
@@ -18,6 +19,8 @@ class TagGroup(
     )
     val tagGroupId: Long = 0L,
     var name: String,
+    @ElementCollection
+    val peopleCounts: MutableList<Int> = mutableListOf(),
     @OneToMany(mappedBy = "tagGroup", cascade = [CascadeType.ALL], orphanRemoval = true)
     val tagGroupTags: MutableList<TagGroupTag> = mutableListOf(),
     var deleted: Boolean = false,
@@ -29,10 +32,16 @@ class TagGroup(
     lateinit var updatedAt: LocalDateTime
 
     companion object {
-        fun from(tagGroupCreateVo: TagGroupCreateVo): TagGroup {
+        fun of(
+            tagGroupCreateVo: TagGroupCreateVo,
+            tags: List<Tag>,
+        ): TagGroup {
             return TagGroup(
                 name = tagGroupCreateVo.name,
-            )
+            ).apply {
+                this.peopleCounts.addAll(tagGroupCreateVo.peopleCounts)
+                this.tagGroupTags.addAll(tags.map { TagGroupTag.of(this, it) })
+            }
         }
     }
 
@@ -41,6 +50,8 @@ class TagGroup(
         tagGroupTags: List<TagGroupTag>,
     ) {
         this.name = tagGroupUpdateVo.name
+        this.peopleCounts.clear()
+        this.peopleCounts.addAll(tagGroupUpdateVo.peopleCounts)
         this.tagGroupTags.clear()
         this.tagGroupTags.addAll(tagGroupTags)
     }

@@ -28,6 +28,10 @@
                 <td th:text="${tagGroup.name}"></td>
             </tr>
             <tr>
+                <th th:text="#{poseplz.tag.group.peopleCounts}"></th>
+                <td th:text="${tagGroup.peopleCounts}"></td>
+            </tr>
+            <tr>
                 <th th:text="#{poseplz.tag.group.tags}"></th>
                 <td>
                     <ul th:each="tagGroupTag : ${tagGroup.tagGroupTags}">

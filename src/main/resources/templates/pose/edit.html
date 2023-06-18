@@ -19,6 +19,11 @@
                 <input id="fileId" class="form-control" type="file" name="file">
             </div>
             <div class="form-group">
+                <label for="peopleCountId" class="form-label" th:text="#{poseplz.pose.peopleCount}"></label>
+                <input id="peopleCountId" name="peopleCount" class="form-control" type="number"
+                       th:placeholder="'인원 수를 입력하세요. (1~6)'" th:value="${pose.peopleCount}">
+            </div>
+            <div class="form-group">
                 <label for="tagIdsId" class="form-label" th:text="#{poseplz.pose.tags}"></label>
                 <select id="tagIdsId" name="tagIds" class="form-control" multiple="multiple" style="height: 30rem">
                     <option th:each="tag : *{tags}" th:value="${tag.tagId}"

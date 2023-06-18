@@ -43,15 +43,22 @@ class AdminTagGroupController(
         model: Model,
     ): String {
         model.addAttribute("tags", tagApplicationService.findWithCount(null, Pageable.unpaged()))
+        model.addAttribute("peopleCounts", getPeopleCounts())
         return "tag/group/add"
     }
 
     @PostMapping("/add")
     fun addSubmit(
-        @ModelAttribute tagGroupCreateVo: TagGroupCreateVo,
+        @ModelAttribute tagGroupCreateRequest: TagGroupCreateRequest,
         model: Model,
     ): String {
-        val tagGroup = tagGroupService.create(tagGroupCreateVo)
+        val tagGroup = tagGroupService.create(
+            tagGroupCreateVo = TagGroupCreateVo(
+                name = tagGroupCreateRequest.name,
+                peopleCounts = tagGroupCreateRequest.peopleCounts,
+                tagIds = tagGroupCreateRequest.tagIds,
+            ),
+        )
         model.addAttribute("tagGroup", tagGroup)
         return "redirect:/tag-group"
     }
@@ -65,16 +72,26 @@ class AdminTagGroupController(
         model.addAttribute("tagGroup", tagGroup)
         model.addAttribute("selectedTagIds", tagGroup.tagGroupTags.map { it.tag.tagId }.toSet())
         model.addAttribute("tags", tagApplicationService.findWithCount(null, Pageable.unpaged()))
+        model.addAttribute("peopleCounts", getPeopleCounts())
         return "tag/group/edit"
     }
 
     @PostMapping("/{tagGroupId}/edit")
     fun editSubmit(
         @PathVariable tagGroupId: Long,
-        @ModelAttribute tagGroupUpdateVo: TagGroupUpdateVo,
+        @ModelAttribute tagGroupUpdateRequest: TagGroupUpdateRequest,
         model: Model,
     ): String {
-        val tagGroup = tagGroupService.update(tagGroupId, tagGroupUpdateVo)
+        val tagGroup = tagGroupService.update(
+            tagGroupId = tagGroupId,
+            tagGroupUpdateVo = TagGroupUpdateVo(
+                name = tagGroupUpdateRequest.name,
+                peopleCounts = tagGroupUpdateRequest.peopleCounts,
+                tagIds = tagGroupUpdateRequest.tagIds,
+            ),
+        )
         return "redirect:/tag-group/${tagGroup.tagGroupId}"
     }
+
+    private fun getPeopleCounts() = listOf(1, 2, 3, 4, 5, 6)
 }

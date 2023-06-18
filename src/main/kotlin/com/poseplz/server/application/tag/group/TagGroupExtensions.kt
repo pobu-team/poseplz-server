@@ -8,10 +8,12 @@ import com.poseplz.server.ui.api.tag.group.TagGroupResponse
 fun TagGroup.toTagGroupResponse() = TagGroupResponse(
     tagGroupId = tagGroupId.toString(),
     name = name,
+    peopleCounts = peopleCounts,
 )
 
 fun TagGroup.toTagGroupDetailResponse() = TagGroupDetailResponse(
     tagGroupId = tagGroupId.toString(),
     name = name,
+    peopleCounts = peopleCounts,
     tags = tagGroupTags.map { it.tag.toTagResponse() },
 )

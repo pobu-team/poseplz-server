@@ -23,6 +23,7 @@
             <tr>
                 <th th:text="#{poseplz.tag.group.id}"></th>
                 <th th:text="#{poseplz.tag.group.name}"></th>
+                <th th:text="#{poseplz.tag.group.peopleCounts}"></th>
                 <th th:text="#{poseplz.tag.group.deleted}"></th>
             </tr>
             </thead>
@@ -32,6 +33,7 @@
                     <a th:href="${'/tag-group/' + tagGroup.tagGroupId}" th:text="${tagGroup.tagGroupId}"/>
                 </td>
                 <td th:text="${tagGroup.name}"></td>
+                <td th:text="${tagGroup.peopleCounts}"></td>
                 <td th:text="${tagGroup.deleted}"></td>
             </tr>
             </tbody>

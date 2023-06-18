@@ -75,6 +75,7 @@ class AdminPoseController(
                 size = poseAddRequest.file.size,
             ),
             tagIds = poseAddRequest.tagIds.map { it.toLong() },
+            peopleCount = poseAddRequest.peopleCount,
         )
         return "redirect:/pose"
     }
@@ -105,7 +106,8 @@ class AdminPoseController(
                 contentType = poseEditRequest.file.contentType!!,
                 size = poseEditRequest.file.size,
             ),
-            tagIds = poseEditRequest.tagIds.map { it.toLong() }
+            tagIds = poseEditRequest.tagIds.map { it.toLong() },
+            peopleCount = poseEditRequest.peopleCount
         )
         model.addAttribute("pose", pose)
         return "redirect:/pose/${poseId}"

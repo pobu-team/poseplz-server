@@ -30,6 +30,7 @@
             <thead class="table-header thead-light">
             <tr>
                 <th th:text="#{poseplz.pose.file}"></th>
+                <th th:text="#{poseplz.pose.peopleCount}"></th>
                 <th th:text="#{poseplz.pose.tags}"></th>
                 <th th:text="#{poseplz.pose.createdAt}"></th>
                 <th th:text="#{poseplz.pose.updatedAt}"></th>
@@ -47,6 +48,7 @@
                         />
                     </a>
                 </td>
+                <td th:text="${pose.peopleCount}"></td>
                 <td>
                     <div class="row">
                         <span th:each="poseTag : *{pose.poseTags}" th:text="${poseTag.tag.name}"></span>
