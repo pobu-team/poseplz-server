@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface TagRepository : JpaRepository<Tag, Long> {
     fun findByType(tagType: TagType, pageable: Pageable): Page<Tag>
+    fun findByTagIdIn(tagIds: List<Long>): List<Tag>
 }

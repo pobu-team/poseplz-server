@@ -1,5 +1,6 @@
 package com.poseplz.server.ui.admin.tag.group
 
+import com.poseplz.server.application.tag.TagApplicationService
 import com.poseplz.server.domain.tag.group.TagGroupCreateVo
 import com.poseplz.server.domain.tag.group.TagGroupService
 import com.poseplz.server.domain.tag.group.TagGroupUpdateVo
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Controller
 class AdminTagGroupController(
     private val tagGroupService: TagGroupService,
+    private val tagApplicationService: TagApplicationService,
 ) {
     @GetMapping
     fun list(
@@ -40,6 +42,7 @@ class AdminTagGroupController(
     fun add(
         model: Model,
     ): String {
+        model.addAttribute("tags", tagApplicationService.findWithCount(null, Pageable.unpaged()))
         return "tag/group/add"
     }
 
@@ -58,7 +61,10 @@ class AdminTagGroupController(
         @PathVariable tagGroupId: Long,
         model: Model,
     ): String {
-        model.addAttribute("tagGroup", tagGroupService.findById(tagGroupId))
+        val tagGroup = tagGroupService.getById(tagGroupId)
+        model.addAttribute("tagGroup", tagGroup)
+        model.addAttribute("selectedTagIds", tagGroup.tagGroupTags.map { it.tag.tagId }.toSet())
+        model.addAttribute("tags", tagApplicationService.findWithCount(null, Pageable.unpaged()))
         return "tag/group/edit"
     }
 

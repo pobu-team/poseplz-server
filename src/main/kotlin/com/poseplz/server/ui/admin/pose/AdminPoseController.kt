@@ -84,7 +84,10 @@ class AdminPoseController(
         @PathVariable poseId: Long,
         model: Model,
     ): String {
-        model.addAttribute("pose", poseService.getById(poseId))
+        val pose = poseService.getById(poseId)
+        model.addAttribute("pose", pose)
+        model.addAttribute("selectedTagIds", pose.poseTags.map { it.tag.tagId }.toSet())
+        model.addAttribute("tags", tagApplicationService.findWithCount(null, Pageable.unpaged()))
         return "pose/edit"
     }
 

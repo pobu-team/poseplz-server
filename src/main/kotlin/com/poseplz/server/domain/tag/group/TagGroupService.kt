@@ -1,5 +1,6 @@
 package com.poseplz.server.domain.tag.group
 
+import com.poseplz.server.domain.tag.TagService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
@@ -19,6 +20,7 @@ interface TagGroupService {
 @Transactional(readOnly = true)
 class TagGroupServiceImpl(
     private val tagGroupRepository: TagGroupRepository,
+    private val tagService: TagService,
 ) : TagGroupService {
     @Transactional
     override fun create(tagGroupCreateVo: TagGroupCreateVo): TagGroup {
@@ -31,8 +33,10 @@ class TagGroupServiceImpl(
     override fun update(tagGroupId: Long, tagGroupUpdateVo: TagGroupUpdateVo): TagGroup {
         val tagGroup = (tagGroupRepository.findByIdOrNull(tagGroupId)
             ?: throw TagGroupNotFoundException())
+        val tagGroupTags = tagService.findByTagIds(tagGroupUpdateVo.tagIds)
+            .map { TagGroupTag.of(tagGroup, it) }
         return tagGroup.apply {
-            update(tagGroupUpdateVo)
+            update(tagGroupUpdateVo, tagGroupTags)
         }
     }
 

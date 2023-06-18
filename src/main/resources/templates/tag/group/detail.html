@@ -28,6 +28,16 @@
                 <td th:text="${tagGroup.name}"></td>
             </tr>
             <tr>
+                <th th:text="#{poseplz.tag.group.tags}"></th>
+                <td>
+                    <ul th:each="tagGroupTag : ${tagGroup.tagGroupTags}">
+                        <li>
+                            <a th:text="${tagGroupTag.tag.name}" th:href="'/tag/' + ${tagGroupTag.tag.tagId}"></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
                 <th th:text="#{poseplz.tag.group.createdAt}"></th>
                 <td th:text="${tagGroup.createdAt}"></td>
             </tr>

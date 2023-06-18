@@ -39,7 +39,7 @@ class PoseController(
     ): ApiResponse<List<PoseSimpleResponse>> {
         return ApiResponse.success(
             data = poseApplicationService.recommend(
-                tagIds = recommendRequest.tagIds.map { it.toLong() }
+                tagGroupIds = recommendRequest.tagGroupIds.map { it.toLong() },
             ),
         )
     }

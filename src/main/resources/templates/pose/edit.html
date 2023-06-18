@@ -18,6 +18,14 @@
                 <label for="fileId" class="form-label" th:text="#{poseplz.pose.file}"></label>
                 <input id="fileId" class="form-control" type="file" name="file">
             </div>
+            <div class="form-group">
+                <label for="tagIdsId" class="form-label" th:text="#{poseplz.pose.tags}"></label>
+                <select id="tagIdsId" name="tagIds" class="form-control" multiple="multiple" style="height: 30rem">
+                    <option th:each="tag : *{tags}" th:value="${tag.tagId}"
+                            th:text="${tag.name} + ' (' + ${tag.count} + ')'" th:selected="${selectedTagIds.contains(tag.tagId)}"></option>
+                </select>
+                <small class="form-text text-muted">`Ctrl + Click` or `Command + Click` 으로 여러개 선택 가능</small>
+            </div>
             <button id="tagSubmitId" type="submit" formmethod="post" class="btn btn-primary" th:text="#{poseplz.button.edit}"></button>
         </form>
     </div>

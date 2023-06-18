@@ -1,6 +1,12 @@
 package com.poseplz.server.domain.tag.group
 
-import jakarta.persistence.*
+import com.poseplz.server.domain.tag.Tag
+import jakarta.persistence.Entity
+import jakarta.persistence.EntityListeners
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 import org.hibernate.annotations.GenericGenerator
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
@@ -9,18 +15,20 @@ import java.time.LocalDateTime
 
 @Entity
 @EntityListeners(AuditingEntityListener::class)
-class TagGroup(
+class TagGroupTag(
     @Id
     @GeneratedValue(generator = "SnowflakeIdentifierGenerator")
     @GenericGenerator(
         name = "SnowflakeIdentifierGenerator",
         strategy = "com.poseplz.server.infrastructure.hibernate.SnowflakeIdentifierGenerator",
     )
-    val tagGroupId: Long = 0L,
-    var name: String,
-    @OneToMany(mappedBy = "tagGroup", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val tagGroupTags: MutableList<TagGroupTag> = mutableListOf(),
-    var deleted: Boolean = false,
+    val tagGroupTagId: Long = 0L,
+    @ManyToOne
+    @JoinColumn(name = "tagGroupId")
+    val tagGroup: TagGroup,
+    @ManyToOne
+    @JoinColumn(name = "tagId")
+    val tag: Tag,
 ) {
     @CreatedDate
     lateinit var createdAt: LocalDateTime
@@ -29,19 +37,9 @@ class TagGroup(
     lateinit var updatedAt: LocalDateTime
 
     companion object {
-        fun from(tagGroupCreateVo: TagGroupCreateVo): TagGroup {
-            return TagGroup(
-                name = tagGroupCreateVo.name,
-            )
-        }
-    }
-
-    fun update(
-        tagGroupUpdateVo: TagGroupUpdateVo,
-        tagGroupTags: List<TagGroupTag>,
-    ) {
-        this.name = tagGroupUpdateVo.name
-        this.tagGroupTags.clear()
-        this.tagGroupTags.addAll(tagGroupTags)
+        fun of(tagGroup: TagGroup, tag: Tag) = TagGroupTag(
+            tagGroup = tagGroup,
+            tag = tag,
+        )
     }
 }

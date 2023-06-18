@@ -1,5 +1,6 @@
 package com.poseplz.server.ui.api.tag.group
 
+import com.poseplz.server.application.tag.group.toTagGroupDetailResponse
 import com.poseplz.server.application.tag.group.toTagGroupResponse
 import com.poseplz.server.domain.tag.group.TagGroupService
 import com.poseplz.server.ui.api.ApiResponse
@@ -19,16 +20,16 @@ class TagGroupController(
         return ApiResponse.success(
             data = tagGroupService.findAll(Pageable.unpaged())
                 .map { it.toTagGroupResponse() }
-                .toList()
+                .toList(),
         )
     }
 
     @GetMapping("/{tagGroupId}")
     fun getTagGroup(
         @PathVariable tagGroupId: Long,
-    ): ApiResponse<TagGroupResponse> {
+    ): ApiResponse<TagGroupDetailResponse> {
         return ApiResponse.success(
-            data = tagGroupService.getById(tagGroupId).toTagGroupResponse()
+            data = tagGroupService.getById(tagGroupId).toTagGroupDetailResponse(),
         )
     }
 }

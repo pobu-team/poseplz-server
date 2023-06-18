@@ -12,7 +12,7 @@ interface PoseService {
     fun create(poseCreateVo: PoseCreateVo): Pose
     fun update(poseId: Long, poseUpdateVo: PoseUpdateVo): Pose
     fun delete(postId: Long)
-    fun recommend(tagIds: Collection<Long>): List<Pose>
+    fun recommend(tagGroupIds: Collection<Long>): List<Pose>
     fun findAll(pageable: Pageable): Page<Pose>
     fun findBy(tagIds: Collection<Long>, pageable: Pageable): Page<Pose>
     fun findById(poseId: Long): Pose?
@@ -43,8 +43,13 @@ class PoseServiceImpl(
     override fun update(poseId: Long, poseUpdateVo: PoseUpdateVo): Pose {
         val pose = poseRepository.findByIdOrNull(poseId)
             ?: throw PoseNotFoundException()
-        pose.file = fileRepository.getReferenceById(poseUpdateVo.fileId)
-        // TODO: 태그 수정
+        poseUpdateVo.fileId?.run { pose.file = fileRepository.getReferenceById(this) }
+        pose.poseTags.clear()
+        pose.poseTags.addAll(
+            poseUpdateVo.tagIds
+                .map { tagRepository.getReferenceById(it) }
+                .map { tag -> PoseTag.of(pose, tag) }
+        )
         return pose
     }
 
@@ -55,8 +60,10 @@ class PoseServiceImpl(
         }
     }
 
-    override fun recommend(tagIds: Collection<Long>): List<Pose> {
-        return poseRepository.findByTagIds(tagIds)
+    override fun recommend(
+        tagGroupIds: Collection<Long>,
+    ): List<Pose> {
+        return poseRepository.findByTagGroupIds(tagGroupIds)
     }
 
     override fun findAll(pageable: Pageable): Page<Pose> {

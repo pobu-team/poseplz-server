@@ -4,10 +4,7 @@ import com.poseplz.server.application.tag.TagApplicationService
 import com.poseplz.server.domain.tag.TagType
 import com.poseplz.server.ui.api.ApiResponse
 import org.springframework.data.domain.Pageable
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/tags")
@@ -20,6 +17,15 @@ class TagController (
     ): ApiResponse<List<TagResponse>> {
         return ApiResponse.success(
             data = tagApplicationService.findByTagType(tagType, Pageable.unpaged()).content,
+        )
+    }
+
+    @GetMapping("/{tagId}")
+    fun getTag(
+        @PathVariable tagId: Long,
+    ): ApiResponse<TagDetailResponse> {
+        return ApiResponse.success(
+            data = tagApplicationService.getTagByTagId(tagId),
         )
     }
 }

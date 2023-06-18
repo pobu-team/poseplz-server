@@ -59,19 +59,23 @@ class PoseApplicationService(
         fileUploadVo: FileUploadVo,
         tagIds: List<Long>,
     ): PoseDetailResponse {
-        // Delete old file
-        val fileId = poseService.findById(poseId)?.file?.fileId
-            ?: throw PoseNotFoundException()
-        fileService.delete(fileId)
+        val file: File? = if (inputStream.available() > 0) {
+            // Delete old file
+            val fileId = poseService.findById(poseId)?.file?.fileId
+                ?: throw PoseNotFoundException()
+            fileService.delete(fileId)
 
-        // create new file
-        val file = createFile(inputStream, fileUploadVo)
+            // create new file
+            createFile(inputStream, fileUploadVo)
+        } else {
+            null
+        }
 
         // Update pose
         val pose = poseService.update(
             poseId = poseId,
             poseUpdateVo = PoseUpdateVo(
-                fileId = file.fileId,
+                fileId = file?.fileId,
                 tagIds = tagIds,
             ),
         )
@@ -102,9 +106,9 @@ class PoseApplicationService(
     }
 
     fun recommend(
-        tagIds: Collection<Long>,
+        tagGroupIds: Collection<Long>,
     ): List<PoseSimpleResponse> {
-        return poseService.recommend(tagIds)
+        return poseService.recommend(tagGroupIds)
             .map { it.toPoseSimpleResponse() }
     }
 

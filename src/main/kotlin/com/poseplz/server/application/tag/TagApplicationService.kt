@@ -4,6 +4,7 @@ import com.poseplz.server.domain.pose.PoseService
 import com.poseplz.server.domain.tag.TagService
 import com.poseplz.server.domain.tag.TagType
 import com.poseplz.server.ui.admin.tag.TagCountResponse
+import com.poseplz.server.ui.api.tag.TagDetailResponse
 import com.poseplz.server.ui.api.tag.TagResponse
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -33,5 +34,10 @@ class TagApplicationService(
             val count = poseService.countByTagId(it.tagId)
             TagCountResponse.of(it, count.toInt())
         }
+    }
+
+    fun getTagByTagId(tagId: Long): TagDetailResponse {
+        val tag = tagService.getById(tagId)
+        return tag.toTagDetailResponse()
     }
 }

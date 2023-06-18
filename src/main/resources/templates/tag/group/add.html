@@ -19,6 +19,14 @@
                 <input id="tagGroupNameId" type="text" name="name" class="form-control" placeholder="태그 그룹 이름을 입력하세요.">
                 <small class="form-text text-muted">분위기있게, 예쁘게, 재미있게, 귀엽게, 연인사이, 친구끼리, ...</small>
             </div>
+            <div class="form-group">
+                <label for="tagIdsId" class="form-label" th:text="#{poseplz.pose.tags}"></label>
+                <select id="tagIdsId" name="tagIds" class="form-control" multiple="multiple" style="height: 30rem">
+                    <option th:each="tag : *{tags}" th:value="${tag.tagId}"
+                            th:text="${tag.name} + ' (' + ${tag.count} + ')'"></option>
+                </select>
+                <small class="form-text text-muted">`Ctrl + Click` or `Command + Click` 으로 여러개 선택 가능</small>
+            </div>
             <button id="tagGroupSubmitId" type="submit" formmethod="post" class="btn btn-primary" th:text="#{poseplz.button.add}"></button>
         </form>
     </div>
