@@ -16,7 +16,6 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
 import java.io.InputStream
-import kotlin.reflect.typeOf
 
 @Component
 class PoseApplicationService(
@@ -112,8 +111,9 @@ class PoseApplicationService(
 
     fun recommend(
         tagGroupIds: Collection<Long>,
+        peopleCount: Int,
     ): List<PoseSimpleResponse> {
-        return poseService.recommend(tagGroupIds)
+        return poseService.recommend(tagGroupIds, peopleCount)
             .map { it.toPoseSimpleResponse() }
     }
 

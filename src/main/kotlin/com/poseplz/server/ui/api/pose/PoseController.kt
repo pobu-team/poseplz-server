@@ -1,9 +1,7 @@
 package com.poseplz.server.ui.api.pose
 
 import com.poseplz.server.application.pose.PoseApplicationService
-import com.poseplz.server.domain.tag.TagType
 import com.poseplz.server.ui.api.ApiResponse
-import com.poseplz.server.ui.api.tag.TagResponse
 import org.springframework.data.domain.PageRequest
 import org.springframework.web.bind.annotation.*
 
@@ -49,6 +47,7 @@ class PoseController(
         return ApiResponse.success(
             data = poseApplicationService.recommend(
                 tagGroupIds = recommendRequest.tagGroupIds.map { it.toLong() },
+                peopleCount = recommendRequest.peopleCount,
             ),
         )
     }
