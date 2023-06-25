@@ -12,7 +12,7 @@ interface PoseService {
     fun create(poseCreateVo: PoseCreateVo): Pose
     fun update(poseId: Long, poseUpdateVo: PoseUpdateVo): Pose
     fun delete(postId: Long)
-    fun recommend(tagGroupIds: Collection<Long>): List<Pose>
+    fun recommend(tagGroupIds: Collection<Long>, peopleCount: Int): List<Pose>
     fun findAll(pageable: Pageable): Page<Pose>
     fun findBy(tagIds: Collection<Long>, pageable: Pageable): Page<Pose>
     fun findById(poseId: Long): Pose?
@@ -64,8 +64,9 @@ class PoseServiceImpl(
 
     override fun recommend(
         tagGroupIds: Collection<Long>,
+        peopleCount: Int,
     ): List<Pose> {
-        return poseRepository.findByTagGroupIds(tagGroupIds)
+        return poseRepository.findByTagGroupIdsAndPeopleCount(tagGroupIds, peopleCount)
     }
 
     override fun findAll(pageable: Pageable): Page<Pose> {

@@ -24,13 +24,16 @@ class PoseRepositoryImpl : PoseRepositoryCustom, QuerydslRepositorySupport(Pose:
             .fetch()
     }
 
-    override fun findByTagGroupIds(
+    override fun findByTagGroupIdsAndPeopleCount(
         tagGroupIds: Collection<Long>,
+        peopleCount: Int,
     ): List<Pose> {
         val postIds = from(tagGroupTag)
             .leftJoin(tagGroupTag.tag, tag)
             .leftJoin(tag.poseTags, poseTag)
-            .where(tagGroupTag.tagGroup.tagGroupId.`in`(tagGroupIds))
+            .where(tagGroupTag.tagGroup.tagGroupId.`in`(tagGroupIds)
+                .and(pose.peopleCount.eq(peopleCount))
+            )
             .groupBy(tagGroupTag.tagGroup.tagGroupId, poseTag.pose.poseId)
             .having(poseTag.pose.poseId.count().eq(tagGroupIds.size.toLong()))
             .select(poseTag.pose.poseId)

@@ -11,6 +11,7 @@ fun Pose.toPoseDetailResponse(): PoseDetailResponse {
         thumbnailImageUrl = "/api/v1/files/${this.file.fileId}",
         imageUrl = "/api/v1/files/${this.file.fileId}",
         tags = this.poseTags.map { it.tag.toTagResponse() },
+        peopleCount = this.peopleCount,
     )
 }
 
@@ -18,5 +19,6 @@ fun Pose.toPoseSimpleResponse(): PoseSimpleResponse {
     return PoseSimpleResponse(
         poseId = this.poseId.toString(),
         thumbnailImageUrl = "/api/v1/files/${this.file.fileId}",
+        poseCount = this.peopleCount,
     )
 }

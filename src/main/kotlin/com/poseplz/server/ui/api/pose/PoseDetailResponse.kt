@@ -7,4 +7,5 @@ data class PoseDetailResponse(
     val thumbnailImageUrl: String,
     val imageUrl: String,
     val tags: List<TagResponse>,
+    val peopleCount: Int,
 )
