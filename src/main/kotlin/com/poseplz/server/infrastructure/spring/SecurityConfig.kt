@@ -3,10 +3,9 @@ package com.poseplz.server.infrastructure.spring
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.poseplz.server.ui.api.ApiResponse
 import com.poseplz.server.ui.api.ResultCode
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -81,7 +80,16 @@ class SecurityConfig {
             "http://localhost:3000",
             "http://localhost:8080",
         )
-        configuration.allowedMethods = listOf("HEAD", "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+        configuration.allowedMethods = listOf(
+            HttpMethod.HEAD,
+            HttpMethod.GET,
+            HttpMethod.POST,
+            HttpMethod.PUT,
+            HttpMethod.PATCH,
+            HttpMethod.DELETE,
+            HttpMethod.OPTIONS,
+        ).map { it.name() }
+        configuration.addAllowedHeader("*")
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", configuration)
         return source
