@@ -34,6 +34,7 @@
                 <th th:text="#{poseplz.pose.tags}"></th>
                 <th th:text="#{poseplz.pose.createdAt}"></th>
                 <th th:text="#{poseplz.pose.updatedAt}"></th>
+                <th th:text="#{poseplz.pose.updatedBy}"></th>
                 <th th:text="#{poseplz.pose.deleted}"></th>
             </tr>
             </thead>
@@ -56,6 +57,7 @@
                 </td>
                 <td th:text="${pose.createdAt}"></td>
                 <td th:text="${pose.updatedAt}"></td>
+                <td th:text="${pose.updatedBy}"></td>
                 <td th:text="${pose.deleted}"></td>
             </tr>
             </tbody>

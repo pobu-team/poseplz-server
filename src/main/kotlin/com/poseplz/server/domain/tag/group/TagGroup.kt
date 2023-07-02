@@ -3,7 +3,9 @@ package com.poseplz.server.domain.tag.group
 import com.poseplz.server.domain.tag.Tag
 import jakarta.persistence.*
 import org.hibernate.annotations.GenericGenerator
+import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
@@ -30,6 +32,12 @@ class TagGroup(
 
     @LastModifiedDate
     lateinit var updatedAt: LocalDateTime
+
+    @CreatedBy
+    lateinit var createdBy: String
+
+    @LastModifiedBy
+    lateinit var updatedBy: String
 
     companion object {
         fun of(

@@ -23,6 +23,7 @@
                 <th>deleted</th>
                 <th>createdAt</th>
                 <th>updatedAt</th>
+                <th>updatedBy</th>
             </tr>
             </thead>
             <tbody class="table-container">
@@ -42,6 +43,7 @@
                 <td th:text="${file.getDeleted()}"></td>
                 <td th:text="${file.getCreatedAt()}"></td>
                 <td th:text="${file.getUpdatedAt()}"></td>
+                <td th:text="${file.getUpdatedBy()} ?: ''"></td>
             </tr>
             </tbody>
         </table>

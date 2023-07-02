@@ -4,7 +4,9 @@ import com.poseplz.server.domain.pose.PoseTag
 import com.poseplz.server.domain.tag.group.TagGroupTag
 import jakarta.persistence.*
 import org.hibernate.annotations.GenericGenerator
+import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
@@ -38,6 +40,12 @@ class Tag(
 
     @LastModifiedDate
     lateinit var updatedAt: LocalDateTime
+
+    @CreatedBy
+    lateinit var createdBy: String
+
+    @LastModifiedBy
+    lateinit var updatedBy: String
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

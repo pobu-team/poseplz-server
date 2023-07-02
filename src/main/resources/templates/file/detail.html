@@ -41,7 +41,11 @@
             </tr>
             <tr>
                 <th>updatedAt</th>
-                <td th:text="${file.getUpdatedAt()}"></td>
+                <td th:text="${file.updatedAt}"></td>
+            </tr>
+            <tr>
+                <th>updatedBy</th>
+                <td th:text="${file.updatedBy} ?: ''"></td>
             </tr>
             <tr>
                 <th>image</th>

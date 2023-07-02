@@ -10,7 +10,9 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToMany
 import org.hibernate.annotations.GenericGenerator
+import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
@@ -38,6 +40,12 @@ class Pose(
 
     @LastModifiedDate
     lateinit var updatedAt: LocalDateTime
+
+    @CreatedBy
+    lateinit var createdBy: String
+
+    @LastModifiedBy
+    lateinit var updatedBy: String
 
     companion object {
         fun of(

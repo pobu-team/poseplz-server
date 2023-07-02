@@ -5,7 +5,9 @@ import jakarta.persistence.EntityListeners
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import org.hibernate.annotations.GenericGenerator
+import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
@@ -34,6 +36,12 @@ class File(
 
     @LastModifiedDate
     lateinit var updatedAt: LocalDateTime
+
+    @CreatedBy
+    lateinit var createdBy: String
+
+    @LastModifiedBy
+    lateinit var updatedBy: String
 
     fun delete() {
         this.deleted = true
