@@ -72,11 +72,15 @@ class SecurityConfig {
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
         configuration.allowedOrigins = listOf(
-            "https://pobu-himyne.vercel.app",
+            // production
             "https://poseplz.com",
             "https://www.poseplz.com",
             "https://api.poseplz.com",
             "https://server.poseplz.com",
+            // vercel
+            "https://pobu-himyne.vercel.app",
+            "https://pobu-pose-recommend.vercel.app",
+            // local
             "http://localhost:3000",
             "http://localhost:8080",
         )
