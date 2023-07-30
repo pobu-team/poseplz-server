@@ -13,6 +13,9 @@ class SpringSecurityAuditorAware : AuditorAware<String> {
         if (authentication == null || !authentication.isAuthenticated) {
             return Optional.of("system")
         }
+        if (authentication.principal !is DefaultOidcUser) {
+            return Optional.of("system")
+        }
         return Optional.ofNullable(
             (authentication.principal as DefaultOidcUser).attributes["email"].toString()
         )

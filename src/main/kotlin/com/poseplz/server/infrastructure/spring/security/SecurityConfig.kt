@@ -35,6 +35,7 @@ class SecurityConfig {
             .requestMatchers("/api/v1/auth/login").permitAll()
             .requestMatchers("/favicon.ico", "/error", "/webjars/**", "/css/**", "/js/**").permitAll()
             .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+            .requestMatchers("/api/v1/files/migrate").permitAll()
             .requestMatchers("/api/v1/members/me", ).hasAuthority(MEMBER_ROLE_NAME)
             .anyRequest().authenticated()
             .and()

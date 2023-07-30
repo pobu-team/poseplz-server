@@ -29,6 +29,8 @@ class File(
     val name: String,
     val contentType: String,
     val size: Long,
+    var width: Int? = null,
+    var height: Int? = null,
     var deleted: Boolean = false,
 ) {
     @CreatedDate

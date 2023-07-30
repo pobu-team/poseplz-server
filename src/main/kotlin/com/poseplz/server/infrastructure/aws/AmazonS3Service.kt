@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest
 import com.poseplz.server.domain.file.storage.*
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
+import java.io.ByteArrayInputStream
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.*
@@ -52,4 +53,21 @@ class AmazonS3Service(
             throw StorageDownloadFailedException("Failed to download file from S3", it)
         }
     }
+
+    fun download(
+        filename: String,
+    ): InputStream {
+        runCatching {
+            return amazonS3.getObject(
+                GetObjectRequest(
+                    bucketName,
+                    filename,
+                ),
+            ).objectContent
+        }.onFailure {
+            throw StorageDownloadFailedException("Failed to download file from S3", it)
+        }
+        return ByteArrayInputStream(ByteArray(32))
+    }
+
 }
