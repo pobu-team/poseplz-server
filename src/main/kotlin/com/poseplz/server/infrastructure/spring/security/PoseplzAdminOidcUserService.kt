@@ -1,4 +1,4 @@
-package com.poseplz.server.infrastructure.spring
+package com.poseplz.server.infrastructure.spring.security
 
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest

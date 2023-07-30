@@ -1,6 +1,8 @@
-package com.poseplz.server.infrastructure.spring
+package com.poseplz.server.infrastructure.spring.security
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.poseplz.server.infrastructure.spring.security.preauth.JwtAuthenticationProvider
+import com.poseplz.server.infrastructure.spring.security.preauth.BearerPreAuthenticatedProcessingFilter
 import com.poseplz.server.ui.api.ApiResponse
 import com.poseplz.server.ui.api.ResultCode
 import org.springframework.context.annotation.Bean
@@ -8,12 +10,14 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.security.authentication.ProviderManager
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService
 import org.springframework.security.oauth2.core.oidc.user.OidcUser
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
@@ -26,15 +30,18 @@ class SecurityConfig {
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .authorizeHttpRequests()
-            .requestMatchers("/api/v1/**", "/actuator/**").permitAll()
+            .requestMatchers("/actuator/**").permitAll()
             .requestMatchers("/login").permitAll()
+            .requestMatchers("/api/v1/auth/login").permitAll()
             .requestMatchers("/favicon.ico", "/error", "/webjars/**", "/css/**", "/js/**").permitAll()
             .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+            .requestMatchers("/api/v1/members/me", ).hasAuthority(MEMBER_ROLE_NAME)
             .anyRequest().authenticated()
             .and()
             .formLogin().disable()
             .oauth2Login()
             .and()
+            .addFilterAt(jwtPreAuthenticatedProcessingFilter(), AbstractPreAuthenticatedProcessingFilter::class.java)
             .anonymous()
             .and()
             .cors()
@@ -97,6 +104,17 @@ class SecurityConfig {
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", configuration)
         return source
+    }
+
+    @Bean
+    fun jwtPreAuthenticatedProcessingFilter(): AbstractPreAuthenticatedProcessingFilter {
+        return BearerPreAuthenticatedProcessingFilter().apply {
+            setAuthenticationManager(ProviderManager(JwtAuthenticationProvider()))
+        }
+    }
+
+    companion object {
+        const val MEMBER_ROLE_NAME = "MEMBER"
     }
 }
 

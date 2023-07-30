@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component
 class LoginApplicationService(
     private val providerUserIdServices: List<ProviderUserIdService>,
     private val memberService: MemberService,
+    private val tokenService: TokenService<Long>,
 ) {
     fun login(providerIdentifier: ProviderIdentifier): LoginResponseVo {
         val authenticatedProviderIdentifier = resolveLoginService(providerIdentifier).getProviderUserId(providerIdentifier)
@@ -16,7 +17,7 @@ class LoginApplicationService(
             ?: memberService.create(authenticatedProviderIdentifier))
         return LoginResponseVo(
             memberVo = MemberVo.from(member),
-            accessToken = "accessToken"
+            accessToken = tokenService.encode(member.memberId),
         )
     }
 

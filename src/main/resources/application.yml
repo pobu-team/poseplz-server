@@ -23,3 +23,5 @@ poseplz:
       secret-key: ${AWS_S3_SECRET_KEY}
       region: ap-northeast-2
       bucket-name: ${AWS_S3_BUCKET_NAME}
+  jwt:
+    secret-key: ${JWT_SECRET_KEY}

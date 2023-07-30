@@ -13,3 +13,5 @@ poseplz:
       secret-key: secretKey
       region: ap-northeast-2
       bucket-name: bucketName
+  jwt:
+    secret-key: secretKey

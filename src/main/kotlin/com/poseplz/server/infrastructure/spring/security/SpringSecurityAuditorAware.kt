@@ -1,4 +1,4 @@
-package com.poseplz.server.infrastructure.spring
+package com.poseplz.server.infrastructure.spring.security
 
 import org.springframework.data.domain.AuditorAware
 import org.springframework.security.core.context.SecurityContextHolder

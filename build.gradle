@@ -32,7 +32,7 @@ dependencies {
     runtimeOnly "com.mysql:mysql-connector-j:${mysqlVersion}"
     implementation "com.querydsl:querydsl-jpa:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
     kapt "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
-
+    implementation "com.auth0:java-jwt:${javaJwtVersion}"
 
     // admin
     implementation "org.webjars:webjars-locator:$webjarsLocatorVersion"
