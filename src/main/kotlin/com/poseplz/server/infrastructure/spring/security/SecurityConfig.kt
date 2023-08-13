@@ -85,6 +85,9 @@ class SecurityConfig {
             "https://www.poseplz.com",
             "https://api.poseplz.com",
             "https://server.poseplz.com",
+            // develop
+            "https://dev.api.poseplz.com",
+            "https://dev.server.poseplz.com",
             // vercel
             "https://pobu-himyne.vercel.app",
             "https://pobu-pose-recommend.vercel.app",
