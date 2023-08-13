@@ -10,7 +10,7 @@ class SpringSecurityAuditorAware : AuditorAware<String> {
     override fun getCurrentAuditor(): Optional<String> {
         val authentication = SecurityContextHolder.getContext().authentication
 
-        if (authentication == null || !authentication.isAuthenticated) {
+        if (authentication == null || !authentication.isAuthenticated || authentication !is DefaultOidcUser) {
             return Optional.of("system")
         }
         return Optional.ofNullable(
