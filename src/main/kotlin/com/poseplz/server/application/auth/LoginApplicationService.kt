@@ -2,7 +2,6 @@ package com.poseplz.server.application.auth
 
 import com.poseplz.server.domain.member.MemberService
 import com.poseplz.server.domain.member.MemberVo
-import com.poseplz.server.domain.member.ProviderIdentifier
 import org.springframework.stereotype.Component
 
 @Component
@@ -11,8 +10,10 @@ class LoginApplicationService(
     private val memberService: MemberService,
     private val tokenService: TokenService<Long>,
 ) {
-    fun login(providerIdentifier: ProviderIdentifier): LoginResponseVo {
-        val authenticatedProviderIdentifier = resolveLoginService(providerIdentifier).getProviderUserId(providerIdentifier)
+    fun login(
+        loginRequestVo: LoginRequestVo,
+    ): LoginResponseVo {
+        val authenticatedProviderIdentifier = resolveLoginService(loginRequestVo).getProviderUserId(loginRequestVo)
         val member = (memberService.findByProviderIdentifier(authenticatedProviderIdentifier)
             ?: memberService.create(authenticatedProviderIdentifier))
         return LoginResponseVo(
@@ -21,8 +22,8 @@ class LoginApplicationService(
         )
     }
 
-    private fun resolveLoginService(providerIdentifier: ProviderIdentifier): ProviderUserIdService {
-        return providerUserIdServices.firstOrNull { it.supports(providerIdentifier) }
-            ?: throw IllegalArgumentException("지원하지 않는 로그인 서비스입니다. providerIdentifier: $providerIdentifier")
+    private fun resolveLoginService(loginRequestVo: LoginRequestVo): ProviderUserIdService {
+        return providerUserIdServices.firstOrNull { it.supports(loginRequestVo) }
+            ?: throw IllegalArgumentException("지원하지 않는 로그인 서비스입니다. loginRequestVo: $loginRequestVo")
     }
 }
