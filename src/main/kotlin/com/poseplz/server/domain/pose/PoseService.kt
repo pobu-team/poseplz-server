@@ -15,6 +15,7 @@ interface PoseService {
     fun recommend(tagGroupIds: Collection<Long>, peopleCount: Int): List<Pose>
     fun findAll(pageable: Pageable): Page<Pose>
     fun findBy(tagIds: Collection<Long>, pageable: Pageable): Page<Pose>
+    fun findBy(poseQueryRequestVo: PoseQueryRequestVo): Page<Pose>
     fun findById(poseId: Long): Pose?
     fun getById(poseId: Long): Pose
     fun countByTagId(tagId: Long): Long
@@ -78,6 +79,14 @@ class PoseServiceImpl(
             poseRepository.findAll(pageable)
         } else {
             poseRepository.findByPoseTags_Tag_TagIdIn(tagIds, pageable)
+        }
+    }
+
+    override fun findBy(poseQueryRequestVo: PoseQueryRequestVo): Page<Pose> {
+        return if (poseQueryRequestVo.tagIds.isEmpty()) {
+            poseRepository.findAll(poseQueryRequestVo.pageable)
+        } else {
+            poseRepository.findByPoseTags_Tag_TagIdIn(poseQueryRequestVo.tagIds, poseQueryRequestVo.pageable)
         }
     }
 

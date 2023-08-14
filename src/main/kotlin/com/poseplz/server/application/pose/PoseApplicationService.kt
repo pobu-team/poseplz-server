@@ -6,10 +6,8 @@ import com.poseplz.server.domain.file.FileCreateVo
 import com.poseplz.server.domain.file.FileService
 import com.poseplz.server.domain.file.storage.StorageService
 import com.poseplz.server.domain.file.storage.StorageUploadRequestVo
-import com.poseplz.server.domain.pose.PoseCreateVo
-import com.poseplz.server.domain.pose.PoseNotFoundException
-import com.poseplz.server.domain.pose.PoseService
-import com.poseplz.server.domain.pose.PoseUpdateVo
+import com.poseplz.server.domain.pose.*
+import com.poseplz.server.domain.pose.archive.ArchivedPoseService
 import com.poseplz.server.ui.api.pose.PoseDetailResponse
 import com.poseplz.server.ui.api.pose.PoseSimpleResponse
 import org.springframework.data.domain.Page
@@ -22,6 +20,7 @@ class PoseApplicationService(
     private val storageService: StorageService,
     private val fileService: FileService,
     private val poseService: PoseService,
+    private val archivedPoseService: ArchivedPoseService,
 ) {
     fun create(
         inputStream: InputStream,
@@ -52,7 +51,12 @@ class PoseApplicationService(
                 peopleCount = peopleCount,
             ),
         )
-        return pose.toPoseDetailResponse()
+        // FIXME: memberId
+        val memberId: Long? = null
+        val archived = memberId?.let {
+            archivedPoseService.isArchived(memberId = it, poseId = pose.poseId)
+        } ?: false
+        return pose.toPoseDetailResponse(archived)
     }
 
     fun update(
@@ -84,7 +88,7 @@ class PoseApplicationService(
             ),
         )
 
-        return pose.toPoseDetailResponse()
+        return pose.toPoseDetailResponse(false)
     }
 
     private fun createFile(
@@ -114,7 +118,7 @@ class PoseApplicationService(
         peopleCount: Int,
     ): List<PoseSimpleResponse> {
         return poseService.recommend(tagGroupIds, peopleCount)
-            .map { it.toPoseSimpleResponse() }
+            .map { it.toPoseSimpleResponse(false) }
     }
 
     fun count(): Long {
@@ -126,13 +130,20 @@ class PoseApplicationService(
         pageable: Pageable,
     ): Page<PoseSimpleResponse> {
         return poseService.findBy(tagIds, pageable)
-            .map { it.toPoseSimpleResponse() }
+            .map { it.toPoseSimpleResponse(false) }
+    }
+
+    fun findByTagIds(
+        poseQueryRequestVo: PoseQueryRequestVo,
+    ): Page<PoseSimpleResponse> {
+        return poseService.findBy(poseQueryRequestVo)
+            .map { it.toPoseSimpleResponse(false) }
     }
 
     fun findByPoseId(
         poseId: Long,
     ): PoseDetailResponse {
-        return poseService.findById(poseId)?.toPoseDetailResponse()
+        return poseService.findById(poseId)?.toPoseDetailResponse(false)
             ?: throw PoseNotFoundException()
     }
 }

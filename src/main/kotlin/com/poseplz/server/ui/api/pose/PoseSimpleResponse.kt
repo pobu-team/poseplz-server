@@ -4,4 +4,5 @@ data class PoseSimpleResponse(
     val poseId: String,
     val thumbnailImageUrl: String,
     val poseCount: Int,
+    val archived: Boolean,
 )

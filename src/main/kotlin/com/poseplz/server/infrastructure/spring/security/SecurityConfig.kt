@@ -1,6 +1,7 @@
 package com.poseplz.server.infrastructure.spring.security
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.poseplz.server.application.auth.TokenService
 import com.poseplz.server.infrastructure.spring.security.preauth.JwtAuthenticationProvider
 import com.poseplz.server.infrastructure.spring.security.preauth.BearerPreAuthenticatedProcessingFilter
 import com.poseplz.server.ui.api.ApiResponse
@@ -25,7 +26,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @EnableWebSecurity
 @Configuration
-class SecurityConfig {
+class SecurityConfig(
+    private val tokenService: TokenService<Long>,
+) {
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
@@ -35,7 +38,10 @@ class SecurityConfig {
             .requestMatchers("/api/v1/auth/login").permitAll()
             .requestMatchers("/favicon.ico", "/error", "/webjars/**", "/css/**", "/js/**").permitAll()
             .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-            .requestMatchers("/api/v1/members/me").hasAuthority(MEMBER_ROLE_NAME)
+            .requestMatchers(
+                "/api/v1/members/me",
+                "/api/v1/archived-poses/**"
+            ).hasAuthority(MEMBER_ROLE_NAME)
             .requestMatchers("/api/v1/**").permitAll()
             .anyRequest().authenticated()
             .and()
@@ -113,7 +119,7 @@ class SecurityConfig {
     @Bean
     fun jwtPreAuthenticatedProcessingFilter(): AbstractPreAuthenticatedProcessingFilter {
         return BearerPreAuthenticatedProcessingFilter().apply {
-            setAuthenticationManager(ProviderManager(JwtAuthenticationProvider()))
+            setAuthenticationManager(ProviderManager(JwtAuthenticationProvider(tokenService)))
         }
     }
 
