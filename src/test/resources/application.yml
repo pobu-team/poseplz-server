@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: pobu-api-test
   security:
     oauth2:
       client:
