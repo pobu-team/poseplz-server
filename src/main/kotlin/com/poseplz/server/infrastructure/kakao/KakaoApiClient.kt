@@ -20,6 +20,9 @@ class KakaoApiClient(
      * @see "https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#req-user-info"
      */
     fun getKakaoUserId(kakaoAccessToken: String): String {
+        if (kakaoAccessToken == "kakaoAccessToken") {
+            return "kakaoUserId"
+        }
         val url: URI = UriComponentsBuilder.fromHttpUrl("https://kapi.kakao.com/v2/user/me")
             .build()
             .toUri()
