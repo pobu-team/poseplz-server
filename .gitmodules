@@ -1,0 +1,3 @@
+[submodule "pobu-scrapping"]
+	path = pobu-scrapping
+	url = https://github.com/pobu-team/poseplz-scrapping.git
