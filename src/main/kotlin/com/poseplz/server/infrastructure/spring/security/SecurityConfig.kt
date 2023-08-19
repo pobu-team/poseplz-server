@@ -111,6 +111,7 @@ class SecurityConfig(
             HttpMethod.OPTIONS,
         ).map { it.name() }
         configuration.addAllowedHeader("*")
+        configuration.allowCredentials = true
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", configuration)
         return source
