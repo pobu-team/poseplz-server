@@ -26,6 +26,7 @@ fun Pose.toPoseSimpleResponse(
     return PoseSimpleResponse(
         poseId = this.poseId.toString(),
         thumbnailImageUrl = "/api/v1/files/${this.file.fileId}",
+        file = this.file.toFileResponse(),
         poseCount = this.peopleCount,
         archived = archived,
     )
