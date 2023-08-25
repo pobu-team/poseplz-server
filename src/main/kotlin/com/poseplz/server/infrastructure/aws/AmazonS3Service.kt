@@ -52,4 +52,5 @@ class AmazonS3Service(
             throw StorageDownloadFailedException("Failed to download file from S3", it)
         }
     }
+
 }
