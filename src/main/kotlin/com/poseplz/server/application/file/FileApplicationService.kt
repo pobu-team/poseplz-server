@@ -52,7 +52,7 @@ class FileApplicationService(
                     name = it.name,
                     contentType = it.contentType,
                     size = it.size,
-                )
+                ),
             )
         }.toFileResponse()
     }

@@ -1,5 +1,7 @@
 package com.poseplz.server.domain.file
 
+import com.poseplz.server.domain.file.event.FileCreatedEvent
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
@@ -8,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 
 interface FileService {
     fun create(fileCreateVo: FileCreateVo): File
+    fun update(fileId: Long, fileUpdateVo: FileUpdateVo): File
     fun delete(fileId: Long)
     fun findAll(pageable: Pageable): Page<File>
     fun findById(fileId: Long): File?
@@ -17,6 +20,7 @@ interface FileService {
 @Transactional(readOnly = true)
 class FileServiceImpl(
     private val fileRepository: FileRepository,
+    private val applicationEventPublisher: ApplicationEventPublisher,
 ) : FileService {
     @Transactional
     override fun create(fileCreateVo: FileCreateVo): File {
@@ -26,8 +30,18 @@ class FileServiceImpl(
             contentType = fileCreateVo.contentType,
             size = fileCreateVo.size,
         ).let {
-            return fileRepository.save(it)
+            fileRepository.save(it)
+            applicationEventPublisher.publishEvent(FileCreatedEvent.from(it))
+            return it
         }
+    }
+
+    @Transactional
+    override fun update(fileId: Long, fileUpdateVo: FileUpdateVo): File {
+        val file = fileRepository.findByIdOrNull(fileId) ?: throw FileNotFoundException()
+        file.width = fileUpdateVo.width
+        file.height = fileUpdateVo.height
+        return file
     }
 
     override fun delete(fileId: Long) {
