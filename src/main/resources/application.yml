@@ -16,6 +16,10 @@ spring:
           google:
             clientId: ${OAUTH2_CLIENT_ID_GOOGLE}
             clientSecret: ${OAUTH2_CLIENT_SECRET_GOOGLE}
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 30MB
 server:
   forward-headers-strategy: framework
 poseplz:
