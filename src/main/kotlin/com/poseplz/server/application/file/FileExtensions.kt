@@ -8,6 +8,7 @@ fun File.toFileResponse(): FileResponse {
         fileId = this.fileId.toString(),
         name = this.name,
         contentType = this.contentType,
+        imageType = this.imageType,
         url = "/api/v1/files/${this.fileId}",
         size = this.size,
         width = this.width,
