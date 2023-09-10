@@ -24,16 +24,10 @@ class FileServiceImpl(
 ) : FileService {
     @Transactional
     override fun create(fileCreateVo: FileCreateVo): File {
-        File(
-            url = fileCreateVo.url,
-            name = fileCreateVo.name,
-            contentType = fileCreateVo.contentType,
-            size = fileCreateVo.size,
-        ).let {
-            fileRepository.save(it)
-            applicationEventPublisher.publishEvent(FileCreatedEvent.from(it))
-            return it
-        }
+        val file = File.from(fileCreateVo)
+        fileRepository.save(file)
+        applicationEventPublisher.publishEvent(FileCreatedEvent.from(file))
+        return file
     }
 
     @Transactional

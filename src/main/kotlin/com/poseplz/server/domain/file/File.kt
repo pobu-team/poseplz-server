@@ -1,9 +1,6 @@
 package com.poseplz.server.domain.file
 
-import jakarta.persistence.Entity
-import jakarta.persistence.EntityListeners
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
+import jakarta.persistence.*
 import org.hibernate.annotations.GenericGenerator
 import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
@@ -28,6 +25,8 @@ class File(
     val url: String,
     val name: String,
     val contentType: String,
+    @Enumerated(EnumType.STRING)
+    var imageType: FileImageType,
     val size: Long,
     var width: Int? = null,
     var height: Int? = null,
@@ -44,6 +43,18 @@ class File(
 
     @LastModifiedBy
     lateinit var updatedBy: String
+
+    companion object {
+        fun from(fileCreateVo: FileCreateVo): File {
+            return File(
+                url = fileCreateVo.url,
+                name = fileCreateVo.name,
+                contentType = fileCreateVo.contentType,
+                imageType = FileImageType.PHOTOGRAPH,
+                size = fileCreateVo.size,
+            )
+        }
+    }
 
     fun delete() {
         this.deleted = true
