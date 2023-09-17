@@ -76,7 +76,7 @@ class TagServiceImpl(
         poseIdPoseTagMap.filter { it.value.size == 1 }
             .forEach { it.value.first().updateTag(sourceTag) }
         // targetTag 삭제
-        targetTag.delete()
+        tagRepository.delete(targetTag)
         return sourceTag
     }
 }
