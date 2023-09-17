@@ -4,8 +4,10 @@ import com.poseplz.server.application.pose.PoseApplicationService
 import com.poseplz.server.domain.pose.PoseCreateVo
 import com.poseplz.server.domain.pose.PoseQueryRequestVo
 import com.poseplz.server.domain.pose.PoseUpdateVo
+import com.poseplz.server.infrastructure.springdoc.SpringdocConfig
 import com.poseplz.server.ui.api.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.data.domain.PageRequest
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -70,6 +72,7 @@ class PoseController(
         )
     }
 
+    @SecurityRequirement(name = SpringdocConfig.SECURITY_SCHEME_NAME)
     @Operation(summary = "포즈 추가", description = "사용자가 새 포즈를 추가합니다. ")
     @PostMapping
     fun create(
@@ -88,6 +91,7 @@ class PoseController(
         )
     }
 
+    @SecurityRequirement(name = SpringdocConfig.SECURITY_SCHEME_NAME)
     @Operation(summary = "포즈 수정", description = "사용자가 포즈를 수정합니다. ")
     @PutMapping("/{poseId}")
     fun update(
@@ -106,6 +110,7 @@ class PoseController(
         )
     }
 
+    @SecurityRequirement(name = SpringdocConfig.SECURITY_SCHEME_NAME)
     @Operation(summary = "포즈 삭제", description = "사용자가 포즈를 삭제합니다. ")
     @DeleteMapping("/{poseId}")
     fun delete(
