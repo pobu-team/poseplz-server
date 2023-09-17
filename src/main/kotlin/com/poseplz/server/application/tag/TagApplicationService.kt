@@ -46,7 +46,7 @@ class TagApplicationService(
      */
     fun merge(tagId: Long, tagIds: List<Long>) {
         tagIds.forEach {
-            tagService.merge(it, tagId)
+            tagService.merge(tagId, it)
         }
     }
 }

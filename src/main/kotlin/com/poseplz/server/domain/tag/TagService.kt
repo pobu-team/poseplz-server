@@ -58,25 +58,25 @@ class TagServiceImpl(
      */
     @Transactional
     override fun merge(sourceTagId: Long, targetTagId: Long): Tag {
-        val targetTag = tagRepository.findByIdOrNull(targetTagId) ?: throw TagNotFoundException()
-        val sourceTag = tagRepository.findByIdOrNull(sourceTagId) ?: return targetTag
+        val sourceTag = tagRepository.findByIdOrNull(sourceTagId) ?: throw TagNotFoundException()
+        val targetTag = tagRepository.findByIdOrNull(targetTagId) ?: return sourceTag
         // source, target 모두 가진 매핑 조회
-        val poseIdPoseTagMap = poseTagRepository.findByTag(sourceTag)
+        val poseIdPoseTagMap = poseTagRepository.findByTag(targetTag)
             .filter { it.tag == sourceTag || it.tag == targetTag }
             .groupBy { it.pose.poseId }
-        // 둘 다 가진 poseTag 에 대해서 sourceTag 삭제
+        // 둘 다 가진 poseTag 에 대해서 targetTag 삭제
         poseIdPoseTagMap.filter { it.value.size > 1 }
             .forEach { (poseId, poseTags) ->
                 run {
-                    poseTags.filter { it.tag == sourceTag }
+                    poseTags.filter { it.tag == targetTag }
                         .forEach { poseTagRepository.delete(it) }
                 }
             }
-        // sourceTag 만 가진 poseTag 를 targetTag 로 업데이트
+        // targetTag 만 가진 poseTag 를 sourceTag 로 업데이트
         poseIdPoseTagMap.filter { it.value.size == 1 }
-            .forEach { it.value.first().updateTag(targetTag) }
-        // sourceTag 삭제
-        sourceTag.delete()
-        return targetTag
+            .forEach { it.value.first().updateTag(sourceTag) }
+        // targetTag 삭제
+        targetTag.delete()
+        return sourceTag
     }
 }
