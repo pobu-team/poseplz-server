@@ -40,4 +40,13 @@ class TagApplicationService(
         val tag = tagService.getById(tagId)
         return tag.toTagDetailResponse()
     }
+
+    /**
+     * tagId 로 나머지 tagIds 를 합침
+     */
+    fun merge(tagId: Long, tagIds: List<Long>) {
+        tagIds.forEach {
+            tagService.merge(tagId, it)
+        }
+    }
 }
