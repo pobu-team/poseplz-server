@@ -70,7 +70,7 @@ class PoseController(
         )
     }
 
-    @Operation(summary = "포즈 추가", description = "새 포즈를 추가합니다. ")
+    @Operation(summary = "포즈 추가", description = "사용자가 새 포즈를 추가합니다. ")
     @PostMapping
     fun create(
         @AuthenticationPrincipal memberId: Long,
@@ -88,22 +88,25 @@ class PoseController(
         )
     }
 
-    @Operation(summary = "포즈 수정", description = "포즈를 수정합니다. ")
+    @Operation(summary = "포즈 수정", description = "사용자가 포즈를 수정합니다. ")
     @PutMapping("/{poseId}")
     fun update(
         @AuthenticationPrincipal memberId: Long,
         @PathVariable poseId: Long,
         @RequestBody poseUpdateRequest: PoseUpdateRequest,
-    ): ApiResponse<Unit> {
-        poseApplicationService.updateByMember(memberId, poseId, PoseUpdateVo(
-            fileId = poseUpdateRequest.fileId.toLong(),
-            tagIds = poseUpdateRequest.tagIds.map { it.toLong() },
-            peopleCount = poseUpdateRequest.peopleCount,
-        ))
-        return ApiResponse.success()
+    ): ApiResponse<PoseDetailResponse> {
+        return ApiResponse.success(
+            data = poseApplicationService.updateByMember(
+                memberId, poseId, PoseUpdateVo(
+                    fileId = poseUpdateRequest.fileId.toLong(),
+                    tagIds = poseUpdateRequest.tagIds.map { it.toLong() },
+                    peopleCount = poseUpdateRequest.peopleCount,
+                )
+            ),
+        )
     }
 
-    @Operation(summary = "포즈 삭제", description = "포즈를 삭제합니다. ")
+    @Operation(summary = "포즈 삭제", description = "사용자가 포즈를 삭제합니다. ")
     @DeleteMapping("/{poseId}")
     fun delete(
         @AuthenticationPrincipal memberId: Long,

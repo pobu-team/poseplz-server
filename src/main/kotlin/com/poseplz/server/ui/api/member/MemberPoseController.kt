@@ -4,6 +4,7 @@ import com.poseplz.server.application.pose.PoseApplicationService
 import com.poseplz.server.infrastructure.springdoc.SpringdocConfig
 import com.poseplz.server.ui.api.ApiResponse
 import com.poseplz.server.ui.api.pose.PoseSimpleResponse
+import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.data.domain.Pageable
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController
 class MemberPoseController(
     private val poseApplicationService: PoseApplicationService,
 ) {
+    @Operation(summary = "내 포즈 목록 조회", description = "사용자가 등록한 포즈 목록을 조회합니다.")
     @GetMapping
     fun getMyPoses(
         @AuthenticationPrincipal memberId: Long,
