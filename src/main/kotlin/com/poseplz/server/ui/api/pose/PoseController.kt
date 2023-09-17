@@ -1,11 +1,14 @@
 package com.poseplz.server.ui.api.pose
 
 import com.poseplz.server.application.pose.PoseApplicationService
+import com.poseplz.server.domain.pose.PoseCreateVo
 import com.poseplz.server.domain.pose.PoseQueryRequestVo
+import com.poseplz.server.domain.pose.PoseUpdateVo
 import com.poseplz.server.ui.api.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.data.domain.PageRequest
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
 @Tag(name = "포즈", description = "포즈 API")
@@ -65,5 +68,51 @@ class PoseController(
                 peopleCount = recommendRequest.peopleCount,
             ),
         )
+    }
+
+    @Operation(summary = "포즈 추가", description = "사용자가 새 포즈를 추가합니다. ")
+    @PostMapping
+    fun create(
+        @AuthenticationPrincipal memberId: Long,
+        @RequestBody poseCreateRequest: PoseCreateRequest,
+    ): ApiResponse<PoseDetailResponse> {
+        return ApiResponse.success(
+            data = poseApplicationService.createByMember(
+                memberId = memberId,
+                poseCreateVo = PoseCreateVo(
+                    fileId = poseCreateRequest.fileId.toLong(),
+                    tagIds = poseCreateRequest.tagIds.map { it.toLong() },
+                    peopleCount = poseCreateRequest.peopleCount,
+                ),
+            ),
+        )
+    }
+
+    @Operation(summary = "포즈 수정", description = "사용자가 포즈를 수정합니다. ")
+    @PutMapping("/{poseId}")
+    fun update(
+        @AuthenticationPrincipal memberId: Long,
+        @PathVariable poseId: Long,
+        @RequestBody poseUpdateRequest: PoseUpdateRequest,
+    ): ApiResponse<PoseDetailResponse> {
+        return ApiResponse.success(
+            data = poseApplicationService.updateByMember(
+                memberId, poseId, PoseUpdateVo(
+                    fileId = poseUpdateRequest.fileId.toLong(),
+                    tagIds = poseUpdateRequest.tagIds.map { it.toLong() },
+                    peopleCount = poseUpdateRequest.peopleCount,
+                )
+            ),
+        )
+    }
+
+    @Operation(summary = "포즈 삭제", description = "사용자가 포즈를 삭제합니다. ")
+    @DeleteMapping("/{poseId}")
+    fun delete(
+        @AuthenticationPrincipal memberId: Long,
+        @PathVariable poseId: Long,
+    ): ApiResponse<Unit> {
+        poseApplicationService.delete(memberId, poseId)
+        return ApiResponse.success()
     }
 }
