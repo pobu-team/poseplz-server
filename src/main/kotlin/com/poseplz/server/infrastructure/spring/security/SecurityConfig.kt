@@ -40,8 +40,12 @@ class SecurityConfig(
             .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
             .requestMatchers(
                 "/api/v1/members/me",
-                "/api/v1/archived-poses/**"
+                "/api/v1/archived-poses/**",
+                "/api/v1/members/me/poses/**",
             ).hasAuthority(MEMBER_ROLE_NAME)
+            .requestMatchers(HttpMethod.POST, "/api/v1/poses").hasAuthority(MEMBER_ROLE_NAME)
+            .requestMatchers(HttpMethod.PUT, "/api/v1/poses/**").hasAuthority(MEMBER_ROLE_NAME)
+            .requestMatchers(HttpMethod.DELETE, "/api/v1/poses/**").hasAuthority(MEMBER_ROLE_NAME)
             .requestMatchers("/api/v1/**").permitAll()
             .anyRequest().authenticated()
             .and()
