@@ -85,4 +85,8 @@ class Tag(
             )
         }
     }
+
+    fun delete() {
+        deleted = true
+    }
 }

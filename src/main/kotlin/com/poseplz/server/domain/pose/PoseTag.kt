@@ -23,7 +23,7 @@ class PoseTag(
     val pose: Pose,
     @ManyToOne
     @JoinColumn(name = "tagId")
-    val tag: Tag,
+    var tag: Tag,
 ) {
     @CreatedDate
     lateinit var createdAt: LocalDateTime
@@ -35,5 +35,9 @@ class PoseTag(
         fun of(pose: Pose, tag: Tag): PoseTag {
             return PoseTag(pose = pose, tag = tag)
         }
+    }
+
+    fun updateTag(tag: Tag) {
+        this.tag = tag
     }
 }

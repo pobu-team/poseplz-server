@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 
-@RequestMapping("/tag")
+@RequestMapping("/tag", "/admin/tag")
 @Controller
 class AdminTagController(
     private val tagService: TagService,
@@ -113,5 +114,17 @@ class AdminTagController(
             )
         )
         return "redirect:/tag/${tag.tagId}"
+    }
+
+    @PostMapping("/{tagId}/merge")
+    fun merge(
+        @PathVariable tagId: Long,
+        @RequestBody tagMergeRequest: TagMergeRequest,
+    ): String {
+        tagApplicationService.merge(
+            tagId = tagId,
+            tagIds = tagMergeRequest.tagIds.map { it.toLong() },
+        )
+        return "redirect:/tag/list"
     }
 }
