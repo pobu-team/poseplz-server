@@ -27,6 +27,7 @@ class Pose(
         strategy = "com.poseplz.server.infrastructure.hibernate.SnowflakeIdentifierGenerator",
     )
     val poseId: Long = 0L,
+    val memberId: Long?,
     var peopleCount: Int,
     @ManyToOne
     @JoinColumn(name = "fileId")
@@ -49,10 +50,12 @@ class Pose(
 
     companion object {
         fun of(
+            memberId: Long?,
             file: File,
             peopleCount: Int,
         ): Pose {
             return Pose(
+                memberId = memberId,
                 file = file,
                 peopleCount = peopleCount,
             )

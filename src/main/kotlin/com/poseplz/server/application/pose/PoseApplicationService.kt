@@ -45,6 +45,7 @@ class PoseApplicationService(
             )
         }
         val pose = poseService.create(
+            memberId = null,
             poseCreateVo = PoseCreateVo(
                 fileId = file.fileId,
                 tagIds = tagIds,
@@ -57,6 +58,14 @@ class PoseApplicationService(
             archivedPoseService.isArchived(memberId = it, poseId = pose.poseId)
         } ?: false
         return pose.toPoseDetailResponse(archived)
+    }
+
+    fun createByMember(
+        memberId: Long,
+        poseCreateVo: PoseCreateVo,
+    ): PoseDetailResponse {
+        val pose = poseService.create(memberId, poseCreateVo)
+        return pose.toPoseDetailResponse(archived = false)
     }
 
     fun update(
@@ -89,6 +98,23 @@ class PoseApplicationService(
         )
 
         return pose.toPoseDetailResponse(false)
+    }
+
+    fun updateByMember(
+        memberId: Long,
+        poseId: Long,
+        poseUpdateVo: PoseUpdateVo,
+    ): PoseDetailResponse {
+        val pose = poseService.findById(poseId) ?: throw PoseNotFoundException()
+        if (pose.memberId != memberId) {
+            throw PoseNotFoundException()
+        }
+        return poseService.update(
+            poseId = poseId,
+            poseUpdateVo = poseUpdateVo,
+        ).toPoseDetailResponse(
+            archived = archivedPoseService.isArchived(memberId, poseId),
+        )
     }
 
     private fun createFile(
@@ -145,5 +171,29 @@ class PoseApplicationService(
     ): PoseDetailResponse {
         return poseService.findById(poseId)?.toPoseDetailResponse(false)
             ?: throw PoseNotFoundException()
+    }
+
+    fun findByPoses(
+        memberId: Long,
+        pageable: Pageable,
+    ): Page<PoseSimpleResponse> {
+        return poseService.findByMemberId(memberId, pageable)
+            .map { it.toPoseSimpleResponse(
+                archived = archivedPoseService.isArchived(
+                    memberId = memberId,
+                    poseId = it.poseId,
+                )
+            ) }
+    }
+
+    fun delete(
+        memberId: Long,
+        poseId: Long,
+    ) {
+        val pose = poseService.findById(poseId) ?: return
+        if (pose.memberId != memberId) {
+            return
+        }
+        poseService.delete(poseId)
     }
 }

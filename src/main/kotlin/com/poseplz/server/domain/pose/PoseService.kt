@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 interface PoseService {
-    fun create(poseCreateVo: PoseCreateVo): Pose
+    fun create(memberId: Long?, poseCreateVo: PoseCreateVo): Pose
     fun update(poseId: Long, poseUpdateVo: PoseUpdateVo): Pose
     fun delete(postId: Long)
     fun recommend(tagGroupIds: Collection<Long>, peopleCount: Int): List<Pose>
@@ -18,6 +18,7 @@ interface PoseService {
     fun findBy(poseQueryRequestVo: PoseQueryRequestVo): Page<Pose>
     fun findById(poseId: Long): Pose?
     fun getById(poseId: Long): Pose
+    fun findByMemberId(memberId: Long, pageable: Pageable): Page<Pose>
     fun countByTagId(tagId: Long): Long
     fun count(): Long
 }
@@ -30,9 +31,12 @@ class PoseServiceImpl(
     private val tagRepository: TagRepository,
 ) : PoseService {
     @Transactional
-    override fun create(poseCreateVo: PoseCreateVo): Pose {
+    override fun create(
+        memberId: Long?,
+        poseCreateVo: PoseCreateVo,
+    ): Pose {
         val file = fileRepository.getReferenceById(poseCreateVo.fileId)
-        val pose = Pose.of(file, poseCreateVo.peopleCount)
+        val pose = Pose.of(memberId, file, poseCreateVo.peopleCount)
         val poseTags = poseCreateVo.tagIds
             .map { tagRepository.getReferenceById(it) }
             .map { tag -> PoseTag.of(pose, tag) }
@@ -96,6 +100,10 @@ class PoseServiceImpl(
 
     override fun getById(poseId: Long): Pose {
         return poseRepository.findByIdOrNull(poseId) ?: throw PoseNotFoundException()
+    }
+
+    override fun findByMemberId(memberId: Long, pageable: Pageable): Page<Pose> {
+        return poseRepository.findByMemberId(memberId, pageable)
     }
 
     override fun countByTagId(tagId: Long): Long {
