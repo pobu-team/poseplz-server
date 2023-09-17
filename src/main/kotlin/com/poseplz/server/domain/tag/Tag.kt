@@ -4,6 +4,8 @@ import com.poseplz.server.domain.pose.PoseTag
 import com.poseplz.server.domain.tag.group.TagGroupTag
 import jakarta.persistence.*
 import org.hibernate.annotations.GenericGenerator
+import org.hibernate.annotations.SQLDelete
+import org.hibernate.annotations.Where
 import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedBy
@@ -13,6 +15,8 @@ import java.time.LocalDateTime
 
 @Entity
 @EntityListeners(AuditingEntityListener::class)
+@Where(clause = "deleted = false")
+@SQLDelete(sql = "UPDATE tag SET deleted = 1 WHERE tag_id = ?")
 class Tag(
     @Id
     @GeneratedValue(generator = "SnowflakeIdentifierGenerator")
