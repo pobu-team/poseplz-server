@@ -1,4 +1,4 @@
-package com.poseplz.server.domain.brand
+package com.poseplz.server.domain.photobooth.brand
 
 class BrandNotFoundException(
     override val message: String? = null,

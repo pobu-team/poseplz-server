@@ -1,4 +1,4 @@
-package com.poseplz.server.domain.brand
+package com.poseplz.server.domain.photobooth.brand
 
 import jakarta.persistence.*
 import org.hibernate.annotations.GenericGenerator

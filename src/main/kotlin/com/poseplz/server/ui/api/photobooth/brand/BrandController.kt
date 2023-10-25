@@ -1,4 +1,4 @@
-package com.poseplz.server.ui.api.brand
+package com.poseplz.server.ui.api.photobooth.brand
 
 import com.poseplz.server.application.brand.BrandApplicationService
 import com.poseplz.server.application.brand.toBrandResponse

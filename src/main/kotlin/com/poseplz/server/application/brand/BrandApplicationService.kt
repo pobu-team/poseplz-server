@@ -1,7 +1,7 @@
 package com.poseplz.server.application.brand
 
-import com.poseplz.server.domain.brand.Brand
-import com.poseplz.server.domain.brand.BrandService
+import com.poseplz.server.domain.photobooth.brand.Brand
+import com.poseplz.server.domain.photobooth.brand.BrandService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component

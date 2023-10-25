@@ -1,4 +1,4 @@
-package com.poseplz.server.ui.api.brand
+package com.poseplz.server.ui.api.photobooth.brand
 
 data class BrandResponse(
     val brandId: Long,
