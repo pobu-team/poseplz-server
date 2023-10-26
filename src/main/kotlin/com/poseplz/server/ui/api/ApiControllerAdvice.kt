@@ -1,5 +1,7 @@
 package com.poseplz.server.ui.api
 
+import com.poseplz.server.domain.photobooth.PhotoBoothNotFoundException
+import com.poseplz.server.domain.photobooth.brand.BrandNotFoundException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -17,6 +19,18 @@ class ApiControllerAdvice {
         log.error("Max upload size exceeded.", e)
         return ApiResponse.failure(
             resultCode = ResultCode.MAX_UPLOAD_SIZE_EXCEEDED,
+        )
+    }
+
+    @ExceptionHandler(
+        PhotoBoothNotFoundException::class,
+        BrandNotFoundException::class,
+    )
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    fun handleNotFoundException(e: Exception): ApiResponse<Unit> {
+        log.warn("Resource not found", e)
+        return ApiResponse.failure(
+            resultCode = ResultCode.NOT_FOUND,
         )
     }
 
