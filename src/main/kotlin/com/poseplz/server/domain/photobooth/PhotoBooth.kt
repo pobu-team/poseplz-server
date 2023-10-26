@@ -1,5 +1,6 @@
-package com.poseplz.server.domain.photobooth.brand
+package com.poseplz.server.domain.photobooth
 
+import com.poseplz.server.domain.photobooth.brand.Brand
 import jakarta.persistence.*
 import org.hibernate.annotations.GenericGenerator
 import org.springframework.data.annotation.CreatedDate
@@ -9,38 +10,45 @@ import java.time.LocalDateTime
 
 @Entity
 @EntityListeners(AuditingEntityListener::class)
-class Brand(
+class PhotoBooth(
     @Id
     @GeneratedValue(generator = "SnowflakeIdentifierGenerator")
     @GenericGenerator(
         name = "SnowflakeIdentifierGenerator",
         strategy = "com.poseplz.server.infrastructure.hibernate.SnowflakeIdentifierGenerator",
     )
-    val brandId: Long = 0L,
+    val photoBoothId: Long = 0L,
     /**
-     * 브랜드 이름
+     * 포토부스 이름
      */
     var name: String,
     /**
-     * 브랜드 설명
+     * 포토부스 브랜드
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brandId")
+    var brand: Brand,
+    /**
+     * 포토부스 설명
      */
     var description: String?,
     /**
-     * 브랜드 로고 이미지 URL
+     * 대표 이미지 url
      */
-    var logoUrl: String?,
+    var imgeUrl: String?,
     /**
-     * 브랜드 홈페이지 URL
+     * 포토부스 주소
      */
-    var homepageUrl: String?,
+    var address: String,
     /**
-     * 브랜드 인스타그램 URL
+     * 포토부스 좌표
      */
-    var instagramUrl: String?,
+    @Embedded
+    var coordinates: Coordinates,
     /**
      * 삭제 여부
      */
-    var deleted: Boolean = false
+    var deleted: Boolean = false,
 ) {
     @CreatedDate
     lateinit var createdAt: LocalDateTime

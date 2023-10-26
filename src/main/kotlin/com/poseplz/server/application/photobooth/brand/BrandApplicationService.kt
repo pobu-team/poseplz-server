@@ -1,4 +1,4 @@
-package com.poseplz.server.application.brand
+package com.poseplz.server.application.photobooth.brand
 
 import com.poseplz.server.domain.photobooth.brand.Brand
 import com.poseplz.server.domain.photobooth.brand.BrandService
