@@ -26,7 +26,7 @@ class PhotoBoothController(
     @GetMapping
     @PageableAsQueryParam
     fun getPhotoBooths(
-        @Parameter(hidden = false) pageable: Pageable
+        @Parameter(hidden = true) pageable: Pageable
     ): ApiResponse<List<PhotoBoothResponse>> {
         return ApiResponse.success(
             data = photoBoothApplicationService.getPhotoBooths(pageable),
