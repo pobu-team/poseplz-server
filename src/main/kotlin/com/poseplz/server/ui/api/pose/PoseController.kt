@@ -35,7 +35,7 @@ class PoseController(
                     archived = archived,
                     pageable = PageRequest.of(page, size),
                 ),
-            ).content,
+            ),
         )
     }
 
