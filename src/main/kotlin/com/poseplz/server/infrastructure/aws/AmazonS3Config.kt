@@ -18,17 +18,20 @@ class AmazonS3Config(
     private val secretKey: String,
     @Value("\${poseplz.aws.s3.region}")
     private val regison: String,
+    @Value("\${poseplz.aws.s3.request-timeout:4000}")
+    private val requestTimeout: Int,
     @Value("\${poseplz.aws.s3.connection-timeout:1000}")
     private val connectionTimeout: Int,
-    @Value("\${poseplz.aws.s3.request-timeout:3000}")
-    private val requestTimeout: Int,
+    @Value("\${poseplz.aws.s3.socket-timeout:3000}")
+    private val socketTimeout: Int,
 ) {
     @Bean
     fun amazonS3(): AmazonS3 {
         val awsCredentials: AWSCredentials = BasicAWSCredentials(accessKey, secretKey)
         val clientConfiguration = ClientConfiguration()
-        clientConfiguration.connectionTimeout = connectionTimeout
         clientConfiguration.requestTimeout = requestTimeout
+        clientConfiguration.connectionTimeout = connectionTimeout
+        clientConfiguration.socketTimeout = socketTimeout
         return AmazonS3ClientBuilder.standard()
             .withRegion(regison)
             .withCredentials(AWSStaticCredentialsProvider(awsCredentials))
