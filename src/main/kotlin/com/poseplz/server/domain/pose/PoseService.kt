@@ -1,6 +1,7 @@
 package com.poseplz.server.domain.pose
 
 import com.poseplz.server.domain.file.FileRepository
+import com.poseplz.server.domain.pose.archive.ArchivedPoseRepository
 import com.poseplz.server.domain.tag.TagRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -11,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 interface PoseService {
     fun create(memberId: Long?, poseCreateVo: PoseCreateVo): Pose
     fun update(poseId: Long, poseUpdateVo: PoseUpdateVo): Pose
-    fun delete(postId: Long)
+    fun delete(memberId: Long, poseId: Long)
     fun recommend(tagGroupIds: Collection<Long>, peopleCount: Int): List<Pose>
     fun findAll(pageable: Pageable): Page<Pose>
     fun findBy(tagIds: Collection<Long>, pageable: Pageable): Page<Pose>
@@ -29,6 +30,7 @@ class PoseServiceImpl(
     private val poseRepository: PoseRepository,
     private val fileRepository: FileRepository,
     private val tagRepository: TagRepository,
+    private val archivedPoseRepository: ArchivedPoseRepository,
 ) : PoseService {
     @Transactional
     override fun create(
@@ -61,9 +63,13 @@ class PoseServiceImpl(
     }
 
     @Transactional
-    override fun delete(postId: Long) {
-        if (poseRepository.existsById(postId)) {
-            poseRepository.deleteById(postId)
+    override fun delete(
+        memberId: Long,
+        poseId: Long,
+    ) {
+        if (poseRepository.existsById(poseId)) {
+            archivedPoseRepository.deleteByMember_memberIdAndPose_poseId(memberId, poseId)
+            poseRepository.deleteById(poseId)
         }
     }
 
