@@ -194,6 +194,6 @@ class PoseApplicationService(
         if (pose.memberId != memberId) {
             return
         }
-        poseService.delete(poseId)
+        poseService.delete(memberId, poseId)
     }
 }
