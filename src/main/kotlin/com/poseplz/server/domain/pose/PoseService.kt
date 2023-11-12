@@ -13,6 +13,7 @@ interface PoseService {
     fun create(memberId: Long?, poseCreateVo: PoseCreateVo): Pose
     fun update(poseId: Long, poseUpdateVo: PoseUpdateVo): Pose
     fun delete(memberId: Long, poseId: Long)
+    fun deleteByAdmin(poseId: Long)
     fun recommend(tagGroupIds: Collection<Long>, peopleCount: Int): List<Pose>
     fun findAll(pageable: Pageable): Page<Pose>
     fun findBy(tagIds: Collection<Long>, pageable: Pageable): Page<Pose>
@@ -68,7 +69,19 @@ class PoseServiceImpl(
         poseId: Long,
     ) {
         if (poseRepository.existsById(poseId)) {
-            archivedPoseRepository.deleteByMember_memberIdAndPose_poseId(memberId, poseId)
+            archivedPoseRepository.findByMember_memberIdAndPose_poseId(memberId, poseId)?.let {
+                archivedPoseRepository.delete(it)
+            }
+            poseRepository.deleteById(poseId)
+        }
+    }
+
+    @Transactional
+    override fun deleteByAdmin(
+        poseId: Long,
+    ) {
+        if (poseRepository.existsById(poseId)) {
+            archivedPoseRepository.findByPose_poseId(poseId).forEach { archivedPoseRepository.delete(it) }
             poseRepository.deleteById(poseId)
         }
     }

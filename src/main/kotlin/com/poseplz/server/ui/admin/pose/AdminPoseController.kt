@@ -117,7 +117,7 @@ class AdminPoseController(
     fun deleteSubmit(
         @PathVariable postId: Long,
     ): String {
-        poseService.delete(postId)
+        poseService.deleteByAdmin(postId)
         return "redirect:/pose"
     }
 
