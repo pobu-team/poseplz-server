@@ -15,5 +15,9 @@ poseplz:
       secret-key: secretKey
       region: ap-northeast-2
       bucket-name: bucketName
+  naver:
+    api:
+      client-id: clientId
+      client-secret: clientSecret
   jwt:
     secret-key: secretKey
