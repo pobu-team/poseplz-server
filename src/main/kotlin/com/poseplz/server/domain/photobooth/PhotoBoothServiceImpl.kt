@@ -23,4 +23,29 @@ class PhotoBoothServiceImpl(
         return photoBoothRepository.findByIdOrNull(photoBoothId)
             ?: throw PhotoBoothNotFoundException()
     }
+
+    override fun findBy(photoBoothSearchVo: PhotoBoothSearchVo, pageable: Pageable): Page<PhotoBooth> {
+        return photoBoothRepository.findBy(photoBoothSearchVo, pageable)
+    }
+
+    @Transactional
+    override fun create(photoBoothCreateVo: PhotoBoothCreateVo): PhotoBooth {
+        return photoBoothRepository.save(
+            PhotoBooth.from(
+                photoBoothCreateVo = photoBoothCreateVo,
+            ),
+        )
+    }
+
+    @Transactional
+    override fun update(
+        photoBoothId: Long,
+        photoBoothUpdateVo: PhotoBoothUpdateVo,
+    ): PhotoBooth {
+        val photoBooth = getPhotoBooth(photoBoothId)
+        photoBooth.update(
+            photoBoothUpdateVo = photoBoothUpdateVo,
+        )
+        return photoBooth
+    }
 }

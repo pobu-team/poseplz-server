@@ -35,7 +35,7 @@ class PhotoBooth(
     /**
      * 대표 이미지 url
      */
-    var imgeUrl: String?,
+    var imageUrl: String?,
     /**
      * 포토부스 주소
      */
@@ -55,4 +55,23 @@ class PhotoBooth(
 
     @LastModifiedDate
     lateinit var updatedAt: LocalDateTime
+
+    companion object {
+        fun from(
+            photoBoothCreateVo: PhotoBoothCreateVo,
+        ) = PhotoBooth(
+            name = photoBoothCreateVo.name,
+            brand = photoBoothCreateVo.brand,
+            description = photoBoothCreateVo.description,
+            imageUrl = photoBoothCreateVo.imageUrl,
+            address = photoBoothCreateVo.address ?: "",
+            coordinates = photoBoothCreateVo.coordinates ?: Coordinates.empty(),
+        )
+    }
+
+    fun update(
+        photoBoothUpdateVo: PhotoBoothUpdateVo,
+    ) {
+        return
+    }
 }

@@ -31,6 +31,10 @@ poseplz:
       bucket-name: ${AWS_S3_BUCKET_NAME}
   jwt:
     secret-key: ${JWT_SECRET_KEY}
+  naver:
+    api:
+      client-id: ${NAVER_API_CLIENT_ID}
+      client-secret: ${NAVER_API_CLIENT_SECRET}
 management:
   endpoints:
     enabled-by-default: false

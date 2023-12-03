@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{poseplz.photobooth.menu.add}"></title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+    <link rel="stylesheet" href="/css/common.css" type="text/css"/>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+<body>
+<main class="d-flex flex-nowrap">
+    <div th:replace="~{fragments/header :: header}">Header</div>
+    <div class="container">
+        <h1 th:text="#{poseplz.photobooth.menu.add}"></h1>
+        <form>
+            <!-- 이름 입력 -->
+            <div class="form-group">
+                <label for="nameId" class="form-label" th:text="#{poseplz.photobooth.name}"></label>
+                <input id="nameId" name="name" class="form-control" type="text" th:placeholder="#{poseplz.photobooth.name.placeholder}">
+            </div>
+            <!-- 설명 입력 -->
+            <div class="form-group">
+                <label for="descriptionId" class="form-label" th:text="#{poseplz.photobooth.description}"></label>
+                <input id="descriptionId" name="description" class="form-control" type="text" th:placeholder="#{poseplz.photobooth.description.placeholder}">
+            </div>
+            <!-- 브랜드 입력 -->
+            <div class="form-group">
+                <label for="brandId" class="form-label" th:text="#{poseplz.photobooth.brand}"></label>
+                <select id="brandId" name="brandId" class="form-control" style="height: 30rem">
+                    <option th:each="brandWithCount : *{brandWithCountList}" th:value="${brandWithCount.brand.brandId}" th:text="${brandWithCount.brand.name} + ' (' + ${brandWithCount.count} + ')'"></option>
+                </select>
+            </div>
+            <!-- 이미지 URL 입력 -->
+            <div class="form-group">
+                <label for="imageUrlId" class="form-label" th:text="#{poseplz.photobooth.imageUrl}"></label>
+                <input id="imageUrlId" class="form-control" type="text" name="imageUrl" th:placeholder="#{poseplz.photobooth.imageUrl.placeholder}">
+            </div>
+            <!-- 주소 입력 -->
+            <div class="form-group">
+                <label for="addressId" class="form-label" th:text="#{poseplz.photobooth.address}"></label>
+                <input id="addressId" class="form-control" type="text" name="address" th:placeholder="#{poseplz.photobooth.address.placeholder}">
+            </div>
+            <!-- 위도 입력 -->
+            <div class="form-group">
+                <label for="latitudeId" class="form-label" th:text="#{poseplz.photobooth.latitude}"></label>
+                <input id="latitudeId" class="form-control" type="text" name="latitude" th:placeholder="#{poseplz.photobooth.latitude.placeholder}">
+            </div>
+            <!-- 경도 입력 -->
+            <div class="form-group">
+                <label for="longitudeId" class="form-label" th:text="#{poseplz.photobooth.longitude}"></label>
+                <input id="longitudeId" class="form-control" type="text" name="longitude" th:placeholder="#{poseplz.photobooth.longitude.placeholder}">
+            </div>
+            <button id="photoBoothSubmitId" type="submit" formmethod="post" class="btn btn-primary" th:text="#{poseplz.button.add}"></button>
+        </form>
+    </div>
+</main>
+<div th:insert="~{fragments/footer :: footer-admin}">&copy; 2023 The Static Templates</div>
+</body>
+</html>

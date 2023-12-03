@@ -12,4 +12,10 @@ data class Coordinates(
      * 경도
      */
     var longitude: Double,
-)
+) {
+    companion object {
+        fun empty(): Coordinates {
+            return Coordinates(0.0, 0.0)
+        }
+    }
+}

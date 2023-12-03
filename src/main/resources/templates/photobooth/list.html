@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{poseplz.photobooth.menu.list}"></title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+    <link rel="stylesheet" href="/css/common.css" type="text/css"/>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+<body>
+<main class="d-flex flex-nowrap">
+    <div th:replace="~{fragments/header :: header}">Header</div>
+    <div class="container">
+        <h1 th:text="#{poseplz.photobooth.menu.list}"></h1>
+        <div>
+            <a class="btn btn-primary" href="/photo-booth/add" role="button" th:text="#{poseplz.photobooth.menu.add}"></a>
+        </div>
+        <form>
+            <div class="form-group">
+                <label for="brandIds" th:text="#{poseplz.photobooth.brand}"></label>
+                <select class="form-control" id="brandIds" name="brandIds" multiple="multiple" style="height: 30rem">
+                    <option th:each="brandWithCount : *{brandWithCountList}" th:value="${brandWithCount.brand.brandId}" th:text="${brandWithCount.brand.name} + ' (' + ${brandWithCount.count} + ')'"></option>
+                </select>
+                <small class="form-text text-muted">`Ctrl + Click` or `Command + Click` 으로 여러개 선택 가능</small>
+            </div>
+            <button formmethod="post" type="submit" class="btn btn-primary" th:text="#{poseplz.button.search}"></button>
+        </form>
+        <table class="table table-hover">
+            <thead class="table-header thead-light">
+            <tr>
+                <th th:text="#{poseplz.photobooth.id}"></th>
+                <th th:text="#{poseplz.photobooth.name}"></th>
+                <th th:text="#{poseplz.photobooth.createdAt}"></th>
+                <th th:text="#{poseplz.photobooth.updatedAt}"></th>
+                <th th:text="#{poseplz.photobooth.deleted}"></th>
+            </tr>
+            </thead>
+            <tbody class="table-container">
+            <tr th:each="photoBooth : *{photoBoothPage.content}">
+                <td>
+                    <a th:href="${'/photo-booth/' + photoBooth.photoBoothId}"
+                       th:text="${photoBooth.photoBoothId}">
+                    </a>
+                </td>
+                <td th:text="${photoBooth.name}"></td>
+                <td th:text="${photoBooth.createdAt}"></td>
+                <td th:text="${photoBooth.updatedAt}"></td>
+                <td th:text="${photoBooth.deleted}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<div th:insert="~{fragments/footer :: footer-admin}">&copy; 2023 The Static Templates</div>
+</body>
+</html>
