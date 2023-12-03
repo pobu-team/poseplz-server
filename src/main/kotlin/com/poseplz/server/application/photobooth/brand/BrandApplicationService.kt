@@ -2,6 +2,7 @@ package com.poseplz.server.application.photobooth.brand
 
 import com.poseplz.server.domain.photobooth.brand.Brand
 import com.poseplz.server.domain.photobooth.brand.BrandService
+import com.poseplz.server.domain.photobooth.brand.BrandWithCount
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
@@ -20,5 +21,9 @@ class BrandApplicationService(
         brandId: Long,
     ): Brand {
         return brandService.getBrand(brandId)
+    }
+
+    fun getBrandsWithCount(): List<BrandWithCount> {
+        return brandService.getBrandsWithCount()
     }
 }

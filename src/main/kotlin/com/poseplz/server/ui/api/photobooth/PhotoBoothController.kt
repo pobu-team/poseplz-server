@@ -1,6 +1,7 @@
 package com.poseplz.server.ui.api.photobooth
 
 import com.poseplz.server.application.photobooth.PhotoBoothApplicationService
+import com.poseplz.server.application.photobooth.toPhotoBoothResponse
 import com.poseplz.server.ui.api.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
@@ -29,9 +30,9 @@ class PhotoBoothController(
         @Parameter(hidden = true) pageable: Pageable
     ): ApiResponse<List<PhotoBoothResponse>> {
         return ApiResponse.success(
-            data = photoBoothApplicationService.getPhotoBooths(pageable),
+            data = photoBoothApplicationService.getPhotoBooths(pageable)
+                .map { it.toPhotoBoothResponse() },
         )
-
     }
 
     @Operation(
@@ -43,7 +44,7 @@ class PhotoBoothController(
         @PathVariable photoBoothId: Long,
     ): ApiResponse<PhotoBoothResponse> {
         return ApiResponse.success(
-            data = photoBoothApplicationService.getPhotoBooth(photoBoothId = photoBoothId),
+            data = photoBoothApplicationService.getPhotoBooth(photoBoothId = photoBoothId).toPhotoBoothResponse(),
         )
     }
 

@@ -1,5 +1,6 @@
 package com.poseplz.server.infrastructure.kakao
 
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpMethod
 import org.springframework.http.RequestEntity
 import org.springframework.stereotype.Component
@@ -13,6 +14,7 @@ import java.net.URI
 
 @Component
 class KakaoApiClient(
+    @Qualifier("kakaoRestTemplate")
     private val kakaoRestTemplate: RestTemplate,
 ) {
     /**

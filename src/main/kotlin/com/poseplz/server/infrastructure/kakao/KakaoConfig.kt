@@ -8,7 +8,7 @@ import java.time.Duration
 
 @Configuration
 class KakaoConfig {
-    @Bean
+    @Bean("kakaoRestTemplate")
     fun kakaoRestTemplate(): RestTemplate {
         return RestTemplateBuilder()
             .setConnectTimeout(Duration.ofSeconds(1))
