@@ -9,7 +9,10 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToMany
+import jakarta.persistence.Table
 import org.hibernate.annotations.GenericGenerator
+import org.hibernate.annotations.SQLDelete
+import org.hibernate.annotations.Where
 import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedBy
@@ -19,6 +22,9 @@ import java.time.LocalDateTime
 
 @Entity
 @EntityListeners(AuditingEntityListener::class)
+@Table(schema = "poseplz", name = "pose")
+@Where(clause = "deleted = false")
+@SQLDelete(sql = "UPDATE pose SET deleted = true WHERE pose_id = ?")
 class Pose(
     @Id
     @GeneratedValue(generator = "SnowflakeIdentifierGenerator")
