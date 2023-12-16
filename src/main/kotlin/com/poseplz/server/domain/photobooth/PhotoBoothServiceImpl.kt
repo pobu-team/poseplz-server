@@ -12,9 +12,14 @@ class PhotoBoothServiceImpl(
     private val photoBoothRepository: PhotoBoothRepository,
 ) : PhotoBoothService {
     override fun getPhotoBooths(
-        paegable: Pageable,
+        photoBoothQueryVo: PhotoBoothQueryVo,
+        pageable: Pageable,
     ): Page<PhotoBooth> {
-        return photoBoothRepository.findAll(paegable)
+        return photoBoothRepository.findByDistance(photoBoothQueryVo, pageable)
+    }
+
+    override fun getPhotoBooths(pageable: Pageable): Page<PhotoBooth> {
+        return photoBoothRepository.findAll(pageable)
     }
 
     override fun getPhotoBooth(

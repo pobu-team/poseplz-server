@@ -1,11 +1,13 @@
 package com.poseplz.server.ui.api.photobooth
 
 import com.poseplz.server.application.photobooth.PhotoBoothApplicationService
+import com.poseplz.server.application.photobooth.toPhotoBoothQueryVo
 import com.poseplz.server.application.photobooth.toPhotoBoothResponse
 import com.poseplz.server.ui.api.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springdoc.core.annotations.ParameterObject
 import org.springdoc.core.converters.models.PageableAsQueryParam
 import org.springframework.data.domain.Pageable
 import org.springframework.web.bind.annotation.GetMapping
@@ -27,11 +29,14 @@ class PhotoBoothController(
     @GetMapping
     @PageableAsQueryParam
     fun getPhotoBooths(
-        @Parameter(hidden = true) pageable: Pageable
+        @ParameterObject photoBoothQueryRequest: PhotoBoothQueryRequest,
+        @Parameter(hidden = true) pageable: Pageable,
     ): ApiResponse<List<PhotoBoothResponse>> {
         return ApiResponse.success(
-            data = photoBoothApplicationService.getPhotoBooths(pageable)
-                .map { it.toPhotoBoothResponse() },
+            data = photoBoothApplicationService.getPhotoBooths(
+                photoBoothQueryVo = photoBoothQueryRequest.toPhotoBoothQueryVo(),
+                pageable = pageable
+            ).map { it.toPhotoBoothResponse() },
         )
     }
 

@@ -4,7 +4,15 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 
 interface PhotoBoothService {
-    fun getPhotoBooths(pageable: Pageable): Page<PhotoBooth>
+    fun getPhotoBooths(
+        photoBoothQueryVo: PhotoBoothQueryVo,
+        pageable: Pageable,
+    ): Page<PhotoBooth>
+
+    fun getPhotoBooths(
+        pageable: Pageable,
+    ): Page<PhotoBooth>
+
     fun getPhotoBooth(photoBoothId: Long): PhotoBooth
     fun findBy(photoBoothSearchVo: PhotoBoothSearchVo, pageable: Pageable): Page<PhotoBooth>
     fun create(photoBoothCreateVo: PhotoBoothCreateVo): PhotoBooth

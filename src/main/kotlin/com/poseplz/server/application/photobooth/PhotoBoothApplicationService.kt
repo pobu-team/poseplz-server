@@ -21,6 +21,13 @@ class PhotoBoothApplicationService(
         return photoBoothService.getPhotoBooths(pageable)
     }
 
+    fun getPhotoBooths(
+        photoBoothQueryVo: PhotoBoothQueryVo,
+        pageable: Pageable,
+    ): Page<PhotoBooth> {
+        return photoBoothService.getPhotoBooths(photoBoothQueryVo, pageable)
+    }
+
     fun findBy(
         photoBoothSearchVo: PhotoBoothSearchVo,
         pageable: Pageable,

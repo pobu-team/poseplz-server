@@ -6,4 +6,6 @@ import org.springframework.data.domain.Pageable
 interface PhotoBoothRepositoryCustom {
 
     fun findBy(photoBoothSearchVo: PhotoBoothSearchVo, pageable: Pageable): Page<PhotoBooth>
+
+    fun findByDistance(photoBoothQueryVo: PhotoBoothQueryVo, pageable: Pageable): Page<PhotoBooth>
 }
