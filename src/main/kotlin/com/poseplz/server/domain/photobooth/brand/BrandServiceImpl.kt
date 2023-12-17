@@ -19,6 +19,10 @@ class BrandServiceImpl(
         return brandRepository.findAll(pageable)
     }
 
+    override fun findAllWithCount(pageable: Pageable): List<BrandDetailVo> {
+        return brandRepository.findAllWithCount(pageable)
+    }
+
     override fun getBrand(
         brandId: Long,
     ): Brand {
@@ -28,6 +32,6 @@ class BrandServiceImpl(
 
     override fun getBrandsWithCount(): List<BrandWithCount> {
         return brandRepository.findAll()
-            .map { BrandWithCount(it, photoBoothRepository.countByBrand_brandId(brandId = it.brandId)) }
+            .map { BrandWithCountImpl(it, photoBoothRepository.countByBrand_brandId(brandId = it.brandId)) }
     }
 }
