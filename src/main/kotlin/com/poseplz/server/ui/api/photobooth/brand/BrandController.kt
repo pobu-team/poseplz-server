@@ -1,6 +1,7 @@
 package com.poseplz.server.ui.api.photobooth.brand
 
 import com.poseplz.server.application.photobooth.brand.BrandApplicationService
+import com.poseplz.server.application.photobooth.brand.toBrandDetailResponse
 import com.poseplz.server.application.photobooth.brand.toBrandResponse
 import com.poseplz.server.ui.api.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
@@ -28,10 +29,10 @@ class BrandController(
     @PageableAsQueryParam
     fun getBrands(
         @Parameter(hidden = true) pageable: Pageable
-    ): ApiResponse<List<BrandResponse>> {
+    ): ApiResponse<List<BrandDetailResponse>> {
         return ApiResponse.success(
-            data = brandApplicationService.getBrands(pageable)
-                .map { it.toBrandResponse() },
+            data = brandApplicationService.getBrandsWithCount(pageable)
+                .map { it.toBrandDetailResponse() },
         )
     }
 
