@@ -9,6 +9,8 @@ class LoginApplicationService(
     private val providerUserIdServices: List<ProviderUserIdService>,
     private val memberService: MemberService,
     private val tokenService: TokenService<Long>,
+    private val providerUserNameService: ProviderUserNameService,
+    private val providerUserProfileImageService: ProviderUserProfileImageService,
 ) {
     fun login(
         loginRequestVo: LoginRequestVo,
@@ -16,6 +18,12 @@ class LoginApplicationService(
         val authenticatedProviderIdentifier = resolveLoginService(loginRequestVo).getProviderUserId(loginRequestVo)
         val member = (memberService.findByProviderIdentifier(authenticatedProviderIdentifier)
             ?: memberService.create(authenticatedProviderIdentifier))
+        member.name?.run {
+            member.name = providerUserNameService.getProviderUserName(loginRequestVo)
+        }
+        member.profileImageUrl?.run {
+            member.profileImageUrl = providerUserProfileImageService.getProviderUserProfileImage(loginRequestVo)
+        }
         return LoginResponseVo(
             memberVo = MemberVo.from(member),
             accessToken = tokenService.encode(member.memberId),

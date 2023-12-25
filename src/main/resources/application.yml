@@ -35,6 +35,9 @@ poseplz:
     api:
       client-id: ${NAVER_API_CLIENT_ID}
       client-secret: ${NAVER_API_CLIENT_SECRET}
+  kakao:
+    api:
+      admin-key: ${KAKAO_API_ADMIN_KEY}
 management:
   endpoints:
     enabled-by-default: false
