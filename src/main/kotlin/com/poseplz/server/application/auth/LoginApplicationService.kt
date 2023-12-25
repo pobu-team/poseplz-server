@@ -18,8 +18,11 @@ class LoginApplicationService(
         val authenticatedProviderIdentifier = resolveLoginService(loginRequestVo).getProviderUserId(loginRequestVo)
         val member = (memberService.findByProviderIdentifier(authenticatedProviderIdentifier)
             ?: memberService.create(authenticatedProviderIdentifier))
-        member.name?.run {
+        if (member.name == null) {
             member.name = providerUserNameService.getProviderUserName(loginRequestVo)
+        }
+        if (member.profileImageUrl == null) {
+            member.profileImageUrl = providerUserProfileImageService.getProviderUserProfileImage(loginRequestVo)
         }
         member.profileImageUrl?.run {
             member.profileImageUrl = providerUserProfileImageService.getProviderUserProfileImage(loginRequestVo)
