@@ -10,6 +10,7 @@ import org.springframework.web.client.RestClientException
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
+import java.time.ZonedDateTime
 
 
 @Component
@@ -21,9 +22,12 @@ class KakaoApiClient(
      * 카카오 사용자 정보 가져오기
      * @see "https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#req-user-info"
      */
-    fun getKakaoUserId(kakaoAccessToken: String): String {
+    fun getKakaoUserInfo(kakaoAccessToken: String): KakaoUserMeResponse {
         if (kakaoAccessToken == "kakaoAccessToken") {
-            return "kakaoUserId"
+            return KakaoUserMeResponse(
+                id = 0L,
+                connectedAt = ZonedDateTime.now(),
+            )
         }
         val url: URI = UriComponentsBuilder.fromHttpUrl("https://kapi.kakao.com/v2/user/me")
             .build()
@@ -33,9 +37,9 @@ class KakaoApiClient(
             headerMap["Authorization"] = listOf("Bearer $kakaoAccessToken")
             val responseEntity = kakaoRestTemplate.exchange(
                 RequestEntity<Any?>(headerMap, HttpMethod.GET, url),
-                KakaoUserMeDto::class.java
+                KakaoUserMeResponse::class.java
             )
-            responseEntity.body!!.id
+            responseEntity.body!!
         } catch (e: RestClientException) {
             throw KakaoApiFailedException("카카오 사용자 정보 가져오기 API 호출에 실패했습니다.", e)
         }

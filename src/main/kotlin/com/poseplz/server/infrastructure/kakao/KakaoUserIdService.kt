@@ -11,10 +11,10 @@ class KakaoUserIdService(
     private val kakaoApiClient: KakaoApiClient,
 ) : ProviderUserIdService {
     override fun getProviderUserId(loginRequestVo: LoginRequestVo): ProviderIdentifier {
-        val kakaoUserId = kakaoApiClient.getKakaoUserId(loginRequestVo.providerUserCredential!!)
+        val kakaoUserInfo = kakaoApiClient.getKakaoUserInfo(loginRequestVo.providerUserCredential!!)
         return ProviderIdentifier(
             providerType = ProviderType.KAKAO,
-            providerUserId = kakaoUserId,
+            providerUserId = kakaoUserInfo.id.toString(),
         )
     }
 

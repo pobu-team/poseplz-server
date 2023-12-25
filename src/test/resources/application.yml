@@ -19,5 +19,8 @@ poseplz:
     api:
       client-id: clientId
       client-secret: clientSecret
+  kakao:
+    api:
+      admin-key: adminKey
   jwt:
     secret-key: secretKey

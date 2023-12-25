@@ -17,6 +17,8 @@ class Member(
         strategy = "com.poseplz.server.infrastructure.hibernate.SnowflakeIdentifierGenerator",
     )
     val memberId: Long = 0L,
+    var name: String? = null,
+    var profileImageUrl: String? = null,
     @Enumerated(EnumType.STRING)
     var status: MemberStatus,
     @Embedded
