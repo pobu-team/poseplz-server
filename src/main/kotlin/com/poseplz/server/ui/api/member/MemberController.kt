@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -22,6 +23,18 @@ class MemberController(
     @GetMapping("/me")
     fun getMyInfo(
         @AuthenticationPrincipal memberId: Long,
+    ): ApiResponse<MemberResponse> {
+        return ApiResponse.success(
+            data = MemberResponse.from(
+                memberApplicationService.getMember(memberId),
+            ),
+        )
+    }
+
+    @Operation(summary = "회원 정보 조회", description = "회원 정보를 조회합니다.")
+    @GetMapping("/{memberId:\\d+}")
+    fun getMemberInfo(
+        @PathVariable memberId: Long,
     ): ApiResponse<MemberResponse> {
         return ApiResponse.success(
             data = MemberResponse.from(
