@@ -17,7 +17,7 @@ class KakaoAdminApiClient(
 
         return try {
             val responseEntity = kakaoAdminRestTemplate.getForEntity(
-                UriComponentsBuilder.fromHttpUrl("https://kapi.kakao.com/v1/user/me")
+                UriComponentsBuilder.fromHttpUrl("https://kapi.kakao.com/v2/user/me")
                     .queryParam("target_id_type", "user_id")
                     .queryParam("target_id", kakaoUserId)
                     .build()
