@@ -13,7 +13,7 @@ class KakaoUserNameService(
         return kakaoApiClient.getKakaoUserInfo(loginRequestVo.providerUserCredential!!)
             .kakaoAccount
             ?.profile
-            ?.nickName
+            ?.nickname
     }
 
     override fun supports(loginRequestVo: LoginRequestVo) =
