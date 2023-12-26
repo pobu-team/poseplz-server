@@ -1,21 +1,21 @@
 package com.poseplz.server.infrastructure.kakao
 
-import com.poseplz.server.application.auth.LoginRequestVo
 import com.poseplz.server.application.auth.ProviderUserNameService
+import com.poseplz.server.domain.member.ProviderIdentifier
 import com.poseplz.server.domain.member.ProviderType
 import org.springframework.stereotype.Service
 
 @Service
 class KakaoUserNameService(
-    private val kakaoApiClient: KakaoApiClient,
+    private val kakaoAdminApiClient: KakaoAdminApiClient,
 ) : ProviderUserNameService {
-    override fun getProviderUserName(loginRequestVo: LoginRequestVo): String? {
-        return kakaoApiClient.getKakaoUserInfo(loginRequestVo.providerUserCredential!!)
+    override fun getProviderUserName(providerIdentifier: ProviderIdentifier): String? {
+        return kakaoAdminApiClient.getUserInfo(providerIdentifier.providerUserId)
             .kakaoAccount
             ?.profile
-            ?.nickName
+            ?.nickname
     }
 
-    override fun supports(loginRequestVo: LoginRequestVo) =
-        loginRequestVo.providerType == ProviderType.KAKAO
+    override fun supports(providerIdentifier: ProviderIdentifier) =
+        providerIdentifier.providerType == ProviderType.KAKAO
 }

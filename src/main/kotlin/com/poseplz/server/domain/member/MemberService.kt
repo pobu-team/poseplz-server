@@ -7,6 +7,12 @@ import org.springframework.transaction.annotation.Transactional
 interface MemberService {
     fun create(providerIdentifier: ProviderIdentifier): Member
 
+    fun update(
+        memberId: Long,
+        name: String?,
+        profileImageUrl: String?,
+    ): Member
+
     fun findById(memberId: Long): Member?
 
     fun findByProviderIdentifier(providerIdentifier: ProviderIdentifier): Member?
@@ -24,6 +30,20 @@ class MemberServiceImpl(
             providerIdentifier = providerIdentifier,
         )
         return memberRepository.save(member)
+    }
+
+    @Transactional
+    override fun update(
+        memberId: Long,
+        name: String?,
+        profileImageUrl: String?
+    ): Member {
+        return memberRepository.findByIdOrNull(memberId)
+            ?.apply {
+                this.name = name
+                this.profileImageUrl = profileImageUrl
+            }
+            ?: throw MemberNotFoundException("존재하지 않는 회원입니다. memberId: $memberId")
     }
 
     override fun findById(memberId: Long): Member? {
