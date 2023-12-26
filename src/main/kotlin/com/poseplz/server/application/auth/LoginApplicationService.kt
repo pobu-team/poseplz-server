@@ -24,9 +24,6 @@ class LoginApplicationService(
         if (member.profileImageUrl == null) {
             member.profileImageUrl = providerUserProfileImageService.getProviderUserProfileImage(loginRequestVo)
         }
-        member.profileImageUrl?.run {
-            member.profileImageUrl = providerUserProfileImageService.getProviderUserProfileImage(loginRequestVo)
-        }
         return LoginResponseVo(
             memberVo = MemberVo.from(member),
             accessToken = tokenService.encode(member.memberId),
