@@ -39,7 +39,7 @@ class PoseServiceImpl(
         poseCreateVo: PoseCreateVo,
     ): Pose {
         val file = fileRepository.getReferenceById(poseCreateVo.fileId)
-        val pose = Pose.of(memberId, file, poseCreateVo.peopleCount)
+        val pose = Pose.of(memberId, file, poseCreateVo.peopleCount, poseCreateVo.sourceTitle, poseCreateVo.sourceUrl)
         val poseTags = poseCreateVo.tagIds
             .map { tagRepository.getReferenceById(it) }
             .map { tag -> PoseTag.of(pose, tag) }
@@ -54,6 +54,8 @@ class PoseServiceImpl(
             ?: throw PoseNotFoundException()
         poseUpdateVo.fileId?.run { pose.file = fileRepository.getReferenceById(this) }
         pose.peopleCount = poseUpdateVo.peopleCount
+        pose.sourceTitle = poseUpdateVo.sourceTitle
+        pose.sourceUrl = poseUpdateVo.sourceUrl
         pose.poseTags.clear()
         pose.poseTags.addAll(
             poseUpdateVo.tagIds

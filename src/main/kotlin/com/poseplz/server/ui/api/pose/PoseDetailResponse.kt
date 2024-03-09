@@ -11,4 +11,6 @@ data class PoseDetailResponse(
     val tags: List<TagResponse>,
     val peopleCount: Int,
     val archived: Boolean = false,
+    val sourceTitle: String,
+    val sourceUrl: String
 )
