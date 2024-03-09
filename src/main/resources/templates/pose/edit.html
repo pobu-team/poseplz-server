@@ -31,6 +31,16 @@
                 </select>
                 <small class="form-text text-muted">`Ctrl + Click` or `Command + Click` 으로 여러개 선택 가능</small>
             </div>
+            <div class="form-group">
+                <label for="sourceTitleId" class="form-label" th:text="#{poseplz.pose.sourceTitle}"></label>
+                <input id="sourceTitleId" name="sourceTitle" class="form-control" type="text"
+                       th:placeholder="'포즈의 출처를 입력하세요.'" th:value="${pose.sourceTitle}">
+            </div>
+            <div class="form-group">
+                <label for="sourceUrlId" class="form-label" th:text="#{poseplz.pose.sourceUrl}"></label>
+                <input id="sourceUrlId" name="sourceUrl" class="form-control" type="text"
+                       th:placeholder="'출처 제목을 클릭했을 때 이동할 링크 URL을 입력하세요.'" th:value="${pose.sourceUrl}">
+            </div>
             <button id="tagSubmitId" type="submit" formmethod="post" class="btn btn-primary" th:text="#{poseplz.button.edit}"></button>
         </form>
     </div>
