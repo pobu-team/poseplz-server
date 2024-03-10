@@ -40,6 +40,8 @@ class Pose(
     var file: File,
     @OneToMany(mappedBy = "pose", cascade = [CascadeType.ALL], orphanRemoval = true)
     val poseTags: MutableList<PoseTag> = mutableListOf(),
+    var sourceTitle: String?,
+    var sourceUrl: String?,
     var deleted: Boolean = false,
 ) {
     @CreatedDate
@@ -59,11 +61,15 @@ class Pose(
             memberId: Long?,
             file: File,
             peopleCount: Int,
+            sourceTitle: String? = null,
+            sourceUrl: String? = null,
         ): Pose {
             return Pose(
                 memberId = memberId,
                 file = file,
                 peopleCount = peopleCount,
+                sourceTitle = sourceTitle,
+                sourceUrl = sourceUrl
             )
         }
     }

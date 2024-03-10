@@ -27,6 +27,8 @@ class PoseApplicationService(
         fileUploadVo: FileUploadVo,
         tagIds: List<Long>,
         peopleCount: Int,
+        sourceTitle: String?,
+        sourceUrl: String?,
     ): PoseDetailResponse {
         val file = storageService.upload(
             inputStream = inputStream,
@@ -50,6 +52,8 @@ class PoseApplicationService(
                 fileId = file.fileId,
                 tagIds = tagIds,
                 peopleCount = peopleCount,
+                sourceTitle = sourceTitle,
+                sourceUrl = sourceUrl
             ),
         )
         // FIXME: memberId
@@ -74,6 +78,8 @@ class PoseApplicationService(
         fileUploadVo: FileUploadVo,
         tagIds: List<Long>,
         peopleCount: Int,
+        sourceTitle: String?,
+        sourceUrl: String?,
     ): PoseDetailResponse {
         val file: File? = if (inputStream.available() > 0) {
             // Delete old file
@@ -94,6 +100,8 @@ class PoseApplicationService(
                 fileId = file?.fileId,
                 tagIds = tagIds,
                 peopleCount = peopleCount,
+                sourceTitle = sourceTitle,
+                sourceUrl = sourceUrl
             ),
         )
 

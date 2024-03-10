@@ -16,7 +16,9 @@ fun Pose.toPoseDetailResponse(
         file = this.file.toFileResponse(),
         tags = this.poseTags.map { it.tag.toTagResponse() },
         peopleCount = this.peopleCount,
-        archived = archived
+        archived = archived,
+        sourceTitle = this.sourceTitle ?: "",
+        sourceUrl = this.sourceUrl ?: "",
     )
 }
 

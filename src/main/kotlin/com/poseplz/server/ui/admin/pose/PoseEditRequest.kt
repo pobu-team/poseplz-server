@@ -6,4 +6,6 @@ data class PoseEditRequest(
     val file: MultipartFile,
     val tagIds: List<String> = emptyList(),
     val peopleCount: Int,
+    val sourceTitle: String?,
+    val sourceUrl: String?
 )
