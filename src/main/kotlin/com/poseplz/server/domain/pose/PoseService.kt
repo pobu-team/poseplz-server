@@ -93,6 +93,7 @@ class PoseServiceImpl(
         peopleCount: Int,
     ): List<Pose> {
         return poseRepository.findByTagGroupIdsAndPeopleCount(tagGroupIds, peopleCount)
+            .sortedByDescending { it.createdAt }
     }
 
     override fun findAll(pageable: Pageable): Page<Pose> {
