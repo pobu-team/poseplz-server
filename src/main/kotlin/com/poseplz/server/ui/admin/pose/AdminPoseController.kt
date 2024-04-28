@@ -77,7 +77,7 @@ class AdminPoseController(
             tagIds = poseAddRequest.tagIds.map { it.toLong() },
             peopleCount = poseAddRequest.peopleCount,
             sourceTitle = poseAddRequest.sourceTitle,
-            sourceUrl = poseAddRequest.sourceURL,
+            sourceUrl = poseAddRequest.sourceUrl,
         )
         return "redirect:/pose"
     }
