@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
@@ -33,7 +34,7 @@ class PoseController(
                 poseQueryRequestVo = PoseQueryRequestVo(
                     tagIds = tagIds,
                     archived = archived,
-                    pageable = PageRequest.of(page, size),
+                    pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt")),
                 ),
             ),
         )
