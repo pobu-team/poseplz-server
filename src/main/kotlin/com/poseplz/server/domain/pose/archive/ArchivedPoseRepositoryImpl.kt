@@ -49,7 +49,8 @@ class ArchivedPoseRepositoryImpl : ArchivedPoseRepositoryCustom, QuerydslReposit
                     archivedPose.member.memberId.eq(memberId),
                 )
         }
-        val fetchResult = query.orderBy(archivedPose.createdAt.desc())
+        val fetchResult = query
+            .orderBy(archivedPose.createdAt.desc())
             .select(pose)
             .limit(poseQueryRequestVo.pageable.pageSize.toLong() + 1)
             .offset(poseQueryRequestVo.pageable.offset)

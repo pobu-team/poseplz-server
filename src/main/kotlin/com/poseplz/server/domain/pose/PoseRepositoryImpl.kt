@@ -40,6 +40,7 @@ class PoseRepositoryImpl : PoseRepositoryCustom, QuerydslRepositorySupport(Pose:
             .fetch()
         return from(pose)
             .where(pose.poseId.`in`(postIds))
+            .orderBy(pose.createdAt.desc())
             .fetch()
     }
 }
