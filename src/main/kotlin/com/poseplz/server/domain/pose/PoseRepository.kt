@@ -12,5 +12,6 @@ interface PoseRepository : JpaRepository<Pose, Long>, PoseRepositoryCustom {
     fun countByPoseTags_Tag_TagId(tagId: Long): Long
 
     fun countByDeletedFalse(): Long
+
     fun findByMemberId(memberId: Long, pageable: Pageable): Page<Pose>
 }

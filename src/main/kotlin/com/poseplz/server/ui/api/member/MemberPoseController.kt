@@ -27,7 +27,7 @@ class MemberPoseController(
         @AuthenticationPrincipal memberId: Long,
         @PageableDefault pageable: Pageable
     ): ApiResponse<List<PoseSimpleResponse>> {
-        val poseSimpleResponses = poseApplicationService.findByPoses(memberId, pageable)
+        val poseSimpleResponses = poseApplicationService.findByMember(memberId, pageable)
         return ApiResponse.success(
             data = poseSimpleResponses.content,
         )

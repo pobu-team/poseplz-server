@@ -22,7 +22,6 @@ class PoseController(
     @Operation(summary = "포즈 목록 조회", description = "포즈 목록을 조회합니다.")
     @GetMapping
     fun getPoses(
-        @RequestParam(required = false) preparedPoseQuery: PreparedPoseQuery?,
         @RequestParam(required = false, defaultValue = "") tagIds: Collection<Long>,
         @RequestParam(required = false, defaultValue = "0") page: Int = 0,
         @RequestParam(required = false, defaultValue = "20") size: Int = 20,
@@ -55,6 +54,19 @@ class PoseController(
         return ApiResponse.success(
             data = PoseCountResponse(
                 count = poseApplicationService.count(),
+            ),
+        )
+    }
+
+    @Operation(summary = "인기 포즈 목록 조회", description = "인기 포즈 목록을 조회합니다.")
+    @PostMapping("/popular")
+    fun getPopular(
+        @RequestParam(required = false, defaultValue = "0") page: Int = 0,
+        @RequestParam(required = false, defaultValue = "20") size: Int = 20,
+    ): ApiResponse<List<PoseSimpleResponse>> {
+        return ApiResponse.success(
+            data = poseApplicationService.findPopular(
+                pageable = PageRequest.of(page, size),
             ),
         )
     }
