@@ -52,7 +52,7 @@ class PoseRepositoryImpl : PoseRepositoryCustom, QuerydslRepositorySupport(Pose:
     override fun findOrderByArchive(pageable: Pageable): Page<Pose> {
         val contents = from(pose)
             .leftJoin(archivedPose).on(archivedPose.pose.eq(pose))
-            .orderBy(archivedPose.count().desc())
+            .orderBy(archivedPose.count().desc(), pose.createdAt.desc())
             .groupBy(pose.poseId)
             .fetch()
         return PageableExecutionUtils.getPage(contents, pageable, from(pose)::fetchCount);
