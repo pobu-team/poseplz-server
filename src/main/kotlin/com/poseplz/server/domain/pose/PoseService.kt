@@ -138,6 +138,6 @@ class PoseServiceImpl(
     }
 
     override fun findPopular(pageable: Pageable): Page<Pose> {
-        TODO("Not yet implemented")
+        return poseRepository.findOrderByArchive(pageable)
     }
 }

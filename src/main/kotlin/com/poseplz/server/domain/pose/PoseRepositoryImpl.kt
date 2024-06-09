@@ -1,8 +1,12 @@
 package com.poseplz.server.domain.pose
 
+import com.poseplz.server.domain.pose.archive.QArchivedPose
 import com.poseplz.server.domain.tag.QTag
 import com.poseplz.server.domain.tag.group.QTagGroupTag
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
+import org.springframework.data.support.PageableExecutionUtils
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -11,6 +15,7 @@ class PoseRepositoryImpl : PoseRepositoryCustom, QuerydslRepositorySupport(Pose:
     private val poseTag = QPoseTag.poseTag
     private val tagGroupTag = QTagGroupTag.tagGroupTag
     private val tag = QTag.tag
+    private val archivedPose = QArchivedPose.archivedPose
 
     override fun findByTagIds(tagIds: Collection<Long>): List<Pose> {
         val postIds = from(poseTag)
@@ -31,8 +36,9 @@ class PoseRepositoryImpl : PoseRepositoryCustom, QuerydslRepositorySupport(Pose:
         val postIds = from(tagGroupTag)
             .leftJoin(tagGroupTag.tag, tag)
             .leftJoin(tag.poseTags, poseTag)
-            .where(tagGroupTag.tagGroup.tagGroupId.`in`(tagGroupIds)
-                .and(pose.peopleCount.eq(peopleCount))
+            .where(
+                tagGroupTag.tagGroup.tagGroupId.`in`(tagGroupIds)
+                    .and(pose.peopleCount.eq(peopleCount))
             )
             .groupBy(poseTag.pose.poseId)
             .having(poseTag.pose.poseId.count().goe(tagGroupIds.size.toLong()))
@@ -41,5 +47,14 @@ class PoseRepositoryImpl : PoseRepositoryCustom, QuerydslRepositorySupport(Pose:
         return from(pose)
             .where(pose.poseId.`in`(postIds))
             .fetch()
+    }
+
+    override fun findOrderByArchive(pageable: Pageable): Page<Pose> {
+        val contents = from(pose)
+            .leftJoin(archivedPose).on(archivedPose.pose.eq(pose))
+            .orderBy(archivedPose.count().desc())
+            .groupBy(pose.poseId)
+            .fetch()
+        return PageableExecutionUtils.getPage(contents, pageable, from(pose)::fetchCount);
     }
 }
