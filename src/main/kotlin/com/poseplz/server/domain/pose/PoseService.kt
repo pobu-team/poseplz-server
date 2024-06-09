@@ -23,6 +23,7 @@ interface PoseService {
     fun findByMemberId(memberId: Long, pageable: Pageable): Page<Pose>
     fun countByTagId(tagId: Long): Long
     fun count(): Long
+    fun findPopular(pageable: Pageable): Page<Pose>
 }
 
 @Service
@@ -133,5 +134,9 @@ class PoseServiceImpl(
 
     override fun count(): Long {
         return poseRepository.count()
+    }
+
+    override fun findPopular(pageable: Pageable): Page<Pose> {
+        return poseRepository.findOrderByArchive(pageable)
     }
 }

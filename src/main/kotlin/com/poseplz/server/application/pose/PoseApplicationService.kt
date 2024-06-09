@@ -194,6 +194,13 @@ class PoseApplicationService(
             ) }
     }
 
+    fun findPopular(
+        pageable: Pageable,
+    ): Page<PoseSimpleResponse> {
+        return poseService.findPopular(pageable)
+            .map { it.toPoseSimpleResponse(false) }
+    }
+
     fun delete(
         memberId: Long,
         poseId: Long,
