@@ -181,7 +181,7 @@ class PoseApplicationService(
             ?: throw PoseNotFoundException()
     }
 
-    fun findByPoses(
+    fun findByMember(
         memberId: Long,
         pageable: Pageable,
     ): Page<PoseSimpleResponse> {
