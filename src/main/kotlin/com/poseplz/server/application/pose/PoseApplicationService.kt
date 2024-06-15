@@ -181,7 +181,7 @@ class PoseApplicationService(
             ?: throw PoseNotFoundException()
     }
 
-    fun findByPoses(
+    fun findByMember(
         memberId: Long,
         pageable: Pageable,
     ): Page<PoseSimpleResponse> {
@@ -192,6 +192,13 @@ class PoseApplicationService(
                     poseId = it.poseId,
                 )
             ) }
+    }
+
+    fun findPopular(
+        pageable: Pageable,
+    ): Page<PoseSimpleResponse> {
+        return poseService.findPopular(pageable)
+            .map { it.toPoseSimpleResponse(false) }
     }
 
     fun delete(

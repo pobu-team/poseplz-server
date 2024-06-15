@@ -29,7 +29,7 @@ class MemberPoseController(
         @RequestParam(required = false, defaultValue = "0") page: Int = 0,
         @RequestParam(required = false, defaultValue = "20") size: Int = 20,
     ): ApiResponse<List<PoseSimpleResponse>> {
-        val poseSimpleResponses = poseApplicationService.findByPoses(memberId, PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt")))
+        val poseSimpleResponses = poseApplicationService.findByMember(memberId, PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt")))
         return ApiResponse.success(
             data = poseSimpleResponses.content,
         )
