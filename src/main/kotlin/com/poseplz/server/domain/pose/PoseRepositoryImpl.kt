@@ -36,8 +36,9 @@ class PoseRepositoryImpl : PoseRepositoryCustom, QuerydslRepositorySupport(Pose:
         val postIds = from(tagGroupTag)
             .leftJoin(tagGroupTag.tag, tag)
             .leftJoin(tag.poseTags, poseTag)
-            .where(tagGroupTag.tagGroup.tagGroupId.`in`(tagGroupIds)
-                .and(pose.peopleCount.eq(peopleCount))
+            .where(
+                tagGroupTag.tagGroup.tagGroupId.`in`(tagGroupIds)
+                    .and(pose.peopleCount.eq(peopleCount))
             )
             .groupBy(poseTag.pose.poseId)
             .having(poseTag.pose.poseId.count().goe(tagGroupIds.size.toLong()))
@@ -50,10 +51,11 @@ class PoseRepositoryImpl : PoseRepositoryCustom, QuerydslRepositorySupport(Pose:
     }
 
     override fun findOrderByArchive(pageable: Pageable): Page<Pose> {
-        val contents = from(pose)
+        val query = from(pose)
             .leftJoin(archivedPose).on(archivedPose.pose.eq(pose))
             .orderBy(archivedPose.count().desc(), pose.createdAt.desc())
             .groupBy(pose.poseId)
+        val contents = querydsl!!.applyPagination(pageable, query)
             .fetch()
         return PageableExecutionUtils.getPage(contents, pageable, from(pose)::fetchCount);
     }
