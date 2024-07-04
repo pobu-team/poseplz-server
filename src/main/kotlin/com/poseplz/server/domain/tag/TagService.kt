@@ -15,6 +15,7 @@ interface TagService {
     fun findByTagIds(tagIds: List<Long>): List<Tag>
     fun getById(tagId: Long): Tag
     fun merge(sourceTagId: Long, targetTagId: Long): Tag
+    fun delete(tagId: Long)
 }
 
 @Service
@@ -78,5 +79,10 @@ class TagServiceImpl(
         // targetTag 삭제
         tagRepository.delete(targetTag)
         return sourceTag
+    }
+
+    override fun delete(tagId: Long) {
+        poseTagRepository.deleteAllByTag_TagId(tagId)
+        tagRepository.deleteById(tagId)
     }
 }

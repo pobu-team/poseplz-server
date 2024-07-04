@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface PoseTagRepository : JpaRepository<PoseTag, Long> {
     fun findByTag(tag: Tag): List<PoseTag>
+    fun deleteAllByTag_TagId(tagId: Long)
 }
