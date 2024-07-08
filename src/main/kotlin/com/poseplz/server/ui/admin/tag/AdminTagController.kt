@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
@@ -91,6 +92,17 @@ class AdminTagController(
         model.addAttribute("tag", tagService.getById(tagId))
         model.addAttribute("tagTypes", TagType.values().toList())
         return "tag/edit"
+    }
+
+    /**
+     * 태그 삭제
+     */
+    @DeleteMapping("/{tagId}/delete")
+    fun delete(
+        @PathVariable tagId: Long,
+    ): String {
+        tagService.delete(tagId)
+        return "redirect:/tag/list"
     }
 
     /**
